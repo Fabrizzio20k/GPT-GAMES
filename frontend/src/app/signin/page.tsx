@@ -13,10 +13,12 @@ export default function Login() {
             </div>
             <div className="absolute h-screen w-screen bg-black bg-opacity-70 -z-10"></div>
 
-            <div className="relative h-screen w-full test flex flex-col justify-center items-center">
-                <h1 className="text-white">hola</h1>
-                <div className="bg-white bg-opacity-50 p-10 rounded-lg">
-                    <h1 className="text-2xl font-bold text-center">Sign In</h1>
+            <div className="relative h-screen w-full flex flex-col justify-center items-center">
+                <div className="flex flex-row text-white items-center space-x-5 justify-center">
+                    <Image src="/assets/logo/logo.png" alt="Logo" width={100} height={100} className="invert filter brightness-0" />
+                    <h2 className="text-6xl font-alata tracking-widest bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">GPT GAMES</h2>
+                </div>
+                <div className="bg-gradient-to-tr from-fuchsia-800 to-violet-700 p-10 rounded-lg">
                     <form className="flex flex-col gap-4 mt-4">
                         <input
                             type="email"
@@ -33,7 +35,7 @@ export default function Login() {
                         </button>
                         <hr className="border border-gray-300" />
                         <p className="text-center">or</p>
-                        <button className="p-2 bg-red-500 text-white rounded-md">
+                        <button className="p-2 bg-white rounded-md shadow-lg text-black">
                             Sign In with Google
                         </button>
                     </form>

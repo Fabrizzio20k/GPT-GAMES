@@ -8,9 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      test: {
-        "border": "2px solid red",
-      }
+      fontFamily: {
+        alata: ['Alata', 'sans-serif'],
+      },
     },
   },
   plugins: [],
