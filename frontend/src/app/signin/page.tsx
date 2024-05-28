@@ -40,7 +40,7 @@ export default function Login() {
                         <input
                             type="password"
                             name="password"
-                            placeholder="Pepito el mas capito"
+                            placeholder="********"
                             className="p-3 rounded-2xl bg-gray-800/40 text-white w-full"
                         />
                         <button className="font-bold p-2 mt-4 w-full bg-black text-white rounded-2xl">
