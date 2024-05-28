@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         alata: ['Alata', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
       },
     },
   },
