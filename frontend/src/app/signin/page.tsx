@@ -19,7 +19,7 @@ export default function Login() {
 
     const onSubmit: SubmitHandler<IFormInput> = data => {
         console.log(data);
-        dispatch(setStatusLoggin(true));
+        dispatch(setStatusLoggin(!logged));
         console.log(logged);
     };
 

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: "GPT Games official store",
   icons: {
     icon: "/icons/icon.ico",
-  }
+  },
 };
 
 export default function RootLayout({
@@ -17,9 +17,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <ReduxProvider>
-        <body>{children}</body>
-      </ReduxProvider>
+      <body>
+        <ReduxProvider>
+          {children}
+        </ReduxProvider>
+      </body>
     </html>
   );
 }
