@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { setStatusLoggin } from "@/redux/slices/stateSlice";
 
 interface IFormInput {
     email: string;
@@ -12,8 +14,13 @@ interface IFormInput {
 export default function Login() {
 
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+    const dispatch = useAppDispatch();
+    const logged = useAppSelector(state => state.status.logged);
+
     const onSubmit: SubmitHandler<IFormInput> = data => {
         console.log(data);
+        dispatch(setStatusLoggin(true));
+        console.log(logged);
     };
 
     return (

@@ -13,8 +13,8 @@ export const statusSlice = createSlice({
     name: "status",
     initialState,
     reducers: {
-        setStatusLoggin: (state, action: PayloadAction<statusState>) => {
-            state.logged = action.payload.logged;
+        setStatusLoggin: (state, action: PayloadAction<boolean>) => {
+            state.logged = action.payload;
         },
     },
 });
