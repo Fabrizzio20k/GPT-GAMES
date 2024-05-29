@@ -1,10 +1,9 @@
-"use client";
 import MainLayoutPage from "@/pages/MainLayoutPage";
 
-export default function Page() {
+export default function Search() {
     return (
         <MainLayoutPage>
-            <h1>Hola</h1>
+            <h1>Search</h1>
         </MainLayoutPage>
     );
 }

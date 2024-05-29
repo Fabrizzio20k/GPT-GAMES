@@ -1,10 +1,9 @@
-"use client";
 import MainLayoutPage from "@/pages/MainLayoutPage";
 
-export default function Page() {
+export default function Dashboard() {
     return (
         <MainLayoutPage>
-            <h1>Hola</h1>
+            <h1>Dashboard</h1>
         </MainLayoutPage>
     );
 }
