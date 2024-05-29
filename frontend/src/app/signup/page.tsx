@@ -5,14 +5,13 @@ import { FcGoogle } from "react-icons/fc";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { setStatusLoggin } from "@/redux/slices/stateSlice";
-import Link from "next/link";
 
 interface IFormInput {
     email: string;
     password: string;
 }
 
-export default function Login() {
+export default function Register() {
 
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const dispatch = useAppDispatch();
@@ -71,7 +70,7 @@ export default function Login() {
                         {errors.password && <span className="text-red-500 text-sm md:text-md">{errors.password.message}</span>}
 
                         <button className="font-bold p-2 mt-2 w-full bg-black text-white rounded-2xl text-sm md:text-md">
-                            Log in
+                            Register Now
                         </button>
                     </form>
                     <div className="flex flex-col justify-center items-center gap-2 w-full mt-2">
@@ -82,12 +81,8 @@ export default function Login() {
                         </div>
                         <button className="flex items-center justify-center w-full p-2 bg-white rounded-2xl shadow-lg space-x-4">
                             <FcGoogle className="text-2xl" />
-                            <h2 className="text-black font-bold text-sm md:text-md">Sign in with Google</h2>
+                            <h2 className="text-black font-bold text-sm md:text-md">Register with Google</h2>
                         </button>
-                        <div className="flex flex-row w-full items-center justify-evenly mt-2">
-                            <Link href="#" className="text-white text-sm underline">Forgot your password?</Link>
-                            <Link href="/signup" className="text-white text-sm underline">Create an account</Link>
-                        </div>
                     </div>
                 </div>
             </div>
