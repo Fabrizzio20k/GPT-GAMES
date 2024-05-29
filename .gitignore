@@ -61,19 +61,45 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 
-# Flask stuff:
-instance/
-.webassets-cache
+# If you are using SQLite3 as your database:
+*.sqlite3
 
-# Scrapy stuff:
-.scrapy
+# If you are using a Postgres database:
+*.pgpass
 
-# Sphinx documentation
-docs/_build/
+# Django static files:
+staticfiles/
+static/
 
-# PyBuilder
-.pybuilder/
-target/
+# Media files
+media/
+
+# Local environment settings
+.env
+.env.local
+.env.*.local
+
+# Django migrations
+**/migrations/*
+!**/migrations/__init__.py
+
+# pyenv
+.python-version
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -81,11 +107,6 @@ target/
 # IPython
 profile_default/
 ipython_config.py
-
-# pyenv
-#   For a library or package, you might want to ignore these files since the code is
-#   intended to run in multiple environments; otherwise, check them in:
-# .python-version
 
 # pipenv
 #   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
@@ -119,15 +140,6 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -158,3 +170,32 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+# Additions for Django + DRF projects
+# Environment variables
+.env
+
+# Django static files
+staticfiles/
+static/
+
+# Media files
+media/
+
+# Django migrations
+**/migrations/*
+!**/migrations/__init__.py
+
+# Database
+*.sqlite3
+*.db
+
+# Secret keys
+secrets.json
+
+# Coverage reports
+coverage.xml
+.hypothesis/
+
+# pytest
+.pytest_cache/
