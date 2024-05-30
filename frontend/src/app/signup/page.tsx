@@ -3,10 +3,15 @@
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { setStatusLoggin } from "@/redux/slices/stateSlice";
+import { Toaster, toast } from 'sonner';
+import axios from "axios";
 
 interface IFormInput {
+    username: string;
+    firstname: string;
+    lastname: string;
+    description: string;
+    phone: string;
     email: string;
     password: string;
 }
@@ -14,17 +19,30 @@ interface IFormInput {
 export default function Register() {
 
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
-    const dispatch = useAppDispatch();
-    const logged = useAppSelector(state => state.status.logged);
 
-    const onSubmit: SubmitHandler<IFormInput> = data => {
-        console.log(data);
-        dispatch(setStatusLoggin(!logged));
-        console.log(logged);
+
+    const onSubmit: SubmitHandler<IFormInput> = async data => {
+        try {
+            const response = await axios.post('http://localhost:8000/users/register/', data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            console.log(response.data);
+        } catch (error) {
+            const listErrors = (error as any).response.data;
+            let errors = '';
+            for (const key in listErrors) {
+                errors += `${key}: ${listErrors[key]}\n`;
+            }
+            errors = errors.toUpperCase();
+            toast.error(errors);
+        }
     };
 
     return (
         <main>
+            <Toaster richColors />
             <div className="absolute h-screen w-screen -z-20 filter">
                 <Image
                     src="/assets/background/login_wallpaper.webp"
@@ -51,6 +69,42 @@ export default function Register() {
                 </div>
                 <div className="font-inter bg-gradient-to-tr from-fuchsia-900 to-violet-800 py-4 sm:py-8 px-10 sm:px-20 rounded-2xl w-full max-w-2xl overflow-y-scroll custom-scroll">
                     <form className="flex flex-col gap-2 w-full items-start" onSubmit={handleSubmit(onSubmit)}>
+                        <label className="text-white w-full text-sm">Username</label>
+                        <input
+                            {...register('username', { required: 'Username is required', minLength: { value: 4, message: 'Username must be at least 4 characters long' } })}
+                            type="text"
+                            placeholder="Username"
+                            className="p-2 rounded-2xl bg-gray-800/40 text-white w-full" />
+                        {errors.username && <span className="text-red-500 text-sm md:text-md">{errors.username.message}</span>}
+                        <label className="text-white w-full text-sm">First Name</label>
+                        <input
+                            {...register('firstname', { required: 'Firstname is required' })}
+                            type="text"
+                            placeholder="First Name"
+                            className="p-2 rounded-2xl bg-gray-800/40 text-white w-full" />
+                        {errors.firstname && <span className="text-red-500 text-sm md:text-md">{errors.firstname.message}</span>}
+                        <label className="text-white w-full text-sm">Last Name</label>
+                        <input
+                            {...register('lastname', { required: 'Lastname is required' })}
+                            type="text"
+                            placeholder="Last Name"
+                            className="p-2 rounded-2xl bg-gray-800/40 text-white w-full" />
+                        {errors.lastname && <span className="text-red-500 text-sm md:text-md">{errors.lastname.message}</span>}
+                        <label className="text-white w-full text-sm">Description</label>
+                        <input
+                            {...register('description', { required: 'Description is required' })}
+                            type="text"
+                            placeholder="Description"
+                            className="p-2 rounded-2xl bg-gray-800/40 text-white w-full" />
+                        {errors.description && <span className="text-red-500 text-sm md:text-md">{errors.description.message}</span>}
+                        <label className="text-white w-full text-sm">Phone</label>
+                        <input
+                            {...register('phone', { required: 'Phone is required', pattern: { value: /^[0-9]+$/, message: 'Invalid phone number' } })}
+                            type="tel"
+                            placeholder="Phone"
+                            className="p-2 rounded-2xl bg-gray-800/40 text-white w-full" />
+                        {errors.phone && <span className="text-red-500 text-sm md:text-md">{errors.phone.message}</span>}
+
                         <label className="text-white w-full text-sm">Email</label>
                         <input
                             {...register('email', { required: 'Email is required', pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address' } })}
