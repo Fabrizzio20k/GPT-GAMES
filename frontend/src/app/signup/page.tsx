@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, set } from "react-hook-form";
 import { Toaster, toast } from 'sonner';
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface IFormInput {
     username: string;
@@ -19,6 +20,7 @@ interface IFormInput {
 export default function Register() {
 
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+    const router = useRouter();
 
 
     const onSubmit: SubmitHandler<IFormInput> = async data => {
@@ -28,7 +30,10 @@ export default function Register() {
                     'Content-Type': 'application/json',
                 },
             });
-            console.log(response.data);
+            toast.success('User registered successfully');
+            setTimeout(() => {
+                router.push('/login');
+            }, 2000);
         } catch (error) {
             const listErrors = (error as any).response.data;
             let errors = '';
@@ -50,6 +55,7 @@ export default function Register() {
                     width={1920}
                     height={1080}
                     className="object-cover object-center h-full w-full"
+                    priority={true}
                 />
             </div>
             <div className="absolute h-screen w-screen bg-black bg-opacity-80 -z-10"></div>

@@ -33,6 +33,7 @@ export default function Login() {
                     width={1920}
                     height={1080}
                     className="object-cover object-center h-full w-full"
+                    priority={true}
                 />
             </div>
             <div className="absolute h-screen w-screen bg-black bg-opacity-80 -z-10"></div>
