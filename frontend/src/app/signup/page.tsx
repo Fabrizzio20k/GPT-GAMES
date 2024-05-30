@@ -21,11 +21,12 @@ export default function Register() {
 
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const router = useRouter();
+    const urlServer = process.env.NEXT_PUBLIC_DEV_SERVER_URL;
 
 
     const onSubmit: SubmitHandler<IFormInput> = async data => {
         try {
-            const response = await axios.post('http://localhost:8000/users/register/', data, {
+            const response = await axios.post(urlServer + "/users/register/", data, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
