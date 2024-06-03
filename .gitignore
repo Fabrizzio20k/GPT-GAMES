@@ -199,5 +199,3 @@ coverage.xml
 
 # pytest
 .pytest_cache/
-
-migrations
