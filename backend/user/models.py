@@ -4,8 +4,8 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class User(AbstractUser):
-    firstname = models.CharField(max_length=175 , default="")
-    lastname = models.CharField(max_length=175 , default= "")
+    firstname = models.CharField(max_length=175)
+    lastname = models.CharField(max_length=175)
     description = models.TextField()
     phone = models.CharField(max_length=18)
 
