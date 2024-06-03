@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
-import { useForm, SubmitHandler, set } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { Toaster, toast } from 'sonner';
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -33,13 +33,13 @@ export default function Register() {
             });
             toast.success('User registered successfully');
             setTimeout(() => {
-                router.push('/login');
+                router.push('/signin');
             }, 2000);
         } catch (error) {
             const listErrors = (error as any).response.data;
             let errors = '';
             for (const key in listErrors) {
-                errors += `${key}: ${listErrors[key]}\n`;
+                errors += `${listErrors[key]}\n`;
             }
             errors = errors.toUpperCase();
             toast.error(errors);

@@ -8,7 +8,7 @@ import { setStatusLoggin } from "@/redux/slices/stateSlice";
 import Link from "next/link";
 
 interface IFormInput {
-    email: string;
+    username: string;
     password: string;
 }
 
@@ -53,14 +53,14 @@ export default function Login() {
                 </div>
                 <div className="font-inter bg-gradient-to-tr from-fuchsia-900 to-violet-800 py-4 sm:py-8 px-10 sm:px-20 rounded-2xl w-full max-w-2xl overflow-y-scroll custom-scroll">
                     <form className="flex flex-col gap-2 w-full items-start" onSubmit={handleSubmit(onSubmit)}>
-                        <label className="text-white w-full text-sm">Email</label>
+                        <label className="text-white w-full text-sm">Username</label>
                         <input
-                            {...register('email', { required: 'Email is required', pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address' } })}
-                            type="email"
-                            placeholder="example@mail.com"
+                            {...register('username', { required: 'Username is required', minLength: { value: 4, message: 'Username must be at least 4 characters long' } })}
+                            type="text"
+                            placeholder="GPTUser"
                             className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
                         />
-                        {errors.email && <span className="text-red-500 text-sm md:text-md">{errors.email.message}</span>}
+                        {errors.username && <span className="text-red-500 text-sm md:text-md">{errors.username.message}</span>}
 
                         <label className="text-white w-full text-sm">Password</label>
                         <input
