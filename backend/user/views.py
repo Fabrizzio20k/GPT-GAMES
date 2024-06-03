@@ -29,11 +29,16 @@ def login(request):
 @permission_classes([AllowAny])
 def register(request):
     serialiazer = UserSerializer(data= request.data)
-
+    
     if serialiazer.is_valid():
+
+        if( len(serialiazer.validated_data['password']) < 8):
+            return  Response({"detail": "password too short"}, status=status.HTTP_400_BAD_REQUEST)
+
         try:
             serialiazer.save()
             user  = User.objects.get( username = serialiazer.data['username'])
+            
             user.set_password(serialiazer.data['password'])
             user.save()
             token = Token.objects.create(user = user)
@@ -43,4 +48,5 @@ def register(request):
             return Response({"detail": "Username or email already exists."}, status=status.HTTP_400_BAD_REQUEST)
 
     return Response(serialiazer.errors , status= status.HTTP_400_BAD_REQUEST)
+
 
