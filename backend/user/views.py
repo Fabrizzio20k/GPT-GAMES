@@ -8,6 +8,11 @@ from .models import User
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 from django.db.utils import IntegrityError
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from .models import User
+from .serializers import UserSerializer
+
 
 # Create your views here.
 
@@ -57,3 +62,14 @@ def register(request):
             return Response({"detail": "Username or email already exists."}, status=status.HTTP_400_BAD_REQUEST)
 
     return Response(serialiazer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserListCreateView(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+class UserRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
