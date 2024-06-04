@@ -61,25 +61,27 @@ export default function Navbar() {
                         className={`absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 hidden lg:block`}
                     />
                 </div>
-                <div className="hidden sm:flex flex-row space-x-6 items-center">
-                    {logged ? (
-                        <>
-                            <FaMessage size={24} />
-                            <FaBell size={24} />
-                            <button className="bg-gradient-to-r from-fuchsia-800 to-indigo-700 px-4 py-2 rounded-2xl" onClick={() => router.push('/profile')}>{user.username}</button>
-                            <button onClick={handleLogout}>
-                                Log out
-                            </button>
-                        </>
-                    ) : (
-                        <>
-                            <button onClick={() => router.push('/signin')}>Log in</button>
-                            <button className="bg-gradient-to-r from-fuchsia-800 to-indigo-700 px-4 py-2 rounded-2xl" onClick={() => router.push('/signup')}>
-                                Register
-                            </button>
-                        </>
-                    )}
-                </div>
+                {!searchExpanded && (
+                    <div className="hidden sm:flex flex-row space-x-6 items-center">
+                        {logged ? (
+                            <>
+                                <FaMessage size={24} />
+                                <FaBell size={24} />
+                                <button className="bg-gradient-to-r from-fuchsia-800 to-indigo-700 px-4 py-2 rounded-2xl" onClick={() => router.push('/profile')}>{user.username}</button>
+                                <button onClick={handleLogout}>
+                                    Log out
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <button onClick={() => router.push('/signin')}>Log in</button>
+                                <button className="bg-gradient-to-r from-fuchsia-800 to-indigo-700 px-4 py-2 rounded-2xl" onClick={() => router.push('/signup')}>
+                                    Register
+                                </button>
+                            </>
+                        )}
+                    </div>
+                )}
                 <div className="sm:hidden flex items-center">
                     {!searchExpanded && (
                         <FaBarsStaggered
