@@ -15,6 +15,16 @@ from django.db.utils import IntegrityError
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login(request):
+    errors = {}
+
+    if 'username' not in request.data:
+        errors['username'] = ["Username is required."]
+    if 'password' not in request.data:
+        errors['password'] = ["Password is required."]
+
+    if errors:
+        return Response(errors, status=status.HTTP_400_BAD_REQUEST)
+
     user = get_object_or_404(User, username=request.data['username'])
 
     if not user.check_password(request.data['password']):
@@ -28,16 +38,16 @@ def login(request):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register(request):
-    serialiazer = UserSerializer(data= request.data)
+    serialiazer = UserSerializer(data=request.data)
 
     if serialiazer.is_valid():
 
-        if( len(serialiazer.validated_data['password']) < 8):
-            return  Response({"detail": "password too short"}, status=status.HTTP_400_BAD_REQUEST)
+        if (len(serialiazer.validated_data['password']) < 8):
+            return Response({"detail": "password too short"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             serialiazer.save()
-            user  = User.objects.get( username = serialiazer.data['username'])
+            user = User.objects.get(username=serialiazer.data['username'])
             user.set_password(serialiazer.data['password'])
             user.save()
             token = Token.objects.create(user=user)
@@ -46,5 +56,4 @@ def register(request):
         except IntegrityError:
             return Response({"detail": "Username or email already exists."}, status=status.HTTP_400_BAD_REQUEST)
 
-    return Response(serialiazer.errors , status= status.HTTP_400_BAD_REQUEST)
-
+    return Response(serialiazer.errors, status=status.HTTP_400_BAD_REQUEST)
