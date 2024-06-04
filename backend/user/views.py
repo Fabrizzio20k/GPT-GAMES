@@ -34,6 +34,10 @@ def register(request):
 
         if( len(serialiazer.validated_data['password']) < 8):
             return  Response({"detail": "password too short"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if( len(serialiazer.validated_data['password']) < 4):
+            return Response({"detail": "username too short" } ,  status= status.HTTP_400_BAD_REQUEST)
+
 
         try:
             serialiazer.save()
