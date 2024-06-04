@@ -6,6 +6,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Toaster, toast } from 'sonner';
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Loader from "@/components/Loader";
+import { useState } from "react";
 
 interface IFormInput {
     username: string;
@@ -22,9 +24,11 @@ export default function Register() {
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const router = useRouter();
     const urlServer = process.env.NEXT_PUBLIC_DEV_SERVER_URL;
+    const [loading, setLoading] = useState(false);
 
 
     const onSubmit: SubmitHandler<IFormInput> = async data => {
+        setLoading(true);
         try {
             const response = await axios.post(urlServer + "/users/register/", data, {
                 headers: {
@@ -32,9 +36,7 @@ export default function Register() {
                 },
             });
             toast.success('User registered successfully');
-            setTimeout(() => {
-                router.push('/signin');
-            }, 2000);
+            router.push('/signin');
         } catch (error) {
             const listErrors = (error as any).response.data;
             let errors = '';
@@ -44,10 +46,14 @@ export default function Register() {
             errors = errors.toUpperCase();
             toast.error(errors);
         }
+        finally {
+            setLoading(false);
+        }
     };
 
     return (
         <main>
+            <Loader activate={loading} />
             <Toaster richColors />
             <div className="absolute h-screen w-screen -z-20 filter">
                 <Image
