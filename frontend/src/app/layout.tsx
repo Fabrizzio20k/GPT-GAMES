@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body>
+      <body className="bg-gulf-blue-950">
         <ReduxProvider>
           {children}
         </ReduxProvider>
