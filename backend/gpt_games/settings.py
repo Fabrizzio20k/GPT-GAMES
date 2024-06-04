@@ -66,6 +66,26 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_HEADERS = [
+    'authorization',     # Permite enviar encabezados de autorización para autenticación
+    'content-type',      # Permite especificar el tipo de contenido de la solicitud
+    'x-csrftoken',       # Permite enviar tokens CSRF para seguridad
+    'accept',            # Permite especificar qué tipos de respuesta acepta el cliente
+    'origin',            # Permite enviar el origen de la solicitud
+    'user-agent',        # Permite enviar información sobre el navegador del cliente
+    'accept-encoding',   # Permite enviar tipos de codificación aceptables (como gzip)
+]
+
+
+
 ROOT_URLCONF = 'gpt_games.urls'
 
 TEMPLATES = [
