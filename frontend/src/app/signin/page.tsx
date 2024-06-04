@@ -4,28 +4,76 @@ import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { setStatusLoggin } from "@/redux/slices/stateSlice";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Toaster, toast } from 'sonner';
+import axios from "axios";
+import { setStatusLoggin } from "@/redux/slices/stateSlice";
+import { setUser } from "@/redux/slices/userSlice";
+import Loader from "@/components/Loader";
+import { useState } from "react";
+import { User } from "@/types/user";
 
 interface IFormInput {
-    email: string;
+    username: string;
     password: string;
 }
 
 export default function Login() {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const dispatch = useAppDispatch();
-    const logged = useAppSelector(state => state.status.logged);
+    const router = useRouter();
 
-    const onSubmit: SubmitHandler<IFormInput> = data => {
-        console.log(data);
-        dispatch(setStatusLoggin(!logged));
-        console.log(logged);
+    const urlServer = process.env.NEXT_PUBLIC_DEV_SERVER_URL;
+
+    const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
+
+    const [loading, setLoading] = useState(false);
+
+    const onSubmit: SubmitHandler<IFormInput> = async data => {
+        setLoading(true);
+        try {
+            const response = await axios.post(urlServer + "/users/login/", data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            toast.success('User logged in successfully');
+
+            const dataUser = {
+                id: response.data.user.id,
+                email: response.data.user.email,
+                username: response.data.user.username,
+                firstname: response.data.user.firstname,
+                lastname: response.data.user.lastname,
+                phone: response.data.user.phone,
+                description: response.data.user.description,
+                token: response.data.token,
+            } as User;
+
+            dispatch(setStatusLoggin(true));
+            dispatch(setUser(dataUser));
+
+            router.push('/');
+
+        } catch (error) {
+            const listErrors = (error as any).response.data;
+            let errors = '';
+            for (const key in listErrors) {
+                errors += `${listErrors[key]}\n`;
+            }
+            errors = errors.toUpperCase();
+            toast.error(errors);
+        }
+        finally {
+            setLoading(false);
+        }
     };
 
     return (
         <main>
+            <Loader activate={loading} />
+            <Toaster richColors />
             <div className="absolute h-screen w-screen -z-20 filter">
                 <Image
                     src="/assets/background/login_wallpaper.webp"
@@ -53,14 +101,14 @@ export default function Login() {
                 </div>
                 <div className="font-inter bg-gradient-to-tr from-fuchsia-900 to-violet-800 py-4 sm:py-8 px-10 sm:px-20 rounded-2xl w-full max-w-2xl overflow-y-scroll custom-scroll">
                     <form className="flex flex-col gap-2 w-full items-start" onSubmit={handleSubmit(onSubmit)}>
-                        <label className="text-white w-full text-sm">Email</label>
+                        <label className="text-white w-full text-sm">Username</label>
                         <input
-                            {...register('email', { required: 'Email is required', pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address' } })}
-                            type="email"
-                            placeholder="example@mail.com"
+                            {...register('username', { required: 'Username is required', minLength: { value: 4, message: 'Username must be at least 4 characters long' } })}
+                            type="text"
+                            placeholder="GPTUser"
                             className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
                         />
-                        {errors.email && <span className="text-red-500 text-sm md:text-md">{errors.email.message}</span>}
+                        {errors.username && <span className="text-red-500 text-sm md:text-md">{errors.username.message}</span>}
 
                         <label className="text-white w-full text-sm">Password</label>
                         <input
