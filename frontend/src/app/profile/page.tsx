@@ -8,6 +8,10 @@ export default function Profile() {
 
     const user = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
+    const handleUpdateUser = (e: React.FormEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        const form = e.currentTarget.form;
+    };
 
     return (
         <MainLayoutPage>
@@ -25,48 +29,55 @@ export default function Profile() {
                             </div>
                             <label className="text-white w-full text-sm">Username</label>
                             <input
+                                name="username"
                                 type="text"
                                 placeholder={user.username}
                                 className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
                             />
                             <label className="text-white w-full text-sm">First Name</label>
                             <input
+                                name="firstname"
                                 type="text"
                                 placeholder={user.firstname}
                                 className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
                             />
                             <label className="text-white w-full text-sm">Last Name</label>
                             <input
+                                name="lastname"
                                 type="text"
                                 placeholder={user.lastname}
                                 className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
                             />
                             <label className="text-white w-full text-sm">Phone</label>
                             <input
+                                name="phone"
                                 type="tel"
                                 placeholder={user.phone}
                                 className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
                             />
                             <label className="text-white w-full text-sm">Description</label>
                             <textarea
+                                name="description"
                                 placeholder={user.description}
                                 className="p-2 rounded-2xl bg-gray-800/40 text-white w-full resize-none"
 
                             />
                             <label className="text-white w-full text-sm">Password</label>
                             <input
+                                name="password"
                                 type="password"
                                 placeholder="********"
                                 className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
                             />
                             <label className="text-white w-full text-sm">Confirm Password</label>
                             <input
+                                name="confirmPassword"
                                 type="password"
                                 placeholder="********"
                                 className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
                             />
 
-                            <button type="submit" className="font-bold p-2 mt-2 w-full bg-violet-900 text-white rounded-2xl text-sm md:text-md">
+                            <button type="submit" className="font-bold p-2 mt-2 w-full bg-violet-900 text-white rounded-2xl text-sm md:text-md" onClick={handleUpdateUser}>
                                 Update Profile
                             </button>
                         </form>
