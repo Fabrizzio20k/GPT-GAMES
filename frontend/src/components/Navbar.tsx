@@ -93,7 +93,7 @@ export default function Navbar() {
                             <ul className="flex flex-col p-4 space-y-2">
                                 {logged ? (
                                     <>
-                                        <li className="flex items-center space-x-2 cursor-pointer bg-gradient-to-r from-fuchsia-800 to-indigo-700 px-4 py-2 rounded-2xl">
+                                        <li className="flex items-center space-x-2 cursor-pointer bg-gradient-to-r from-fuchsia-800 to-indigo-700 px-4 py-2 rounded-2xl" onClick={() => router.push('/profile')}>
                                             <FaUserNinja size={20} />
                                             <span>{user.username}</span>
                                         </li>

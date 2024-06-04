@@ -5,6 +5,7 @@ import { ReactNode } from 'react';
 
 import Sidebar from '@/components/Sidebar';
 import Navbar from '@/components/Navbar';
+import "@/app/globals.css";
 
 export default function MainLayoutPage({ children }: { children: ReactNode }) {
 
@@ -14,8 +15,8 @@ export default function MainLayoutPage({ children }: { children: ReactNode }) {
             <Sidebar />
             <div className="flex-1 flex flex-col">
                 <Navbar />
-                <section className="flex-1 shadow-inner p-8 overflow-y-auto">
-                    <div className="container mx-auto">
+                <section className="flex-1 shadow-inner p-4 sm:p-6 md:p-8 overflow-y-auto custom-scroll">
+                    <div className="w-full">
                         {children}
                     </div>
                 </section>
