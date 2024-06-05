@@ -13,6 +13,10 @@ const config: Config = {
         inter: ['Inter', 'sans-serif'],
       },
       colors: {
+        primary: '#7d5bed',
+        secondary: '#1f212d',
+        tertiary: '#151722',
+
         'ebony': {
           '50': '#f2f4fd',
           '100': '#e4e6fa',
@@ -44,6 +48,8 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar-hide')
+  ],
 };
 export default config;
