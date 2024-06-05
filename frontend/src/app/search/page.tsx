@@ -8,7 +8,6 @@ export default function Search() {
     const searchParams = useSearchParams();
     const searchTerm = searchParams?.get("name") || "";
 
-    document.title = searchTerm ? `Resultados para: ${searchTerm}` : "Encuentra tus juegos";
 
     return (
         <MainLayoutPage>
