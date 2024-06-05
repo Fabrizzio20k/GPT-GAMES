@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-export default function Game() {
+export default function Offer() {
     return (
         <section className='bg-tertiary p-3 rounded-xl'>
             <Image
