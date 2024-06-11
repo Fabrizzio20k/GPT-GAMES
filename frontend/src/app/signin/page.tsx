@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, set } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -54,7 +54,9 @@ export default function Login() {
             dispatch(setStatusLoggin(true));
             dispatch(setUser(dataUser));
 
-            router.push('/');
+            setTimeout(() => {
+                router.push('/');
+            }, 1000);
 
         } catch (error) {
             const listErrors = (error as any).response.data;
@@ -66,7 +68,9 @@ export default function Login() {
             toast.error(errors);
         }
         finally {
-            setLoading(false);
+            setTimeout(() => {
+                setLoading(false);
+            }, 1000);
         }
     };
 

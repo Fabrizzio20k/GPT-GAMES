@@ -1,10 +1,10 @@
-"use client"
+"use client";
+
+import { useSearchParams } from "next/navigation";
 import MainLayoutPage from "@/pages/MainLayoutPage";
 import Offer from "@/components/Offer";
 
-export default function Search() {
-    
-
+export default function Search() { 
     return (
         <MainLayoutPage>
             <h1 className="text-2xl mb-5">EXPLORE THE CATALOG</h1>
