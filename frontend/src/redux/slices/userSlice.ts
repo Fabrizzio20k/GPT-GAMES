@@ -6,8 +6,8 @@ const initialState: User = {
     id: "",
     email: "",
     username: "",
-    firstname: "",
-    lastname: "",
+    first_name: "",
+    last_name: "",
     phone: "",
     description: "",
     token: "",
@@ -21,8 +21,8 @@ export const userSlice = createSlice({
             state.id = action.payload.id;
             state.email = action.payload.email;
             state.username = action.payload.username;
-            state.firstname = action.payload.firstname;
-            state.lastname = action.payload.lastname;
+            state.first_name = action.payload.first_name;
+            state.last_name = action.payload.last_name;
             state.phone = action.payload.phone;
             state.description = action.payload.description;
             state.token = action.payload.token;
@@ -31,8 +31,8 @@ export const userSlice = createSlice({
             state.id = "";
             state.email = "";
             state.username = "";
-            state.firstname = "";
-            state.lastname = "";
+            state.first_name = "";
+            state.last_name = "";
             state.phone = "";
             state.description = "";
             state.token = "";
@@ -44,10 +44,10 @@ export const userSlice = createSlice({
             state.username = action.payload;
         },
         updateFirstname: (state, action: PayloadAction<string>) => {
-            state.firstname = action.payload;
+            state.first_name = action.payload;
         },
         updateLastname: (state, action: PayloadAction<string>) => {
-            state.lastname = action.payload;
+            state.last_name = action.payload;
         },
         updatePhone: (state, action: PayloadAction<string>) => {
             state.phone = action.payload;

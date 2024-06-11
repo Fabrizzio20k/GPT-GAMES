@@ -7,8 +7,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 
 interface IFormUpdateProfile {
     username: string;
-    firstname: string;
-    lastname: string;
+    first_name: string;
+    last_name: string;
     description: string;
     phone: string;
     password: string;
@@ -24,8 +24,8 @@ export default function Profile() {
 
     const onSubmit: SubmitHandler<IFormUpdateProfile> = async data => {
         data.username = data.username || user.username;
-        data.firstname = data.firstname || user.firstname;
-        data.lastname = data.lastname || user.lastname;
+        data.first_name = data.first_name || user.first_name;
+        data.last_name = data.last_name || user.last_name;
         data.description = data.description || user.description;
         data.phone = data.phone || user.phone;
         data.email = user.email;
@@ -65,25 +65,25 @@ export default function Profile() {
                             <label className="text-white w-full text-sm">First Name</label>
                             <input
                                 type="text"
-                                placeholder={user.firstname}
+                                placeholder={user.first_name}
                                 className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
-                                {...register("firstname", {
+                                {...register("first_name", {
                                     pattern: { value: /^[a-zA-Z]+$/, message: 'Name should not contain numbers' },
                                     minLength: { value: 2, message: 'Name must be at least 2 characters long' }
                                 })}
                             />
-                            {errors.firstname && <p className="text-red-500 text-sm">{errors.firstname.message}</p>}
+                            {errors.first_name && <p className="text-red-500 text-sm">{errors.first_name.message}</p>}
                             <label className="text-white w-full text-sm">Last Name</label>
                             <input
                                 type="text"
-                                placeholder={user.lastname}
+                                placeholder={user.last_name}
                                 className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
-                                {...register("lastname", {
+                                {...register("last_name", {
                                     pattern: { value: /^[a-zA-Z]+$/, message: 'Name should not contain numbers' },
                                     minLength: { value: 2, message: 'Name must be at least 2 characters long' }
                                 })}
                             />
-                            {errors.lastname && <p className="text-red-500 text-sm">{errors.lastname.message}</p>}
+                            {errors.last_name && <p className="text-red-500 text-sm">{errors.last_name.message}</p>}
                             <label className="text-white w-full text-sm">Phone</label>
                             <input
                                 type="tel"

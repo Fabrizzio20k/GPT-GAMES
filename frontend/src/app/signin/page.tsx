@@ -33,7 +33,7 @@ export default function Login() {
     const onSubmit: SubmitHandler<IFormInput> = async data => {
         setLoading(true);
         try {
-            const response = await axios.post(urlServer + "/users/login/", data, {
+            const response = await axios.post(urlServer + "/login/", data, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -44,8 +44,8 @@ export default function Login() {
                 id: response.data.user.id,
                 email: response.data.user.email,
                 username: response.data.user.username,
-                firstname: response.data.user.firstname,
-                lastname: response.data.user.lastname,
+                first_name: response.data.user.first_name,
+                last_name: response.data.user.last_name,
                 phone: response.data.user.phone,
                 description: response.data.user.description,
                 token: response.data.token,

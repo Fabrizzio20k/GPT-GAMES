@@ -11,8 +11,8 @@ import { useState } from "react";
 
 interface IFormInput {
     username: string;
-    firstname: string;
-    lastname: string;
+    first_name: string;
+    last_name: string;
     description: string;
     phone: string;
     email: string;
@@ -30,7 +30,7 @@ export default function Register() {
     const onSubmit: SubmitHandler<IFormInput> = async data => {
         setLoading(true);
         try {
-            const response = await axios.post(urlServer + "/users/register/", data, {
+            const response = await axios.post(urlServer + "/register/", data, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -91,18 +91,18 @@ export default function Register() {
                         {errors.username && <span className="text-red-500 text-sm md:text-md">{errors.username.message}</span>}
                         <label className="text-white w-full text-sm">First Name</label>
                         <input
-                            {...register('firstname', { required: 'Firstname is required' })}
+                            {...register('first_name', { required: 'Firstname is required' })}
                             type="text"
                             placeholder="First Name"
                             className="p-2 rounded-2xl bg-gray-800/40 text-white w-full" />
-                        {errors.firstname && <span className="text-red-500 text-sm md:text-md">{errors.firstname.message}</span>}
+                        {errors.first_name && <span className="text-red-500 text-sm md:text-md">{errors.first_name.message}</span>}
                         <label className="text-white w-full text-sm">Last Name</label>
                         <input
-                            {...register('lastname', { required: 'Lastname is required' })}
+                            {...register('last_name', { required: 'Lastname is required' })}
                             type="text"
                             placeholder="Last Name"
                             className="p-2 rounded-2xl bg-gray-800/40 text-white w-full" />
-                        {errors.lastname && <span className="text-red-500 text-sm md:text-md">{errors.lastname.message}</span>}
+                        {errors.last_name && <span className="text-red-500 text-sm md:text-md">{errors.last_name.message}</span>}
                         <label className="text-white w-full text-sm">Description</label>
                         <input
                             {...register('description', { required: 'Description is required' })}
