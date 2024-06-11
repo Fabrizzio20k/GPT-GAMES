@@ -2,7 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { FaDiceD6, FaGamepad, FaWrench, FaChevronRight } from "react-icons/fa";
+import { FaDiceD6, FaGamepad, FaWrench, FaChevronRight, FaUserAlt } from "react-icons/fa";
+import { CiCirclePlus } from "react-icons/ci";
 import { FaCartShopping } from "react-icons/fa6";
 import { useRouter, usePathname } from "next/navigation";
 
@@ -47,7 +48,8 @@ export default function Sidebar() {
                     </h2>
                 </div>
                 <ul className="font-inter flex-1 space-y-6 text-white px-4">
-                    <li className={`flex flex-row items-center justify-start cursor-pointer px-4 py-4 space-x-4 rounded-2xl ${path === '/' ? 'bg-gradient-to-r from-fuchsia-800 to-indigo-700' : ''}`} onClick={() => { router.push('/'); setIsSidebarVisible(false); }}>
+                    <li 
+                        className={`flex flex-row items-center justify-start cursor-pointer px-4 py-4 space-x-4 rounded-2xl ${path === '/' ? 'bg-gradient-to-r from-fuchsia-800 to-indigo-700' : ''}`} onClick={() => { router.push('/'); setIsSidebarVisible(false); }}>
                         <FaDiceD6 className="text-2xl" />
                         <h3 className="text-md">Home</h3>
                     </li>
@@ -62,6 +64,14 @@ export default function Sidebar() {
                     <li className={`flex flex-row items-center justify-start cursor-pointer px-4 py-4 space-x-4 rounded-2xl ${path === '/dashboard' ? 'bg-gradient-to-r from-fuchsia-800 to-indigo-700' : ''}`} onClick={() => { router.push('/dashboard'); setIsSidebarVisible(false); }}>
                         <FaWrench className="text-2xl" />
                         <h3 className="text-md">Dashboard</h3>
+                    </li>
+                    <li className={`flex flex-row items-center justify-start cursor-pointer px-4 py-4 space-x-4 rounded-2xl ${path === '/profile' ? 'bg-gradient-to-r from-fuchsia-800 to-indigo-700' : ''}`} onClick={() => { router.push('/profile'); setIsSidebarVisible(false); }}>
+                        <FaUserAlt className="text-2xl" />
+                        <h3 className="text-md">Profile</h3>
+                    </li>
+                    <li className={`flex flex-row items-center justify-start cursor-pointer px-4 py-4 space-x-4 rounded-2xl ${path === '/newoffer' ? 'bg-gradient-to-r from-fuchsia-800 to-indigo-700' : ''}`} onClick={() => { router.push('/newoffer'); setIsSidebarVisible(false); }}>
+                        <CiCirclePlus className="text-2xl" />
+                        <h3 className="text-md">Publish offer</h3>
                     </li>
                 </ul>
             </aside>

@@ -25,7 +25,7 @@ export default function Register() {
     const router = useRouter();
     const urlServer = process.env.NEXT_PUBLIC_DEV_SERVER_URL;
     const [loading, setLoading] = useState(false);
-
+    
 
     const onSubmit: SubmitHandler<IFormInput> = async data => {
         setLoading(true);

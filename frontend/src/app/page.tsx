@@ -1,4 +1,5 @@
 "use client";
+
 import MainLayoutPage from "@/pages/MainLayoutPage";
 import {
     Carousel,
@@ -7,10 +8,10 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel"
+import { Button } from "@/components/ui/button";
 import { useRef } from "react";
 import Autoplay from "embla-carousel-autoplay"
 import Offer from "@/components/Offer";
-import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react"
 
 
