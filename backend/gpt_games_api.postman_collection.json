@@ -1,0 +1,504 @@
+{
+	"info": {
+		"_postman_id": "e61466b8-803d-44f2-907a-e52ca2a2c534",
+		"name": "gpt_games_api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "27996385",
+		"_collection_link": "https://solar-firefly-915406.postman.co/workspace/My-Workspace~c9b062e4-e11f-48e0-8302-3bc727649281/collection/27996385-e61466b8-803d-44f2-907a-e52ca2a2c534?action=share&source=collection_link&creator=27996385"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "get_all_users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{localhostURL}}/users/"
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"momoka\",\r\n    \"password\": \"12345678\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhostURL}}/login/"
+					},
+					"response": []
+				},
+				{
+					"name": "get_profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token d077018fc393baf37b64ddf77403ff35eca9c77e",
+								"type": "text"
+							}
+						],
+						"url": "{{localhostURL}}/profile/"
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"test_5\",\r\n    \"first_name\": \"test_first_name_5\",\r\n    \"last_name\": \"test_last_name_5\",\r\n    \"description\": \"Little Ojousama\",\r\n    \"email\": \"desuwa_7@gmail.com\",\r\n    \"phone\": \"954000904\",\r\n    \"password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhostURL}}/users/"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Billing_info",
+			"item": [
+				{
+					"name": "get_all_billings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token 16435c229f677e6f3ed414dbc2c78314748c656e",
+								"type": "text"
+							}
+						],
+						"url": "{{localhostURL}}/billinginfo/"
+					},
+					"response": []
+				},
+				{
+					"name": "Create_billing_info",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token 16435c229f677e6f3ed414dbc2c78314748c656e",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "url",
+									"value": "http://localhost:8000/billinginfo/1/",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "user",
+									"value": "test_3",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "card_number",
+									"value": "888844441189",
+									"type": "text"
+								},
+								{
+									"key": "expiration_date",
+									"value": "2026-12-01",
+									"type": "text"
+								},
+								{
+									"key": "security_code",
+									"value": "455",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "HTT land",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{localhostURL}}/billinginfo/"
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Billing Info",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token 16435c229f677e6f3ed414dbc2c78314748c656e",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \r\n    \"card_number\": \"888844440000\",\r\n    \"expiration_date\": \"2026-12-01\",\r\n    \"security_code\": \"455\",\r\n    \"address\": \"HTT land\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhostURL}}/billinginfo/3/"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "get_all_reviews",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token d077018fc393baf37b64ddf77403ff35eca9c77e",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhostURL}}/reviews/"
+					},
+					"response": []
+				},
+				{
+					"name": "make_a_review",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token d077018fc393baf37b64ddf77403ff35eca9c77e",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "offer",
+									"value": "20",
+									"type": "text"
+								},
+								{
+									"key": "text",
+									"value": "This is game is sugou  desuwa very complex ",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{localhostURL}}/reviews/"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Games",
+			"item": [
+				{
+					"name": "get_alll_games",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token 16435c229f677e6f3ed414dbc2c78314748c656e",
+								"type": "text"
+							}
+						],
+						"url": "{{localhostURL}}/games/"
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token d077018fc393baf37b64ddf77403ff35eca9c77e",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "23",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{localhostURL}}/games/"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "offer",
+			"item": [
+				{
+					"name": "get_all_offers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token 16435c229f677e6f3ed414dbc2c78314748c656e",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "game",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "p",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "price",
+									"value": "50",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "discount",
+									"value": "20",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": "{{localhostURL}}/offers/"
+					},
+					"response": []
+				},
+				{
+					"name": "create_offer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token d077018fc393baf37b64ddf77403ff35eca9c77e",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"game\": 666,\r\n    \"price\": 7100,\r\n    \"discount\": 60\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{localhostURL}}/offers/"
+					},
+					"response": []
+				},
+				{
+					"name": "get_offer_by_id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token d077018fc393baf37b64ddf77403ff35eca9c77e",
+								"type": "text"
+							}
+						],
+						"url": "{{localhostURL}}/offers/7/"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "transaction",
+			"item": [
+				{
+					"name": "Get_all_transactions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token   d077018fc393baf37b64ddf77403ff35eca9c77e",
+								"type": "text"
+							}
+						],
+						"url": "{{localhostURL}}/transactions/"
+					},
+					"response": []
+				},
+				{
+					"name": "perform_transaction",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token   d077018fc393baf37b64ddf77403ff35eca9c77e",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "seller",
+									"value": "momoka",
+									"type": "text"
+								},
+								{
+									"key": "offer",
+									"value": "20",
+									"type": "text"
+								},
+								{
+									"key": "gamekey",
+									"value": "ghjhkj35465465",
+									"type": "text"
+								}
+							]
+						},
+						"url": "{{localhostURL}}/transactions/"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "shopping_car",
+			"item": [
+				{
+					"name": "get_all_cars",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token d077018fc393baf37b64ddf77403ff35eca9c77e",
+								"type": "text"
+							}
+						],
+						"url": "{{localhostURL}}/shoppingcars/"
+					},
+					"response": []
+				},
+				{
+					"name": "create_users_Car",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token d077018fc393baf37b64ddf77403ff35eca9c77e",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": "{{localhostURL}}/shoppingcars/"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "car_constains",
+			"item": [
+				{
+					"name": "get_all_car_contains",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token d077018fc393baf37b64ddf77403ff35eca9c77e",
+								"type": "text"
+							}
+						],
+						"url": "{{localhostURL}}/car_contains/"
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

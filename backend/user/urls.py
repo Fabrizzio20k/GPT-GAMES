@@ -1,11 +1,15 @@
-# users/urls.py
-from django.urls import path
-from .views import login, register , UserListCreateView , UserRetrieveUpdateDestroyView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+
+from . import views
+from  .views import UserView ,login , ProfileViewSet , register
+
+router = DefaultRouter()
+router.register(r'users', UserView, basename='user')
+router.register(r'profile', ProfileViewSet, basename='profile')
 
 urlpatterns = [
+    path('', include(router.urls)),
     path('login/', login, name='login'),
     path('register/', register, name='register'),
-    path('', UserListCreateView.as_view(), name='user-list-create'),
-    path('<int:pk>/', UserRetrieveUpdateDestroyView.as_view(), name='user-detail'),
 ]
-
