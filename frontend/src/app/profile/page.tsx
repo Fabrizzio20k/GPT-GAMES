@@ -4,6 +4,11 @@ import MainLayoutPage from "@/pages/MainLayoutPage";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { toast, Toaster } from "sonner";
 import { useForm, SubmitHandler } from "react-hook-form";
+import axios from "axios";
+import { useState } from "react";
+import Loader from "@/components/Loader";
+import { User } from "@/types/user";
+import { setUser } from "@/redux/slices/userSlice";
 
 interface IFormUpdateProfile {
     username: string;
@@ -13,12 +18,12 @@ interface IFormUpdateProfile {
     phone: string;
     password: string;
     confirmPassword: string;
-    email: string;
 }
 
 export default function Profile() {
     const user = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
+    const [loading, setLoading] = useState(false);
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm<IFormUpdateProfile>();
 
@@ -28,12 +33,46 @@ export default function Profile() {
         data.last_name = data.last_name || user.last_name;
         data.description = data.description || user.description;
         data.phone = data.phone || user.phone;
-        data.email = user.email;
         console.log(data);
+
+        const urlServer = process.env.NEXT_PUBLIC_DEV_SERVER_URL;
+
+        try {
+            const response = await axios.patch(urlServer + "/users/" + user.id + "/", data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Token ${user.token}`
+                },
+            });
+            const dataUser: User = {
+                id: response.data.id,
+                email: response.data.email,
+                username: response.data.username,
+                first_name: response.data.first_name,
+                last_name: response.data.last_name,
+                phone: response.data.phone,
+                description: response.data.description,
+                token: user.token,
+            };
+            dispatch(setUser(dataUser));
+            toast.success('Profile updated successfully');
+        } catch (error) {
+            const listErrors = (error as any).response.data;
+            let errors = '';
+            for (const key in listErrors) {
+                errors += `${key}: ${listErrors[key]}\n`;
+            }
+            errors = errors.toUpperCase();
+            toast.error(errors);
+        }
+        finally {
+            setLoading(false);
+        }
     }
 
     return (
         <MainLayoutPage>
+            <Loader activate={loading} />
             <Toaster richColors />
             <div className="w-full">
                 <div className="flex flex-col lg:flex-row text-white gap-8">
