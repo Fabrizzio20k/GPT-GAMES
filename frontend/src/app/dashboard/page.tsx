@@ -89,7 +89,7 @@ export default function Dashboard() {
 
             <section className="flex justify-between">
                 <h2 className="uppercase text-xl mb-6">
-                    Published Games:
+                    Published Offers:
                 </h2>
                 <Button 
                     className="rounded-xl"

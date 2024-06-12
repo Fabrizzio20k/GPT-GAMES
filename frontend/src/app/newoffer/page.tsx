@@ -131,7 +131,7 @@ export default function Newoffer() {
                 </form>
             </div>
             <div className="w-full lg:w-1/2">
-                <h1 className="text-xl font-alata">Games purchased</h1>
+                <h1 className="text-xl font-alata">Game selected</h1>
             </div>
             </div>
         </div>
