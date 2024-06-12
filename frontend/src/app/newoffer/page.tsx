@@ -1,15 +1,12 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import MainLayoutPage from '@/pages/MainLayoutPage'
 import { toast, Toaster } from "sonner";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAppSelector } from '@/redux/store';
+import { useRouter } from 'next/navigation';
 import axios from "axios";
-
-interface IFormNewGame {
-    id: number;
-}
 
 interface IFormPublishOffer {
     seller: string;
@@ -22,10 +19,15 @@ export default function Newoffer() {
     const { register, handleSubmit, watch, formState: { errors } } = useForm<IFormPublishOffer>();
     const urlServer = process.env.NEXT_PUBLIC_DEV_SERVER_URL;
     const user = useAppSelector((state) => state.user);
+    const router = useRouter();
 
     const onSubmit: SubmitHandler<IFormPublishOffer> = async data => {
+        let gameId = {
+            id: data.game
+        }
+
         try {
-            const response = await axios.post(urlServer + "/games/", data, {
+            const response = await axios.post(urlServer + "/games/", gameId, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `token ${user.token}`,
@@ -43,28 +45,37 @@ export default function Newoffer() {
             toast.error(errors);
         }
 
+        let offerInfo = {
+            seller: user.id,
+            game: data.game,
+            price: data.price,
+            discount: data.discount
+        }
 
-        // try {
-        //     const response = await axios.post(urlServer + "/offers/", data, {
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Authorization': `token ${user.token}`,
-        //         },
-        //     });
-        //     toast.success('User logged in successfully');
+        try {
+            const response = await axios.post(urlServer + "/offers/", offerInfo, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `token ${user.token}`,
+                },
+            });
+            toast.success('Offer published successfully');
 
-        //     console.log(response.data);
-            
+            console.log(response.data);
 
-        // } catch (error) {
-        //     const listErrors = (error as any).response.data;
-        //     let errors = '';
-        //     for (const key in listErrors) {
-        //         errors += `${listErrors[key]}\n`;
-        //     }
-        //     errors = errors.toUpperCase();
-        //     toast.error(errors);
-        // }
+        } catch (error) {
+            const listErrors = (error as any).response.data;
+            let errors = '';
+            for (const key in listErrors) {
+                errors += `${listErrors[key]}\n`;
+            }
+            errors = errors.toUpperCase();
+            toast.error(errors);
+        }
+
+        setTimeout(() => {
+            router.push('/dashboard');
+        }, 1000);
     }
 
     return (
@@ -83,8 +94,8 @@ export default function Newoffer() {
                         type="number"
                         className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
                         {...register("game", {
-                        required: "Game ID is required",
-                        valueAsNumber: true,
+                            required: "Game ID is required",
+                            valueAsNumber: true,
                         })}
                     />
                     {errors.game && <p className="text-red-500 text-sm">{errors.game.message}</p>}
