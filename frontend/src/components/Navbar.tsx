@@ -78,7 +78,7 @@ export default function Navbar() {
                             <>
                                 <FaMessage size={24} />
                                 <FaBell size={24} />
-                                <button className="bg-gradient-to-r from-fuchsia-800 to-indigo-700 px-4 py-2 rounded-2xl" onClick={() => router.push('/profile')}>{user.username}</button>
+                                <button className="gradient button-gradient px-4 py-2 rounded-2xl" onClick={() => router.push('/profile')}>{user.username}</button>
                                 <button onClick={handleLogout}>
                                     Log out
                                 </button>
@@ -86,7 +86,7 @@ export default function Navbar() {
                         ) : (
                             <>
                                 <button onClick={() => router.push('/signin')}>Log in</button>
-                                <button className="bg-gradient-to-r from-fuchsia-800 to-indigo-700 px-4 py-2 rounded-2xl" onClick={() => router.push('/signup')}>
+                                <button className="gradient button-gradient px-4 py-2 rounded-2xl" onClick={() => router.push('/signup')}>
                                     Register
                                 </button>
                             </>
@@ -106,7 +106,7 @@ export default function Navbar() {
                             <ul className="flex flex-col p-4 space-y-2">
                                 {logged ? (
                                     <>
-                                        <li className="flex items-center space-x-2 cursor-pointer bg-gradient-to-r from-fuchsia-800 to-indigo-700 px-4 py-2 rounded-2xl" onClick={() => router.push('/profile')}>
+                                        <li className="flex items-center space-x-2 cursor-pointer gradient px-4 py-2 rounded-2xl" onClick={() => router.push('/profile')}>
                                             <FaUserNinja size={20} />
                                             <span>{user.username}</span>
                                         </li>
@@ -129,7 +129,7 @@ export default function Navbar() {
                                             <FaSignInAlt size={20} />
                                             <span>Log in</span>
                                         </li>
-                                        <li className="flex items-center space-x-2 cursor-pointer bg-gradient-to-r from-fuchsia-800 to-indigo-700 px-4 py-2 rounded-2xl" onClick={() => router.push('/signup')}>
+                                        <li className="flex items-center space-x-2 cursor-pointer gradient px-4 py-2 rounded-2xl" onClick={() => router.push('/signup')}>
                                             <FaUserPlus size={20} />
                                             <span>Register</span>
                                         </li>

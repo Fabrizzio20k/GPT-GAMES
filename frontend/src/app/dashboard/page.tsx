@@ -60,25 +60,12 @@ export default function Dashboard() {
             toast.error(errors);
         }
     }
-
-    const showOffers = async () => {
-        userOffers.map((offer: any) => {
-            fetchOffers(offer)
-        })
-
-        console.log(userOffersInfo);
-        
-    }
     
-
-    useEffect(() => {
-        fetchUserOffers();
-        showOffers();
-    }, []);
+    useEffect(() => {}, []);
 
     return (
         <MainLayoutPage>
-            <section className="bg-gradient-to-r from-fuchsia-800 to-indigo-700 p-4 rounded-xl mb-6 h-48 flex justify-center items-center flex-col">
+            <section className="gradient rounded-xl mb-6 h-48 flex justify-center items-center flex-col">
                 <h1 className="uppercase font-bold text-4xl mb-6">
                     Dashboard
                 </h1>
@@ -92,18 +79,13 @@ export default function Dashboard() {
                     Published Offers:
                 </h2>
                 <Button 
-                    className="rounded-xl"
+                    className="gradient button-gradient rounded-full"
                     onClick={() => { router.push('/newoffer') }}
                 >
                     <CiCirclePlus className="h-6 w-6" />
                     <span className="ml-2">Publish offer</span>
                 </Button>
             </section>
-
-            <Button onClick={showOffers}>
-                Show offers
-            </Button>
-            
 
             <section className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 <Offer />

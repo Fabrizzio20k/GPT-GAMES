@@ -1,3 +1,5 @@
+"use client"
+
 import { useSearchParams } from "next/navigation";
 import MainLayoutPage from "@/pages/MainLayoutPage";
 import Offer from "@/components/Offer";

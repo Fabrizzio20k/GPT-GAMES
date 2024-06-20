@@ -9,132 +9,144 @@ import { useRouter } from 'next/navigation';
 import axios from "axios";
 
 interface IFormPublishOffer {
-    seller: string;
-    game: number;
+    title: string;
+    description: string;
+    gamekey: string;
     price: number;
     discount: number;
+    game: number; 
 }
 
 export default function Newoffer() {
     const { register, handleSubmit, watch, formState: { errors } } = useForm<IFormPublishOffer>();
-    const urlServer = process.env.NEXT_PUBLIC_DEV_SERVER_URL;
     const user = useAppSelector((state) => state.user);
     const router = useRouter();
-
+    
+    const urlServer = process.env.NEXT_PUBLIC_DEV_SERVER_URL;
+    
     const onSubmit: SubmitHandler<IFormPublishOffer> = async data => {
-        let gameId = {
-            id: data.game
-        }
+        // let gameId = {
+        //     id: data.game
+        // }
 
-        try {
-            const response = await axios.post(urlServer + "/games/", gameId, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `token ${user.token}`,
-                }
-            })
+        // try {
+        //     const response = await axios.post(urlServer + "/games/", gameId, {
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             'Authorization': `token ${user.token}`,
+        //         }
+        //     })
 
-            console.log(response.data);
-        } catch (error) {
-            const listErrors = (error as any).response.data;
-            let errors = '';
-            for (const key in listErrors) {
-                errors += `${listErrors[key]}\n`;
-            }
-            errors = errors.toUpperCase();
-            toast.error(errors);
-        }
+        //     console.log(response.data);
+        // } catch (error) {
+        //     const listErrors = (error as any).response.data;
+        //     let errors = '';
+        //     for (const key in listErrors) {
+        //         errors += `${listErrors[key]}\n`;
+        //     }
+        //     errors = errors.toUpperCase();
+        //     toast.error(errors);
+        // }
 
-        let offerInfo = {
-            seller: user.id,
-            game: data.game,
-            price: data.price,
-            discount: data.discount
-        }
+        // let offerInfo = {
+        //     seller: user.id,
+        //     game: data.game,
+        //     price: data.price,
+        //     discount: data.discount
+        // }
 
-        try {
-            const response = await axios.post(urlServer + "/offers/", offerInfo, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `token ${user.token}`,
-                },
-            });
-            toast.success('Offer published successfully');
+        // try {
+        //     const response = await axios.post(urlServer + "/offers/", offerInfo, {
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             'Authorization': `token ${user.token}`,
+        //         },
+        //     });
+        //     toast.success('Offer published successfully');
 
-            console.log(response.data);
+        //     console.log(response.data);
 
-        } catch (error) {
-            const listErrors = (error as any).response.data;
-            let errors = '';
-            for (const key in listErrors) {
-                errors += `${listErrors[key]}\n`;
-            }
-            errors = errors.toUpperCase();
-            toast.error(errors);
-        }
+        // } catch (error) {
+        //     const listErrors = (error as any).response.data;
+        //     let errors = '';
+        //     for (const key in listErrors) {
+        //         errors += `${listErrors[key]}\n`;
+        //     }
+        //     errors = errors.toUpperCase();
+        //     toast.error(errors);
+        // }
 
-        setTimeout(() => {
-            router.push('/dashboard');
-        }, 1000);
+        // setTimeout(() => {
+        //     router.push('/dashboard');
+        // }, 1000);
     }
 
     return (
         <MainLayoutPage>
         <Toaster richColors />
-        <div className="w-full">
-            <div className="flex flex-col lg:flex-row text-white gap-8">
-            <div className="w-full lg:w-1/2">
-                <h1 className="text-xl font-alata">Publish New Offer</h1>
+        <main className="w-full flex flex-col lg:flex-row text-white gap-8">    
+            <section className="w-full lg:w-1/2">
+                <h1 className="text-xl font-alata uppercase">Publish New Offer</h1>
                 <form
                     className="flex flex-col space-y-4 mt-4 font-inter"
                     onSubmit={handleSubmit(onSubmit)}
                 >
-                    <label className="text-white w-full text-sm">Game</label>
+                    <label className="w-full text-sm">Title</label>
                     <input
-                        type="number"
-                        className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
-                        {...register("game", {
-                            required: "Game ID is required",
-                            valueAsNumber: true,
+                        type="text"
+                        className="p-2 rounded-2xl bg-tertiary w-full"
+                        {...register("title", {
+                            required: "Title of offer is required",
+                            minLength: { value: 5, message: "Title must be at least 5 characters long" },
+                            maxLength: { value: 50, message: "Title must be at most 50 characters long" }
                         })}
                     />
-                    {errors.game && <p className="text-red-500 text-sm">{errors.game.message}</p>}
+                    {errors.title && <p className="text-red-500 text-sm">{errors.title.message}</p>}
 
-                    <label className="text-white w-full text-sm">Price</label>
+                    <label className="w-full text-sm">Description</label>
+                    <textarea
+                        className="p-2 min-h-[100px] resize-none"
+                        {...register("description", {
+                            required: "Description is required",
+                            minLength: { value: 10, message: "Description must be at least 10 characters long" },
+                            maxLength: { value: 200, message: "Description must be at most 200 characters long" }
+                        })}
+                    />
+
+                    <label className="w-full text-sm">Price</label>
                     <input
                         type="number"
-                        className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
+                        className="p-2 rounded-2xl bg-tertiary w-full"
                         {...register("price", {
-                        required: "Price is required",
-                        valueAsNumber: true,
-                        min: { value: 0, message: "Price must be a positive number" }
+                            required: "Price is required",
+                            valueAsNumber: true,
+                            min: { value: 0, message: "Price must be a positive number" }
                         })}
                     />
                     {errors.price && <p className="text-red-500 text-sm">{errors.price.message}</p>}
 
-                    <label className="text-white w-full text-sm">Discount</label>
+                    <label className="w-full text-sm">Discount</label>
                     <input
                         type="number"
-                        className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
+                        className="p-2 rounded-2xl bg-tertiary w-full"
                         {...register("discount", {
-                        required: "Discount is required",
-                        valueAsNumber: true,
-                        min: { value: 0, message: "Discount must be a positive number" },
-                        max: { value: 100, message: "Discount cannot be more than 100" }
+                            required: "Discount is required",
+                            valueAsNumber: true,
+                            min: { value: 0, message: "Discount must be a positive number" },
+                            max: { value: 100, message: "Discount cannot be more than 100" }
                         })}
                     />
                     {errors.discount && <p className="text-red-500 text-sm">{errors.discount.message}</p>}
 
-                    <button type="submit" className="font-bold p-2 mt-2 w-full bg-violet-900 text-white rounded-2xl text-sm md:text-md">
+                    <button type="submit" className="font-bold p-2 mt-2 w-full bg-violet-900 rounded-2xl text-sm md:text-md">
                         Publish Offer
                     </button>
                 </form>
-            </div>
-            <div className="w-full lg:w-1/2">
+            </section>
+            <section className="w-full lg:w-1/2">
                 <h1 className="text-xl font-alata">Game selected</h1>
-            </div>
-            </div>
-        </div>
+            </section>
+        </main>
         </MainLayoutPage>
     )
 }

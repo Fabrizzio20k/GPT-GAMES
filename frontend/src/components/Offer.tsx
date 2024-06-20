@@ -13,7 +13,7 @@ export default function Offer() {
             />
             <div className='flex justify-between'>
                 <h2 className='uppercase'>Game name</h2>
-                <div className='bg-primary px-3 py-1 rounded-full font-bold'>
+                <div className='gradient px-3 py-1 rounded-full font-bold'>
                     S/. 19.99
                 </div>
             </div>

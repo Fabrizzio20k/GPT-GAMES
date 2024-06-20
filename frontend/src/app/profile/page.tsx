@@ -82,17 +82,17 @@ export default function Profile() {
                             className="flex flex-col space-y-4 mt-4 font-inter"
                             onSubmit={handleSubmit(onSubmit)}
                         >
-                            <label className="text-white w-full text-sm">Email</label>
-                            <div className="flex flex-row items-center space-x-2 p-2 rounded-2xl bg-gray-800/40 text-white w-full select-none"
+                            <label className="w-full text-sm">Email</label>
+                            <div className="flex flex-row items-center space-x-2 p-2 rounded-2xl bg-tertiary w-full select-none"
                                 onClick={() => toast.info("Email cannot be changed")}
                             >
                                 {user.email}
                             </div>
-                            <label className="text-white w-full text-sm">Username</label>
+                            <label className="w-full text-sm">Username</label>
                             <input
                                 type="text"
                                 placeholder={user.username}
-                                className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
+                                className=""
                                 {...register("username", {
                                     minLength: {
                                         value: 4,
@@ -101,56 +101,51 @@ export default function Profile() {
                                 })}
                             />
                             {errors.username && <p className="text-red-500 text-sm">{errors.username.message}</p>}
-                            <label className="text-white w-full text-sm">First Name</label>
+                            <label className="w-full text-sm">First Name</label>
                             <input
                                 type="text"
                                 placeholder={user.first_name}
-                                className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
                                 {...register("first_name", {
                                     pattern: { value: /^[a-zA-Z]+$/, message: 'Name should not contain numbers' },
                                     minLength: { value: 2, message: 'Name must be at least 2 characters long' }
                                 })}
                             />
                             {errors.first_name && <p className="text-red-500 text-sm">{errors.first_name.message}</p>}
-                            <label className="text-white w-full text-sm">Last Name</label>
+                            <label className="w-full text-sm">Last Name</label>
                             <input
                                 type="text"
                                 placeholder={user.last_name}
-                                className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
                                 {...register("last_name", {
                                     pattern: { value: /^[a-zA-Z]+$/, message: 'Name should not contain numbers' },
                                     minLength: { value: 2, message: 'Name must be at least 2 characters long' }
                                 })}
                             />
                             {errors.last_name && <p className="text-red-500 text-sm">{errors.last_name.message}</p>}
-                            <label className="text-white w-full text-sm">Phone</label>
+                            <label className="w-full text-sm">Phone</label>
                             <input
                                 type="tel"
                                 placeholder={user.phone}
-                                className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
                                 {...register("phone")}
                             />
-                            <label className="text-white w-full text-sm">Description</label>
+                            <label className="w-full text-sm">Description</label>
                             <textarea
                                 placeholder={user.description}
-                                className="p-2 rounded-2xl bg-gray-800/40 text-white w-full resize-none"
+                                className="resize-none"
                                 {...register("description")}
                             />
-                            <label className="text-white w-full text-sm">Password</label>
+                            <label className="w-full text-sm">Password</label>
                             <input
                                 type="password"
                                 placeholder="********"
-                                className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
                                 {...register("password",
                                     { minLength: { value: 8, message: 'Password must be at least 8 characters long' } }
                                 )}
                             />
                             {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
-                            <label className="text-white w-full text-sm">Confirm Password</label>
+                            <label className="w-full text-sm">Confirm Password</label>
                             <input
                                 type="password"
                                 placeholder="********"
-                                className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
                                 {...register("confirmPassword", {
                                     validate: (value) =>
                                         value === watch('password') || "Passwords do not match"
@@ -158,7 +153,7 @@ export default function Profile() {
                             />
                             {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>}
 
-                            <button type="submit" className="font-bold p-2 mt-2 w-full bg-violet-900 text-white rounded-2xl text-sm md:text-md">
+                            <button type="submit" className="font-bold p-2 mt-2 w-full bg-violet-900 rounded-2xl text-sm md:text-md">
                                 Update Profile
                             </button>
                         </form>

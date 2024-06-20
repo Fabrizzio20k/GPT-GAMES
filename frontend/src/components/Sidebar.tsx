@@ -49,27 +49,33 @@ export default function Sidebar() {
                 </div>
                 <ul className="font-inter flex-1 space-y-6 text-white px-4">
                     <li 
-                        className={`flex flex-row items-center justify-start cursor-pointer px-4 py-4 space-x-4 rounded-2xl ${path === '/' ? 'bg-gradient-to-r from-fuchsia-800 to-indigo-700' : ''}`} onClick={() => { router.push('/'); setIsSidebarVisible(false); }}>
+                        className={`button-sidebar ${path === '/' ? 'gradient button-gradient' : ''}`} 
+                        onClick={() => { router.push('/'); setIsSidebarVisible(false); }}>
                         <FaDiceD6 className="text-2xl" />
                         <h3 className="text-md">Home</h3>
                     </li>
-                    <li className={`flex flex-row items-center justify-start cursor-pointer px-4 py-4 space-x-4 rounded-2xl ${path === '/search' ? 'bg-gradient-to-r from-fuchsia-800 to-indigo-700' : ''}`} onClick={() => { router.push('/search'); setIsSidebarVisible(false); }}>
+                    <li className={`button-sidebar ${path === '/search' ? 'gradient button-gradient' : ''}`} 
+                        onClick={() => { router.push('/search'); setIsSidebarVisible(false); }}>
                         <FaGamepad className="text-2xl" />
                         <h3 className="text-md">Game Store</h3>
                     </li>
-                    <li className={`flex flex-row items-center justify-start cursor-pointer px-4 py-4 space-x-4 rounded-2xl ${path === '/shoppingcart' ? 'bg-gradient-to-r from-fuchsia-800 to-indigo-700' : ''}`} onClick={() => { router.push('/shoppingcart'); setIsSidebarVisible(false); }}>
+                    <li className={`button-sidebar ${path === '/shoppingcart' ? 'gradient button-gradient' : ''}`} 
+                        onClick={() => { router.push('/shoppingcart'); setIsSidebarVisible(false); }}>
                         <FaCartShopping className="text-2xl" />
                         <h3 className="text-md">Buy Games</h3>
                     </li>
-                    <li className={`flex flex-row items-center justify-start cursor-pointer px-4 py-4 space-x-4 rounded-2xl ${path === '/dashboard' ? 'bg-gradient-to-r from-fuchsia-800 to-indigo-700' : ''}`} onClick={() => { router.push('/dashboard'); setIsSidebarVisible(false); }}>
+                    <li className={`button-sidebar ${path === '/dashboard' ? 'gradient button-gradient' : ''}`} 
+                        onClick={() => { router.push('/dashboard'); setIsSidebarVisible(false); }}>
                         <FaWrench className="text-2xl" />
                         <h3 className="text-md">Dashboard</h3>
                     </li>
-                    <li className={`flex flex-row items-center justify-start cursor-pointer px-4 py-4 space-x-4 rounded-2xl ${path === '/profile' ? 'bg-gradient-to-r from-fuchsia-800 to-indigo-700' : ''}`} onClick={() => { router.push('/profile'); setIsSidebarVisible(false); }}>
+                    <li className={`button-sidebar ${path === '/profile' ? 'gradient button-gradient' : ''}`} 
+                        onClick={() => { router.push('/profile'); setIsSidebarVisible(false); }}>
                         <FaUserAlt className="text-2xl" />
                         <h3 className="text-md">Profile</h3>
                     </li>
-                    <li className={`flex flex-row items-center justify-start cursor-pointer px-4 py-4 space-x-4 rounded-2xl ${path === '/newoffer' ? 'bg-gradient-to-r from-fuchsia-800 to-indigo-700' : ''}`} onClick={() => { router.push('/newoffer'); setIsSidebarVisible(false); }}>
+                    <li className={`button-sidebar ${path === '/newoffer' ? 'gradient button-gradient' : ''}`} 
+                        onClick={() => { router.push('/newoffer'); setIsSidebarVisible(false); }}>
                         <CiCirclePlus className="text-2xl" />
                         <h3 className="text-md">Publish offer</h3>
                     </li>
@@ -77,7 +83,7 @@ export default function Sidebar() {
             </aside>
             {!isSidebarVisible && (
                 <button
-                    className="fixed top-1/2 left-0 transform -translate-y-1/2 z-50 p-2 bg-gradient-to-r from-fuchsia-800/40 to-indigo-700/40 text-white rounded-r-full shadow-lg lg:hidden hover:from-fuchsia-700 hover:to-indigo-600 transition-all duration-300"
+                    className="fixed top-1/2 left-0 transform -translate-y-1/2 z-50 p-2 gradient rounded-r-full shadow-lg lg:hidden hover:from-fuchsia-700 hover:to-indigo-600 transition-all duration-300"
                     onClick={() => setIsSidebarVisible(true)}
                 >
                     <FaChevronRight className="text-white" />
