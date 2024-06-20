@@ -74,95 +74,98 @@ export default function Profile() {
         <MainLayoutPage>
             <Loader activate={loading} />
             <Toaster richColors />
-            <div className="w-full">
-                <div className="flex flex-col lg:flex-row text-white gap-8">
-                    <div className="w-full lg:w-1/2">
-                        <h1 className="text-xl font-alata">Profile Information</h1>
-                        <form
-                            className="flex flex-col space-y-4 mt-4 font-inter"
-                            onSubmit={handleSubmit(onSubmit)}
+            <article className="w-full flex flex-col lg:flex-row gap-8">
+                <section className="w-full lg:w-1/2">
+                    <h1 className="text-xl font-alata">Profile Information</h1>
+                    <form
+                        className="flex flex-col space-y-4 mt-4 font-inter"
+                        onSubmit={handleSubmit(onSubmit)}
+                    >
+                        <label className="w-full text-sm">Email</label>
+                        <div className="flex flex-row items-center space-x-2 p-2 rounded-2xl bg-tertiary w-full select-none"
+                            onClick={() => toast.info("Email cannot be changed")}
                         >
-                            <label className="w-full text-sm">Email</label>
-                            <div className="flex flex-row items-center space-x-2 p-2 rounded-2xl bg-tertiary w-full select-none"
-                                onClick={() => toast.info("Email cannot be changed")}
-                            >
-                                {user.email}
-                            </div>
-                            <label className="w-full text-sm">Username</label>
-                            <input
-                                type="text"
-                                placeholder={user.username}
-                                className=""
-                                {...register("username", {
-                                    minLength: {
-                                        value: 4,
-                                        message: "Username must be at least 4 characters long"
-                                    },
-                                })}
-                            />
-                            {errors.username && <p className="text-red-500 text-sm">{errors.username.message}</p>}
-                            <label className="w-full text-sm">First Name</label>
-                            <input
-                                type="text"
-                                placeholder={user.first_name}
-                                {...register("first_name", {
-                                    pattern: { value: /^[a-zA-Z]+$/, message: 'Name should not contain numbers' },
-                                    minLength: { value: 2, message: 'Name must be at least 2 characters long' }
-                                })}
-                            />
-                            {errors.first_name && <p className="text-red-500 text-sm">{errors.first_name.message}</p>}
-                            <label className="w-full text-sm">Last Name</label>
-                            <input
-                                type="text"
-                                placeholder={user.last_name}
-                                {...register("last_name", {
-                                    pattern: { value: /^[a-zA-Z]+$/, message: 'Name should not contain numbers' },
-                                    minLength: { value: 2, message: 'Name must be at least 2 characters long' }
-                                })}
-                            />
-                            {errors.last_name && <p className="text-red-500 text-sm">{errors.last_name.message}</p>}
-                            <label className="w-full text-sm">Phone</label>
-                            <input
-                                type="tel"
-                                placeholder={user.phone}
-                                {...register("phone")}
-                            />
-                            <label className="w-full text-sm">Description</label>
-                            <textarea
-                                placeholder={user.description}
-                                className="resize-none"
-                                {...register("description")}
-                            />
-                            <label className="w-full text-sm">Password</label>
-                            <input
-                                type="password"
-                                placeholder="********"
-                                {...register("password",
-                                    { minLength: { value: 8, message: 'Password must be at least 8 characters long' } }
-                                )}
-                            />
-                            {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
-                            <label className="w-full text-sm">Confirm Password</label>
-                            <input
-                                type="password"
-                                placeholder="********"
-                                {...register("confirmPassword", {
-                                    validate: (value) =>
-                                        value === watch('password') || "Passwords do not match"
-                                })}
-                            />
-                            {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>}
+                            {user.email}
+                        </div>
 
-                            <button type="submit" className="font-bold p-2 mt-2 w-full bg-violet-900 rounded-2xl text-sm md:text-md">
-                                Update Profile
-                            </button>
-                        </form>
-                    </div>
-                    <div className="w-full lg:w-1/2">
-                        <h1 className="text-xl font-alata">Games purchased</h1>
-                    </div>
-                </div>
-            </div>
+                        <label className="w-full text-sm">Username</label>
+                        <input
+                            type="text"
+                            placeholder={user.username}
+                            className=""
+                            {...register("username", {
+                                minLength: {
+                                    value: 4,
+                                    message: "Username must be at least 4 characters long"
+                                },
+                            })}
+                        />
+                        {errors.username && <p className="text-alert text-sm">{errors.username.message}</p>}
+
+                        <label className="w-full text-sm">First Name</label>
+                        <input
+                            type="text"
+                            placeholder={user.first_name}
+                            {...register("first_name", {
+                                pattern: { value: /^[a-zA-Z]+$/, message: 'Name should not contain numbers' },
+                                minLength: { value: 2, message: 'Name must be at least 2 characters long' }
+                            })}
+                        />
+                        {errors.first_name && <p className="text-alert text-sm">{errors.first_name.message}</p>}
+
+                        <label className="w-full text-sm">Last Name</label>
+                        <input
+                            type="text"
+                            placeholder={user.last_name}
+                            {...register("last_name", {
+                                pattern: { value: /^[a-zA-Z]+$/, message: 'Name should not contain numbers' },
+                                minLength: { value: 2, message: 'Name must be at least 2 characters long' }
+                            })}
+                        />
+                        {errors.last_name && <p className="text-alert text-sm">{errors.last_name.message}</p>}
+
+                        <label className="w-full text-sm">Phone</label>
+                        <input
+                            type="tel"
+                            placeholder={user.phone}
+                            {...register("phone")}
+                        />
+                        <label className="w-full text-sm">Description</label>
+                        <textarea
+                            placeholder={user.description}
+                            className="resize-none"
+                            {...register("description")}
+                        />
+                        <label className="w-full text-sm">Password</label>
+                        <input
+                            type="password"
+                            placeholder="********"
+                            {...register("password",
+                                { minLength: { value: 8, message: 'Password must be at least 8 characters long' } }
+                            )}
+                        />
+                        {errors.password && <p className="text-alert text-sm">{errors.password.message}</p>}
+
+                        <label className="w-full text-sm">Confirm Password</label>
+                        <input
+                            type="password"
+                            placeholder="********"
+                            {...register("confirmPassword", {
+                                validate: (value) =>
+                                    value === watch('password') || "Passwords do not match"
+                            })}
+                        />
+                        {errors.confirmPassword && <p className="text-alert text-sm">{errors.confirmPassword.message}</p>}
+
+                        <button type="submit" className="font-bold p-2 mt-2 w-full bg-violet-900 rounded-2xl text-sm md:text-md">
+                            Update Profile
+                        </button>
+                    </form>
+                </section>
+                <section className="w-full lg:w-1/2">
+                    <h1 className="text-xl font-alata">Games purchased</h1>
+                </section>
+            </article>
         </MainLayoutPage>
     );
 }

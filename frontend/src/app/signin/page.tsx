@@ -91,7 +91,7 @@ export default function Login() {
             <div className="absolute h-screen w-screen bg-black bg-opacity-80 -z-10"></div>
 
             <div className="relative h-screen w-full flex flex-col justify-center items-center space-y-4 overflow-x-clip px-5 py-5">
-                <div className="flex flex-row text-white items-center space-x-5 justify-center">
+                <div className="flex flex-row items-center space-x-5 justify-center">
                     <Image
                         src="/assets/logo/logo.png"
                         alt="Logo"
@@ -105,25 +105,25 @@ export default function Login() {
                 </div>
                 <div className="font-inter bg-gradient-to-tr from-fuchsia-900 to-violet-800 py-4 sm:py-8 px-10 sm:px-20 rounded-2xl w-full max-w-2xl overflow-y-scroll custom-scroll">
                     <form className="flex flex-col gap-2 w-full items-start" onSubmit={handleSubmit(onSubmit)}>
-                        <label className="text-white w-full text-sm">Username</label>
+                        <label className="w-full text-sm">Username</label>
                         <input
                             {...register('username', { required: 'Username is required', minLength: { value: 4, message: 'Username must be at least 4 characters long' } })}
                             type="text"
                             placeholder="GPTUser"
-                            className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
+                            className="p-2 rounded-2xl bg-gray-800/40 w-full"
                         />
                         {errors.username && <span className="text-red-500 text-sm md:text-md">{errors.username.message}</span>}
 
-                        <label className="text-white w-full text-sm">Password</label>
+                        <label className="w-full text-sm">Password</label>
                         <input
                             {...register('password', { required: 'Password is required', minLength: { value: 8, message: 'Password must be at least 8 characters long' } })}
                             type="password"
                             placeholder="********"
-                            className="p-2 rounded-2xl bg-gray-800/40 text-white w-full"
+                            className="p-2 rounded-2xl bg-gray-800/40 w-full"
                         />
                         {errors.password && <span className="text-red-500 text-sm md:text-md">{errors.password.message}</span>}
 
-                        <button className="font-bold p-2 mt-2 w-full bg-black text-white rounded-2xl text-sm md:text-md">
+                        <button className="font-bold p-2 mt-2 w-full bg-black rounded-2xl text-sm md:text-md">
                             Log in
                         </button>
                     </form>
@@ -138,8 +138,8 @@ export default function Login() {
                             <h2 className="text-black font-bold text-sm md:text-md">Sign in with Google</h2>
                         </button>
                         <div className="flex flex-row w-full items-center justify-evenly mt-2">
-                            <Link href="#" className="text-white text-sm underline">Forgot your password?</Link>
-                            <Link href="/signup" className="text-white text-sm underline">Create an account</Link>
+                            <Link href="#" className="text-sm underline">Forgot your password?</Link>
+                            <Link href="/signup" className="text-sm underline">Create an account</Link>
                         </div>
                     </div>
                 </div>

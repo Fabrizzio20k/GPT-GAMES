@@ -22,7 +22,7 @@ export default function Page() {
 
     return (
         <MainLayoutPage>
-            <section className="bg-gradient-to-r from-fuchsia-800 to-indigo-700 p-4 rounded-xl mb-6 h-96">
+            <section className="gradient p-4 rounded-xl mb-6 h-96">
                 hi
             </section>
 

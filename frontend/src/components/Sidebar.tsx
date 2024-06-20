@@ -34,8 +34,11 @@ export default function Sidebar() {
     return (
         <>
             <div className={`fixed inset-0 z-40 bg-black transition-opacity ${isSidebarVisible ? 'opacity-50' : 'opacity-0 pointer-events-none'}`}></div>
-            <aside ref={sidebarRef} className={`fixed z-50 top-0 left-0 h-full bg-gulf-blue-950 p-4 w-full max-w-72 flex flex-col transform transition-transform ${isSidebarVisible ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 lg:relative lg:flex lg:shadow-right`}>
-                <div className="flex flex-row text-white items-center space-x-5 justify-center mb-12">
+            <aside 
+                ref={sidebarRef} 
+                className={`fixed z-50 top-0 left-0 h-full bg-gptbackground p-4 w-full max-w-72 flex flex-col transform transition-transform ${isSidebarVisible ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 lg:relative lg:flex lg:shadow-right`}
+                >
+                <div className="flex flex-row items-center space-x-5 justify-center mb-12">
                     <Image
                         src="/assets/logo/logo.png"
                         alt="Logo"
@@ -47,7 +50,7 @@ export default function Sidebar() {
                         GPT GAMES
                     </h2>
                 </div>
-                <ul className="font-inter flex-1 space-y-6 text-white px-4">
+                <ul className="font-inter flex-1 space-y-6 px-4">
                     <li 
                         className={`button-sidebar ${path === '/' ? 'gradient button-gradient' : ''}`} 
                         onClick={() => { router.push('/'); setIsSidebarVisible(false); }}>

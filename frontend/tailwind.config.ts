@@ -16,6 +16,9 @@ const config: Config = {
         primary: '#7d5bed',
         secondary: '#1f212d',
         tertiary: '#151722',
+        alert: '#ef4444',
+        gptbackground: '#1F212D',
+        gpttext: '#FFFFFF',
 
         'ebony': {
           '50': '#f2f4fd',

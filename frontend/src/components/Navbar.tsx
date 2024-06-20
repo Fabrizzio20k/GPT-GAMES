@@ -53,7 +53,7 @@ export default function Navbar() {
     }, [searchExpanded]);
 
     return (
-        <nav className="flex items-center justify-center text-white shadow-bottom py-4 px-8 font-inter">
+        <nav className="flex items-center justify-center shadow-bottom py-4 px-8 font-inter">
             <div className="w-full flex flex-row justify-between items-center">
                 <div className={`relative ${searchExpanded ? 'w-full' : 'max-w-96'}`} ref={searchRef}>
                     <FaSearch
@@ -102,34 +102,34 @@ export default function Navbar() {
                         />
                     )}
                     {!searchExpanded && menuOpen && (
-                        <div ref={menuRef} className="absolute top-14 right-4 bg-ebony-950 text-white rounded-lg shadow-lg z-50">
+                        <div ref={menuRef} className="absolute top-14 right-4 bg-ebony-950 rounded-lg shadow-lg z-50">
                             <ul className="flex flex-col p-4 space-y-2">
                                 {logged ? (
                                     <>
-                                        <li className="flex items-center space-x-2 cursor-pointer gradient px-4 py-2 rounded-2xl" onClick={() => router.push('/profile')}>
+                                        <li className="button-navbar gradient" onClick={() => router.push('/profile')}>
                                             <FaUserNinja size={20} />
                                             <span>{user.username}</span>
                                         </li>
-                                        <li className="flex items-center space-x-2 cursor-pointer px-4 py-2 rounded-2xl">
+                                        <li className="button-navbar">
                                             <FaMessage size={20} />
                                             <span>Messages</span>
                                         </li>
-                                        <li className="flex items-center space-x-2 cursor-pointer px-4 py-2 rounded-2xl">
+                                        <li className="button-navbar">
                                             <FaBell size={20} />
                                             <span>Notifications</span>
                                         </li>
-                                        <li className="flex items-center space-x-2 cursor-pointer px-4 py-2 rounded-2xl" onClick={handleLogout}>
+                                        <li className="button-navbar" onClick={handleLogout}>
                                             <FaSignOutAlt size={20} />
                                             <span>Log out</span>
                                         </li>
                                     </>
                                 ) : (
                                     <>
-                                        <li className="flex items-center space-x-2 cursor-pointer px-4 py-2 rounded-2xl" onClick={() => router.push('/signin')}>
+                                        <li className="button-navbar" onClick={() => router.push('/signin')}>
                                             <FaSignInAlt size={20} />
                                             <span>Log in</span>
                                         </li>
-                                        <li className="flex items-center space-x-2 cursor-pointer gradient px-4 py-2 rounded-2xl" onClick={() => router.push('/signup')}>
+                                        <li className="button-navbar gradient" onClick={() => router.push('/signup')}>
                                             <FaUserPlus size={20} />
                                             <span>Register</span>
                                         </li>
