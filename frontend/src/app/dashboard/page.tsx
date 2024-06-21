@@ -79,7 +79,7 @@ export default function Dashboard() {
                     Dashboard
                 </h1>
                 <p className="text-xl z-10">
-                    Welcome to the dashboard {user.username}!
+                    Manage your games here <strong>{user.username}</strong>!
                 </p>
             </section>
 
