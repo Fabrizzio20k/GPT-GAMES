@@ -69,7 +69,7 @@ export default function Sidebar() {
                             <li className={`button-sidebar ${path === '/shoppingcart' ? 'gradient button-gradient' : ''}`}
                                 onClick={() => { router.push('/shoppingcart'); setIsSidebarVisible(false); }}>
                                 <FaCartShopping className="text-2xl" />
-                                <h3 className="text-md">Buy Games</h3>
+                                <h3 className="text-md">Shopping Cart</h3>
                             </li>
                             <li className={`button-sidebar ${path === '/dashboard' ? 'gradient button-gradient' : ''}`}
                                 onClick={() => { router.push('/dashboard'); setIsSidebarVisible(false); }}>
