@@ -9,6 +9,7 @@ import { CiCirclePlus } from "react-icons/ci";
 import { useRouter } from "next/navigation";
 import { toast, Toaster } from "sonner";
 import axios from "axios";
+import Image from "next/image";
 
 export default function Dashboard() {
     const [userOffers, setUserOffers] = useState([] as any);
@@ -27,7 +28,7 @@ export default function Dashboard() {
             })
 
             setUserOffers(response.data.user.offers);
-            
+
         } catch (error) {
             const listErrors = (error as any).response.data;
             let errors = '';
@@ -60,16 +61,24 @@ export default function Dashboard() {
             toast.error(errors);
         }
     }
-    
-    useEffect(() => {}, []);
+
+    useEffect(() => { }, []);
 
     return (
         <MainLayoutPage>
-            <section className="gradient rounded-xl mb-6 h-48 flex justify-center items-center flex-col">
-                <h1 className="uppercase font-bold text-4xl mb-6">
+            <section className="rounded-xl mb-6 h-48 flex justify-center items-center flex-col relative overflow-hidden border-2 border-white select-none">
+                <Image
+                    src="/assets/background/dashboard.jpg"
+                    alt="Dashboard"
+                    width={1920}
+                    height={1080}
+                    className="absolute inset-0 z-0 object-contain object-bottom brightness-75"
+                    priority={true}
+                />
+                <h1 className="uppercase font-bold text-4xl mb-6 z-10">
                     Dashboard
                 </h1>
-                <p className="text-xl">
+                <p className="text-xl z-10">
                     Welcome to the dashboard {user.username}!
                 </p>
             </section>
@@ -78,7 +87,7 @@ export default function Dashboard() {
                 <h2 className="uppercase text-xl mb-6">
                     Published Offers:
                 </h2>
-                <Button 
+                <Button
                     className="gradient button-gradient rounded-full"
                     onClick={() => { router.push('/newoffer') }}
                 >

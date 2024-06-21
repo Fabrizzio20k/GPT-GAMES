@@ -175,12 +175,12 @@ export default function Newoffer() {
                             <div className="flex flex-col gap-2">
                                 <h2 className="text-lg font-alata">Valorant</h2>
                                 <p className="text-sm">First person shooter game</p>
-                                <div className="flex flex-row gap-4">
-                                    <FaWindows className="text-2xl" />
-                                    <FaXbox className="text-2xl" />
-                                    <FaPlaystation className="text-2xl" />
-                                    <FaApple className="text-2xl" />
-                                    <BsNintendoSwitch className="text-2xl" />
+                                <div className="flex flex-row gap-4 text-2xl">
+                                    <FaWindows />
+                                    <FaXbox />
+                                    <FaPlaystation />
+                                    <FaApple />
+                                    <BsNintendoSwitch />
                                 </div>
                             </div>
                         </div>
