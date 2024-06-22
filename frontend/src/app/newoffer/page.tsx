@@ -6,25 +6,56 @@ import { toast, Toaster } from "sonner";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAppSelector } from '@/redux/store';
 import { useRouter } from 'next/navigation';
-import axios from "axios";
+import { FaSearch } from 'react-icons/fa';
+import FormPublishOffer from '@/interfaces/FormPublishOffer';
+import Image from 'next/image';
 
-interface IFormPublishOffer {
-    title: string;
-    description: string;
-    gamekey: string;
-    price: number;
-    discount: number;
-    game: number; 
+
+const Game = () => {
+    return (
+        <article className='bg-secondary rounded-xl p-2 flex justify-between mb-2'>
+            <div className='w-[48%]'>
+                <Image
+                    src="/assets/background/login_wallpaper.webp"
+                    alt="Login_background"
+                    layout="responsive"
+                    width={100}
+                    height={100} 
+                    className="object-cover object-center rounded-lg"
+                />
+            </div>
+            <div className='w-[48%]'>
+                <h2 className='text-xl font-medium font-alata'>Game 1 abcdefghijklmn</h2>
+                <hr/>
+                <h3 className='mb-1'>Creator</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore cupiditate rem, perferendis accusamus explicabo quaer</p>
+            </div>
+        </article>
+    )
 }
 
+
 export default function Newoffer() {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<IFormPublishOffer>();
+    const { register, handleSubmit, watch, formState: { errors } } = useForm<FormPublishOffer>();
     const user = useAppSelector((state) => state.user);
     const router = useRouter();
     
-    const urlServer = process.env.NEXT_PUBLIC_DEV_SERVER_URL;
     
-    const onSubmit: SubmitHandler<IFormPublishOffer> = async (data) => {
+
+    const [searchGame, setSearchGame] = useState('');
+
+    const fetchGames = async () => {
+
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            console.log(searchGame);
+        }
+    };
+
+    const onSubmit: SubmitHandler<FormPublishOffer> = async (data) => {
         data.game = 1;
         console.log(data);
 
@@ -159,8 +190,26 @@ export default function Newoffer() {
                     </button>
                 </form>
             </section>
-            <section className="w-full lg:w-1/2">
-                <h1 className="text-xl font-alata">Game selected</h1>
+            <section className="w-full lg:w-1/2 bg-tertiary rounded-xl p-4">
+                <h1 className="text-xl font-alata uppercase mb-3">Choose the game to sell</h1>
+
+                <div className="w-full bg-secondary rounded-2xl px-2 py-1 flex items-center mb-3">
+                    <FaSearch
+                        className="w-6 h-6 mx-2"
+                    />
+                    <input
+                        type="text"
+                        placeholder="Search game..."
+                        onChange={(e) => setSearchGame(e.target.value)}
+                        className="bg-secondary border-0 focus:border-0"
+                        onKeyDown={handleKeyDown}
+                    />
+                </div>
+
+                <div>
+                    <Game />
+                    <Game />
+                </div>
             </section>
         </main>
         </MainLayoutPage>

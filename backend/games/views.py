@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view, permission_classes, authenticati
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import permissions, viewsets, authentication
-from games.api import get_game_info_api, get_games
+from games.api import get_game_info_api, get_games, get_game_by_name
 
 from games.models import Game
 from .serializers import GameSerializer
@@ -22,6 +22,12 @@ def game_info(request, id):
     data = get_game_info_api(id)
     return Response(data)
 
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+@authentication_classes([authentication.TokenAuthentication])
+def game_by_name(request, name):
+    data = get_game_by_name(name)
+    return Response(data)
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
