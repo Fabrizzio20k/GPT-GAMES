@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Newoffer from './page'
 
 export const metadata: Metadata = {
-    title: "Profile",
+    title: "New Offer",
     description: "Check your awesome profile in GPT Games",
     icons: {
         icon: "/assets/logo/logo.png",

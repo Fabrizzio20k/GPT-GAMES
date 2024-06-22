@@ -17,7 +17,7 @@ def fetch_games(body, path):
     }
 
     try:
-        response = requests.post(url, headers=headers, data=body)
+        response = requests.post(url, headers=headers, data=body, timeout=5)
         return response
     except requests.exceptions.HTTPError as e:
         return JsonResponse({"error": str(e)})
@@ -42,6 +42,10 @@ def get_game_info_api(id):
         }
     except requests.exceptions.HTTPError as e:
         return JsonResponse({"error": "Game not found"})
+
+
+def get_game_by_name(name):
+    return JsonResponse({"name": name})
 
 
 def get_games():
