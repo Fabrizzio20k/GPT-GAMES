@@ -25,7 +25,11 @@ def game_info(request, id):
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 @authentication_classes([authentication.TokenAuthentication])
-def game_by_name(request, name):
+def game_by_name(request):
+    name = request.query_params.get('name')
+    if not name:
+        return Response({"error": "Missing 'name' query parameter"}, status=400)
+
     data = get_game_by_name(name)
     return Response(data)
 
