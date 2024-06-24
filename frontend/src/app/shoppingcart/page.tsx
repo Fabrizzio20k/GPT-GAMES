@@ -1,3 +1,5 @@
+"use client";
+
 import MainLayoutPage from "@/pages/MainLayoutPage";
 import Image from "next/image";
 import { BiSolidStore } from "react-icons/bi";

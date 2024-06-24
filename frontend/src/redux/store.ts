@@ -13,7 +13,7 @@ const statePersistConfig = {
 const userPersistConfig = {
     key: "user",
     storage: storage,
-    whitelist: ["id", "email", "username", "firstname", "lastname", "phone", "description", "token"],
+    whitelist: ["id", "email", "username", "first_name", "last_name", "phone", "description", "token"],
 };
 
 const rootReducer = combineReducers({

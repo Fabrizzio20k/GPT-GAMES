@@ -62,4 +62,41 @@ const loginUser = async (data: any) => {
   return { errors, dataUser };
 }
 
-export { searchGamesByName, registerUser, loginUser };
+const updateUser = async (data: any, user: User) => {
+  let errors = [];
+  let dataUser = {} as User;
+
+  data.username = data.username || user.username;
+  data.first_name = data.first_name || user.first_name;
+  data.last_name = data.last_name || user.last_name;
+  data.description = data.description || user.description;
+  data.phone = data.phone || user.phone;
+
+  try {
+    const response = await axios.patch(urlServer + "/users/" + user.id + "/", data, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${user.token}`
+      },
+    });
+
+    dataUser = {
+      id: response.data.id,
+      email: response.data.email,
+      username: response.data.username,
+      first_name: response.data.first_name,
+      last_name: response.data.last_name,
+      phone: response.data.phone,
+      description: response.data.description,
+      token: user.token,
+    };
+
+  } catch (error) {
+    errors = (error as any).response.data;
+  }
+
+  return { errors, dataUser };
+
+}
+
+export { searchGamesByName, registerUser, loginUser, updateUser };
