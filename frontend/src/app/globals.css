@@ -235,3 +235,12 @@ input, textarea {
 .new-offer-game {
     @apply bg-secondary cursor-pointer rounded-xl p-2 flex flex-col sm:flex-row justify-between mb-2 border-4 hover:border-gray-300 transform transition-transform hover:scale-95
 }
+
+.gallery {
+    columns: 260px 5;
+    column-gap: 0.5em;
+}
+
+.gallery-item {
+    break-inside: avoid;
+}

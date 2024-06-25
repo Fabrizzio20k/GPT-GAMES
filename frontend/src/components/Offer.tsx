@@ -1,23 +1,37 @@
+import OfferProps from '@/interfaces/OfferProps';
 import Image from 'next/image'
 
-export default function Offer() {
+const Offer: React.FC<OfferProps> = ({
+    title,
+    price,
+    img_url
+}) => {
+
+    const displayTitle = title || "Game name not found"
+    const displayImgUrl = img_url || "/assets/logo/logo.png" // TODO: Reducir tamaño de imagen
+
     return (
-        <section className='bg-tertiary p-3 rounded-xl'>
-            <Image
-                src="/assets/background/login_wallpaper.webp"
-                alt="Login_background"
-                layout="responsive"
-                width={10}
-                height={10} 
-                className="object-cover object-center rounded-lg mb-2 w-100px"
-            />
+        <section className='bg-tertiary p-3 rounded-xl mb-2 w-full block gallery-item'>
+            <div className='w-full mb-2'>
+                <Image
+                    src={displayImgUrl}
+                    alt={displayTitle}
+                    width={500} 
+                    height={300}
+                    sizes="(max-width: 768px) 100vw, 
+                            (max-width: 1200px) 50vw, 
+                            33vw" 
+                    className="object-cover object-center rounded-lg"
+                />
+            </div>
             <div className='flex justify-between'>
-                <h2 className='uppercase'>Game name</h2>
-                <div className='gradient px-3 py-1 rounded-full font-bold'>
-                    S/. 19.99
+                <h2 className='uppercase w-2/3'>{displayTitle}</h2>
+                <div className='gradient px-3 py-1 rounded-full font-bold my-auto'>
+                    {`$ ${price}`}
                 </div>
             </div>
         </section>
     )
 }
 
+export default Offer;

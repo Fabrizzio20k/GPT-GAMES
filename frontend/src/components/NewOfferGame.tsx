@@ -51,8 +51,8 @@ const NewOfferGame: React.FC<NewOfferGameProps> = ({
                 </h3>
                 <p className="mb-2">{displaySummary}</p>
                 <button 
-                    className="gradient px-3 py-1 rounded-full font-bold"
-                    onClick={() => console.log("CLICK")}
+                    className="gradient button-gradient px-3 py-1 rounded-2xl"
+                    onClick={() => console.log("CLICK")} // TODO: Expand games
                 > More info </button>
             </div>
         </article>

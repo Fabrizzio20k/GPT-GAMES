@@ -33,7 +33,7 @@ def game_response(data):
         'platforms': [i.get("name", "") for i in data.get("platforms", [])],
         'summary': data.get("summary", ""),
         'involved_companies': [i["company"].get("name", "") for i in data.get("involved_companies", []) if i.get("company")],
-        'cover': "https://images.igdb.com/igdb/image/upload/t_1080p/" + data.get("cover", {}).get("image_id", "") + ".jpg" if data.get("cover") else "",
+        'cover': "https://images.igdb.com/igdb/image/upload/t_720p/" + data.get("cover", {}).get("image_id", "") + ".jpg" if data.get("cover") else "",
     }
 
     return game
@@ -54,7 +54,7 @@ def get_game_info_api(id):
 
 def get_game_by_name(name):
     fields = "fields summary, name, first_release_date, genres.name, platforms.name, involved_companies.company.name, cover.image_id;"
-    body = fields + " search " + '"' + name + '";' + " limit 5;"
+    body = fields + " search " + '"' + name + '";' + " limit 10;"
 
     try:
         data = fetch_games(body, "games").json()

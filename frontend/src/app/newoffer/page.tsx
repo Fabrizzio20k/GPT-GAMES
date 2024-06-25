@@ -8,7 +8,7 @@ import { useAppSelector } from '@/redux/store';
 import { useRouter } from 'next/navigation';
 import { FaSearch } from "react-icons/fa";
 import FormPublishOffer from '@/interfaces/FormPublishOffer';
-import { searchGamesByName } from '@/services/api';
+import { searchGamesByName, createOffer } from '@/services/api';
 import NewOfferGame from '@/components/NewOfferGame';
 
 
@@ -36,6 +36,9 @@ export default function Newoffer() {
     }, []);
 
     const onSubmit: SubmitHandler<FormPublishOffer> = async (data) => {
+        data.seller_id = parseInt(user.id);
+        data.date_created = new Date().toISOString(); // Backend?
+        
         if (selectedGame === null) {
             toast.error("Please select a game");
             return;
@@ -45,47 +48,9 @@ export default function Newoffer() {
         console.log(data);
         
 
-        // let gameId = {
-        //     id: data.game
-        // }
-
         // try {
-        //     const response = await axios.post(urlServer + "/games/", gameId, {
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Authorization': `token ${user.token}`,
-        //         }
-        //     })
-
-        //     console.log(response.data);
-        // } catch (error) {
-        //     const listErrors = (error as any).response.data;
-        //     let errors = '';
-        //     for (const key in listErrors) {
-        //         errors += `${listErrors[key]}\n`;
-        //     }
-        //     errors = errors.toUpperCase();
-        //     toast.error(errors);
-        // }
-
-        // let offerInfo = {
-        //     seller: user.id,
-        //     game: data.game,
-        //     price: data.price,
-        //     discount: data.discount
-        // }
-
-        // try {
-        //     const response = await axios.post(urlServer + "/offers/", offerInfo, {
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Authorization': `token ${user.token}`,
-        //         },
-        //     });
-        //     toast.success('Offer published successfully');
-
-        //     console.log(response.data);
-
+            //const response = await createOffer(data, user.token);
+            // toast.success('Offer published successfully');
         // } catch (error) {
         //     const listErrors = (error as any).response.data;
         //     let errors = '';
