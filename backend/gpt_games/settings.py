@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'shopping_car',
     'car_contains_offer',
     'transaction',
-    'corsheaders'
+    'corsheaders',
+    'django_filters'
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -144,3 +145,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Custom User model
 AUTH_USER_MODEL = 'user.User'
+
+#Media urls
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

@@ -12,9 +12,19 @@ class UserSerializer(serializers.ModelSerializer):
     shopping_car = ShoppingCarSerializer(read_only=True, many=True)
     class Meta:
         model = User
-        fields = ['id', 'username', 'first_name', 'last_name', 'description', 'email', 'phone', 'billing_info', 'offers' , 'password'
+        fields = ['id', 'username','profile_picture' , 'first_name', 'last_name', 'description', 'email', 'phone', 'billing_info', 'offers'
             ,'shopping_car']
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
+
+class ProfilePictureSerializer(serializers.ModelSerializer):
+    class Meta:
+       model = User
+       fields = ['profile_picture']
+
+    def update(self, instance, validated_data):
+        instance.profile_picture = validated_data.get('profile_picture', instance.profile_picture)
+        instance.save()
+        return instance
