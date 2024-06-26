@@ -177,10 +177,6 @@ static/
 # Media files
 media/
 
-# Django migrations
-**/migrations/*
-!**/migrations/__init__.py
-
 # Database
 *.sqlite3
 *.db
