@@ -26,27 +26,33 @@ def create_game_with_offer(request):
     game_id = request.data.get('id')
     game_name = request.data.get('name')
 
-    game, created = Game.objects.get_or_create(id=game_id, defaults={'name': game_name})
+    game, created = Game.objects.get_or_create(
+        id=game_id, defaults={'name': game_name})
 
     if created:
 
-        game_serializer = GameSerializer(instance=game, context={'request': request})
+        game_serializer = GameSerializer(
+            instance=game, context={'request': request})
     else:
-        game_serializer = GameSerializer(instance=game, data={'name': game_name}, partial=True)
+        game_serializer = GameSerializer(
+            instance=game, data={'name': game_name}, partial=True)
         if game_serializer.is_valid():
             game_serializer.save()
-        game_serializer = GameSerializer(instance=game)  # Actualizar el serializador después de guardar
+        # Actualizar el serializador después de guardar
+        game_serializer = GameSerializer(instance=game)
 
     offer_data = {
         'description': request.data.get('description', "Default description"),
         'gamekey': request.data.get('gamekey', ""),
         'price': request.data.get('price', 0),
-        'discount': request.data.get('discount', 0)
+        'discount': request.data.get('discount', 0),
+        'link': request.data.get('link', ""),
     }
 
     offer = Offer.objects.create(**offer_data, game=game, seller=request.user)
 
-    offer_serializer = OfferSerializer(instance=offer, context={'request': request})
+    offer_serializer = OfferSerializer(
+        instance=offer, context={'request': request})
 
     return Response({
         "offer_data": offer_serializer.data,
