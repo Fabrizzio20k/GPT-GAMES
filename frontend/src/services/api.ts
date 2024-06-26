@@ -99,4 +99,34 @@ const updateUser = async (data: any, user: User) => {
 
 }
 
-export { searchGamesByName, registerUser, loginUser, updateUser };
+const getUserById = async (id: string, token: string) => {
+  let errors = [];
+  let dataUser = {} as User;
+
+  try {
+    const response = await axios.get(urlServer + "/users/" + id + "/", {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`
+      },
+    });
+    dataUser = {
+      id: response.data.id,
+      email: response.data.email,
+      username: response.data.username,
+      first_name: response.data.first_name,
+      last_name: response.data.last_name,
+      phone: response.data.phone,
+      description: response.data.description,
+      token: token,
+    };
+  }
+  catch (error) {
+    errors = (error as any).response.data;
+  }
+
+  return { errors, dataUser };
+
+}
+
+export { searchGamesByName, registerUser, loginUser, updateUser, getUserById };

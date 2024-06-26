@@ -8,6 +8,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        'xs': '500px',
+        '3xl': '1600px',
+      },
       fontFamily: {
         alata: ['Alata', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],

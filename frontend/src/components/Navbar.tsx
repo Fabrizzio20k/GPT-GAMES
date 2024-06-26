@@ -78,7 +78,7 @@ export default function Navbar() {
                             <>
                                 <FaMessage size={24} />
                                 <FaBell size={24} />
-                                <button className="gradient button-gradient px-4 py-2 rounded-2xl" onClick={() => router.push('/profile')}>{user.username}</button>
+                                <button className="gradient button-gradient px-4 py-2 rounded-2xl" onClick={() => router.push(`/viewprofile/${user.id}`)}>{user.username}</button>
                                 <button onClick={handleLogout}>
                                     Log out
                                 </button>

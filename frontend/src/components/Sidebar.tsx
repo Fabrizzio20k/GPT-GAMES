@@ -14,6 +14,7 @@ export default function Sidebar() {
     const [isSidebarVisible, setIsSidebarVisible] = useState(false);
     const sidebarRef = useRef<HTMLDivElement>(null);
     const logged = useAppSelector((state) => state.status.logged);
+    const user = useAppSelector((state) => state.user);
 
     const handleOutsideClick = (event: MouseEvent) => {
         if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
@@ -76,8 +77,8 @@ export default function Sidebar() {
                                 <FaWrench className="text-2xl" />
                                 <h3 className="text-md">Dashboard</h3>
                             </li>
-                            <li className={`button-sidebar ${path === '/profile' ? 'gradient button-gradient' : ''}`}
-                                onClick={() => { router.push('/profile'); setIsSidebarVisible(false); }}>
+                            <li className={`button-sidebar ${path === `/viewprofile/${user.id}` || path === '/editprofile' ? 'gradient button-gradient' : ''}`}
+                                onClick={() => { router.push(`/viewprofile/${user.id}`); setIsSidebarVisible(false); }}>
                                 <FaUserAlt className="text-2xl" />
                                 <h3 className="text-md">Profile</h3>
                             </li>
