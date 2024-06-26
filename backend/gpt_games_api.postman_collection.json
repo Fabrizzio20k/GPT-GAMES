@@ -2,9 +2,9 @@
 	"info": {
 		"_postman_id": "e61466b8-803d-44f2-907a-e52ca2a2c534",
 		"name": "gpt_games_api",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "27996385",
-		"_collection_link": "https://solar-firefly-915406.postman.co/workspace/My-Workspace~c9b062e4-e11f-48e0-8302-3bc727649281/collection/27996385-e61466b8-803d-44f2-907a-e52ca2a2c534?action=share&source=collection_link&creator=27996385"
+		"_collection_link": "https://solar-firefly-915406.postman.co/workspace/c9b062e4-e11f-48e0-8302-3bc727649281/collection/27996385-e61466b8-803d-44f2-907a-e52ca2a2c534?action=share&source=collection_link&creator=27996385"
 	},
 	"item": [
 		{
@@ -14,8 +14,23 @@
 					"name": "get_all_users",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": "{{localhostURL}}/users/"
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{user_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{localhostURL}}/users/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						}
 					},
 					"response": []
 				},
@@ -26,14 +41,23 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"momoka\",\r\n    \"password\": \"12345678\"\r\n\r\n}",
+							"raw": "{\r\n    \"username\": \"Momoka\",\r\n    \"password\": \"12345678\"\r\n    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{localhostURL}}/login/"
+						"url": {
+							"raw": "{{localhostURL}}/login/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"login",
+								""
+							]
+						}
 					},
 					"response": []
 				},
@@ -44,11 +68,30 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Token d077018fc393baf37b64ddf77403ff35eca9c77e",
+								"value": "Token {{user_token}}",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
 								"type": "text"
 							}
 						],
-						"url": "{{localhostURL}}/profile/"
+						"url": {
+							"raw": "{{localhostURL}}/profile/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"profile",
+								""
+							]
+						}
 					},
 					"response": []
 				},
@@ -56,17 +99,96 @@
 					"name": "create",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{user_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"test_5\",\r\n    \"first_name\": \"test_first_name_5\",\r\n    \"last_name\": \"test_last_name_5\",\r\n    \"description\": \"Little Ojousama\",\r\n    \"email\": \"desuwa_7@gmail.com\",\r\n    \"phone\": \"954000904\",\r\n    \"password\": \"12345678\"\r\n}",
+							"raw": "{\r\n    \"username\": \"Rori_kinpatsu_shinobu\",\r\n    \"first_name\": \"Shinobu\",\r\n    \"last_name\": \"Oshino\",\r\n    \"description\": \"Little almost vampire with blond hair\",\r\n    \"email\": \"former_kissshot@gmail.com\",\r\n    \"phone\": \"954000305\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{localhostURL}}/users/"
+						"url": {
+							"raw": "{{localhostURL}}/users/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user_by_name_or_email",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token {{user_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{localhostURL}}/users/?search=Shi",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"users",
+								""
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Shi"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update_profile_image",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token {{user_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "profile_picture",
+									"type": "file",
+									"src": "/D:/Semestre_2024-1_CS/ML/Projetcs/Project1/lab6/data/train/loli_23.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{localhostURL}}/profile-image/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"profile-image",
+								""
+							]
+						}
 					},
 					"response": []
 				}
@@ -82,11 +204,20 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "token 16435c229f677e6f3ed414dbc2c78314748c656e",
+								"value": "Token {{user_token}}",
 								"type": "text"
 							}
 						],
-						"url": "{{localhostURL}}/billinginfo/"
+						"url": {
+							"raw": "{{localhostURL}}/billinginfo/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"billinginfo",
+								""
+							]
+						}
 					},
 					"response": []
 				},
@@ -97,7 +228,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Token 16435c229f677e6f3ed414dbc2c78314748c656e",
+								"value": "Token {{user_token}}",
 								"type": "text"
 							}
 						],
@@ -118,17 +249,17 @@
 								},
 								{
 									"key": "card_number",
-									"value": "888844441189",
+									"value": "888855551989",
 									"type": "text"
 								},
 								{
 									"key": "expiration_date",
-									"value": "2026-12-01",
+									"value": "2026-12-02",
 									"type": "text"
 								},
 								{
 									"key": "security_code",
-									"value": "455",
+									"value": "915",
 									"type": "text"
 								},
 								{
@@ -138,7 +269,16 @@
 								}
 							]
 						},
-						"url": "{{localhostURL}}/billinginfo/"
+						"url": {
+							"raw": "{{localhostURL}}/billinginfo/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"billinginfo",
+								""
+							]
+						}
 					},
 					"response": []
 				},
@@ -149,7 +289,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "token 16435c229f677e6f3ed414dbc2c78314748c656e",
+								"value": "Token {{user_token}}",
 								"type": "text"
 							}
 						],
@@ -162,7 +302,17 @@
 								}
 							}
 						},
-						"url": "{{localhostURL}}/billinginfo/3/"
+						"url": {
+							"raw": "{{localhostURL}}/billinginfo/3/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"billinginfo",
+								"3",
+								""
+							]
+						}
 					},
 					"response": []
 				}
@@ -181,7 +331,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "token d077018fc393baf37b64ddf77403ff35eca9c77e",
+								"value": "Token {{user_token}}",
 								"type": "text"
 							}
 						],
@@ -194,7 +344,16 @@
 								}
 							}
 						},
-						"url": "{{localhostURL}}/reviews/"
+						"url": {
+							"raw": "{{localhostURL}}/reviews/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"reviews",
+								""
+							]
+						}
 					},
 					"response": []
 				},
@@ -205,7 +364,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "token d077018fc393baf37b64ddf77403ff35eca9c77e",
+								"value": "Token {{user_token}}",
 								"type": "text"
 							}
 						],
@@ -230,7 +389,16 @@
 								}
 							]
 						},
-						"url": "{{localhostURL}}/reviews/"
+						"url": {
+							"raw": "{{localhostURL}}/reviews/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"reviews",
+								""
+							]
+						}
 					},
 					"response": []
 				}
@@ -240,28 +408,39 @@
 			"name": "Games",
 			"item": [
 				{
-					"name": "get_alll_games",
+					"name": "get_game_by_id_api",
 					"request": {
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "token 16435c229f677e6f3ed414dbc2c78314748c656e",
-								"type": "text"
+								"value": "token {{token",
+								"type": "text",
+								"disabled": true
 							}
 						],
-						"url": "{{localhostURL}}/games/"
+						"url": {
+							"raw": "{{localhostURL}}/game/2009/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"game",
+								"2009",
+								""
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "create_game",
 					"request": {
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "token d077018fc393baf37b64ddf77403ff35eca9c77e",
+								"value": "Token {{user_token}}",
 								"type": "text"
 							}
 						],
@@ -270,12 +449,65 @@
 							"formdata": [
 								{
 									"key": "id",
-									"value": "23",
+									"value": "143365",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "9 -nine-: Episode 3",
+									"type": "text"
+								},
+								{
+									"key": "gamekey",
+									"value": "4654646",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "1000",
+									"type": "text"
+								},
+								{
+									"key": "discount",
+									"value": "500",
 									"type": "text"
 								}
 							]
 						},
-						"url": "{{localhostURL}}/games/"
+						"url": {
+							"raw": "{{localhostURL}}/create_game/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"create_game",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_all_games_our_rdb",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{user_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{localhostURL}}/games/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"games",
+								""
+							]
+						}
 					},
 					"response": []
 				}
@@ -294,7 +526,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "token 16435c229f677e6f3ed414dbc2c78314748c656e",
+								"value": "Token {{user_token}}",
 								"type": "text"
 							}
 						],
@@ -333,7 +565,16 @@
 								}
 							]
 						},
-						"url": "{{localhostURL}}/offers/"
+						"url": {
+							"raw": "{{localhostURL}}/offers/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"offers",
+								""
+							]
+						}
 					},
 					"response": []
 				},
@@ -344,20 +585,29 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "token d077018fc393baf37b64ddf77403ff35eca9c77e",
+								"value": "Token {{user_token}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"game\": 666,\r\n    \"price\": 7100,\r\n    \"discount\": 60\r\n}",
+							"raw": "{\r\n    \"game\": 2011,\r\n    \"price\": 6000,\r\n    \"discount\": 1000\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{localhostURL}}/offers/"
+						"url": {
+							"raw": "{{localhostURL}}/offers/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"offers",
+								""
+							]
+						}
 					},
 					"response": []
 				},
@@ -368,11 +618,86 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "token d077018fc393baf37b64ddf77403ff35eca9c77e",
+								"value": "Token {{user_token}}",
 								"type": "text"
 							}
 						],
-						"url": "{{localhostURL}}/offers/7/"
+						"url": {
+							"raw": "{{localhostURL}}/offers/7/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"offers",
+								"7",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Offer_by_game_name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{user_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{localhostURL}}/offers/?search=C",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"offers",
+								""
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "C"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_review",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "token {{user_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \r\n    \"text\": \"This is a new review for this game UwU\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhostURL}}/offers/2/add-review/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"offers",
+								"2",
+								"add-review",
+								""
+							]
+						}
 					},
 					"response": []
 				}
@@ -388,11 +713,20 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "token   d077018fc393baf37b64ddf77403ff35eca9c77e",
+								"value": "token   {{user_token}}",
 								"type": "text"
 							}
 						],
-						"url": "{{localhostURL}}/transactions/"
+						"url": {
+							"raw": "{{localhostURL}}/transactions/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"transactions",
+								""
+							]
+						}
 					},
 					"response": []
 				},
@@ -403,31 +737,24 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "token   d077018fc393baf37b64ddf77403ff35eca9c77e",
+								"value": "token   {{user_token}}",
 								"type": "text"
 							}
 						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "seller",
-									"value": "momoka",
-									"type": "text"
-								},
-								{
-									"key": "offer",
-									"value": "20",
-									"type": "text"
-								},
-								{
-									"key": "gamekey",
-									"value": "ghjhkj35465465",
-									"type": "text"
-								}
-							]
+							"mode": "raw",
+							"raw": ""
 						},
-						"url": "{{localhostURL}}/transactions/"
+						"url": {
+							"raw": "{{localhostURL}}/transactions/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"transactions",
+								""
+							]
+						}
 					},
 					"response": []
 				}
@@ -443,11 +770,20 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "token d077018fc393baf37b64ddf77403ff35eca9c77e",
+								"value": "token {{user_token}}",
 								"type": "text"
 							}
 						],
-						"url": "{{localhostURL}}/shoppingcars/"
+						"url": {
+							"raw": "{{localhostURL}}/shoppingcars/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"shoppingcars",
+								""
+							]
+						}
 					},
 					"response": []
 				},
@@ -466,7 +802,16 @@
 							"mode": "formdata",
 							"formdata": []
 						},
-						"url": "{{localhostURL}}/shoppingcars/"
+						"url": {
+							"raw": "{{localhostURL}}/shoppingcars/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"shoppingcars",
+								""
+							]
+						}
 					},
 					"response": []
 				}
@@ -482,11 +827,20 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "token d077018fc393baf37b64ddf77403ff35eca9c77e",
+								"value": "token {{user_token}}",
 								"type": "text"
 							}
 						],
-						"url": "{{localhostURL}}/car_contains/"
+						"url": {
+							"raw": "{{localhostURL}}/car_contains/",
+							"host": [
+								"{{localhostURL}}"
+							],
+							"path": [
+								"car_contains",
+								""
+							]
+						}
 					},
 					"response": []
 				},
