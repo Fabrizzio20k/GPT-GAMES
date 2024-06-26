@@ -59,7 +59,7 @@ export default function ViewProfile() {
         <MainLayoutPage>
             <Loader activate={loading} />
             <Toaster richColors />
-            <article className="w-full flex flex-col lg:flex-row gap-8">
+            <article className="w-full flex flex-col gap-8">
                 <section className="w-full flex flex-col md:flex-row gap-8 items-center md:items-start justify-between">
                     <div className="flex flex-col xs:flex-row items-center w-full md:w-fit gap-8">
                         <Image src="/assets/background/d2.jpg" alt="user-photo" width={1920} height={1080} className="rounded-2xl w-[200px] border-gray-300 border-4" />
@@ -78,8 +78,13 @@ export default function ViewProfile() {
                         </button>
                     )}
                 </section>
-                <section>
-
+                <section className="test">
+                    <h1 className="font-bold text-2xl">
+                        {showedUser.id.toString() === user.id.toString() ? "Games Purchased" : "Offers published"}
+                    </h1>
+                    <div className="flex flex-col gap-4">
+                        <p className="text-xl">No games purchased yet</p>
+                    </div>
                 </section>
             </article>
         </MainLayoutPage>
