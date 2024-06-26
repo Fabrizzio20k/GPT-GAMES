@@ -7,7 +7,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 from .models import User
-from .serializers import UserSerializer , ProfilePictureSerializer
+from .serializers import UserSerializer , ProfilePictureSerializer, RegisterSerializer, LoginSerializer, SearchSerializer
 import logging
 from django.shortcuts import get_object_or_404
 from django.db.utils import IntegrityError
@@ -21,6 +21,23 @@ logger = logging.getLogger(__name__)
 class UserView(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        token, created = Token.objects.get_or_create(user=user)
+        headers = self.get_success_headers(serializer.data)
+        logger.info(f'User created: {user.username}, Token: {token.key}')
+        return Response({'token': token.key}, status=status.HTTP_201_CREATED, headers=headers)
+
+
+class SearchUserView(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = SearchSerializer
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [TokenAuthentication]
     filter_backends = [SearchFilter]
@@ -71,14 +88,14 @@ def login(request):
         return Response({"error": "Invalid password"}, status=status.HTTP_400_BAD_REQUEST)
 
     token, created = Token.objects.get_or_create(user=user)
-    serializer = UserSerializer(instance=user, context={'request': request})
+    serializer = LoginSerializer(instance=user, context={'request': request})
     return Response({'token': token.key, 'user': serializer.data}, status=status.HTTP_201_CREATED)
 
 
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def register(request, format=None):
-    serialiazer = UserSerializer(
+    serialiazer = RegisterSerializer(
         data=request.data, context={'request': request})
 
     if serialiazer.is_valid():
