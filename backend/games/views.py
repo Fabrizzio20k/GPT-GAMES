@@ -16,8 +16,7 @@ class GameViewSet(viewsets.ModelViewSet):
 
 
 @api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
-@authentication_classes([authentication.TokenAuthentication])
+@permission_classes([permissions.AllowAny])
 def game_info(request, id):
     data = get_game_info_api(id)
     return Response(data)
