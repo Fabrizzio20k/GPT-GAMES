@@ -32,9 +32,6 @@ export default function Login() {
 
         const { errors, dataUser } = await loginUser(data);
 
-        console.log(dataUser);
-        
-
         if (Object.keys(errors).length > 0) {
             let errorsText = '';
             for (const key in errors) {
@@ -48,7 +45,7 @@ export default function Login() {
             dispatch(setUser(dataUser));
 
             setTimeout(() => {
-                // router.push('/');
+                router.push('/');
             }, 1000);
         }
 
