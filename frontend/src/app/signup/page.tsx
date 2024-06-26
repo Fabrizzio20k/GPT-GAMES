@@ -4,51 +4,36 @@ import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Toaster, toast } from 'sonner';
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/Loader";
 import { useState } from "react";
+import IFormInput from "@/interfaces/IFormInput";
+import { registerUser } from "@/services/api";
 
-interface IFormInput {
-    username: string;
-    first_name: string;
-    last_name: string;
-    description: string;
-    phone: string;
-    email: string;
-    password: string;
-}
+
 
 export default function Register() {
 
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
     const router = useRouter();
-    const urlServer = process.env.NEXT_PUBLIC_DEV_SERVER_URL;
     const [loading, setLoading] = useState(false);
-    
+
 
     const onSubmit: SubmitHandler<IFormInput> = async data => {
         setLoading(true);
-        try {
-            const response = await axios.post(urlServer + "/register/", data, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+        const { errors, dataResponse } = await registerUser(data);
+        if (Object.keys(errors).length > 0) {
+            let err = '';
+            for (const key in errors) {
+                err += `${errors[key]}\n`;
+            }
+            err = err.toUpperCase();
+            toast.error(err);
+        } else {
             toast.success('User registered successfully');
             router.push('/signin');
-        } catch (error) {
-            const listErrors = (error as any).response.data;
-            let errors = '';
-            for (const key in listErrors) {
-                errors += `${listErrors[key]}\n`;
-            }
-            errors = errors.toUpperCase();
-            toast.error(errors);
         }
-        finally {
-            setLoading(false);
-        }
+        setLoading(false);
     };
 
     return (

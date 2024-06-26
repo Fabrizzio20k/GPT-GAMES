@@ -7,12 +7,11 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Toaster, toast } from 'sonner';
-import axios from "axios";
 import { setStatusLoggin } from "@/redux/slices/stateSlice";
 import { setUser } from "@/redux/slices/userSlice";
 import Loader from "@/components/Loader";
 import { useState } from "react";
-import { User } from "@/types/user";
+import { loginUser } from "@/services/api";
 
 interface IFormInput {
     username: string;
@@ -24,54 +23,35 @@ export default function Login() {
     const dispatch = useAppDispatch();
     const router = useRouter();
 
-    const urlServer = process.env.NEXT_PUBLIC_DEV_SERVER_URL;
-
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
 
     const [loading, setLoading] = useState(false);
 
     const onSubmit: SubmitHandler<IFormInput> = async data => {
         setLoading(true);
-        try {
-            const response = await axios.post(urlServer + "/login/", data, {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+
+        const { errors, dataUser } = await loginUser(data);
+
+        if (Object.keys(errors).length > 0) {
+            let errorsText = '';
+            for (const key in errors) {
+                errorsText += `${errors[key]}\n`;
+            }
+            errorsText = errorsText.toUpperCase();
+            toast.error(errorsText);
+        } else {
             toast.success('User logged in successfully');
-
-            const dataUser = {
-                id: response.data.user.id,
-                email: response.data.user.email,
-                username: response.data.user.username,
-                first_name: response.data.user.first_name,
-                last_name: response.data.user.last_name,
-                phone: response.data.user.phone,
-                description: response.data.user.description,
-                token: response.data.token,
-            } as User;
-
             dispatch(setStatusLoggin(true));
             dispatch(setUser(dataUser));
 
             setTimeout(() => {
                 router.push('/');
             }, 1000);
+        }
 
-        } catch (error) {
-            const listErrors = (error as any).response.data;
-            let errors = '';
-            for (const key in listErrors) {
-                errors += `${listErrors[key]}\n`;
-            }
-            errors = errors.toUpperCase();
-            toast.error(errors);
-        }
-        finally {
-            setTimeout(() => {
-                setLoading(false);
-            }, 1000);
-        }
+        setTimeout(() => {
+            setLoading(false);
+        }, 1000);
     };
 
     return (

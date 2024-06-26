@@ -4,11 +4,11 @@ import MainLayoutPage from "@/pages/MainLayoutPage";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { toast, Toaster } from "sonner";
 import { useForm, SubmitHandler } from "react-hook-form";
-import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Loader from "@/components/Loader";
-import { User } from "@/types/user";
 import { setUser } from "@/redux/slices/userSlice";
+import { updateUser } from "@/services/api";
+import { useRouter } from "next/navigation";
 
 interface IFormUpdateProfile {
     username: string;
@@ -24,51 +24,38 @@ export default function Profile() {
     const user = useAppSelector((state) => state.user);
     const dispatch = useAppDispatch();
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm<IFormUpdateProfile>();
 
     const onSubmit: SubmitHandler<IFormUpdateProfile> = async data => {
-        data.username = data.username || user.username;
-        data.first_name = data.first_name || user.first_name;
-        data.last_name = data.last_name || user.last_name;
-        data.description = data.description || user.description;
-        data.phone = data.phone || user.phone;
-        console.log(data);
+        setLoading(true);
 
-        const urlServer = process.env.NEXT_PUBLIC_DEV_SERVER_URL;
+        const { errors, dataUser } = await updateUser(data, user);
 
-        try {
-            const response = await axios.patch(urlServer + "/users/" + user.id + "/", data, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Token ${user.token}`
-                },
-            });
-            const dataUser: User = {
-                id: response.data.id,
-                email: response.data.email,
-                username: response.data.username,
-                first_name: response.data.first_name,
-                last_name: response.data.last_name,
-                phone: response.data.phone,
-                description: response.data.description,
-                token: user.token,
-            };
+        if (Object.keys(errors).length > 0) {
+            let errorString = '';
+            for (const key in errors) {
+                errorString += `${key}: ${errors[key]}\n`;
+            }
+            errorString = errorString.toUpperCase();
+            toast.error(errorString);
+        } else {
             dispatch(setUser(dataUser));
             toast.success('Profile updated successfully');
-        } catch (error) {
-            const listErrors = (error as any).response.data;
-            let errors = '';
-            for (const key in listErrors) {
-                errors += `${key}: ${listErrors[key]}\n`;
-            }
-            errors = errors.toUpperCase();
-            toast.error(errors);
         }
-        finally {
-            setLoading(false);
-        }
+
+        setLoading(false);
+
     }
+
+    useEffect(() => {
+        if (!user.token) {
+            toast.error('You must be logged in to access this page');
+            router.push('/signin');
+        }
+        console.log(user.first_name);
+    });
 
     return (
         <MainLayoutPage>
