@@ -78,10 +78,6 @@ media/
 .env.local
 .env.*.local
 
-# Django migrations
-**/migrations/*
-!**/migrations/__init__.py
-
 # pyenv
 .python-version
 
