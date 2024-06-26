@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
     shopping_car = ShoppingCarSerializer(read_only=True, many=True)
     class Meta:
         model = User
-        fields = ['id', 'username','profile_picture' , 'first_name', 'last_name', 'description', 'email', 'phone', 'billing_info', 'offers'
+        fields = ['id', 'username','profile_picture' , 'first_name', 'last_name', 'description', 'email', 'password','phone', 'billing_info', 'offers'
             ,'shopping_car']
 
     def create(self, validated_data):
