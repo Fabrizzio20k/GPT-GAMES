@@ -221,3 +221,30 @@
 input, textarea {
     @apply p-2 rounded-2xl bg-tertiary w-full outline-none border-2 border-transparent focus:border-primary
 }
+
+.aspect-ratio-1-1 {
+    aspect-ratio: 1 / 1;
+}
+
+@media (max-width: 500px) {
+    .aspect-ratio-16-9 {
+        aspect-ratio: 16 / 9;
+    }
+}
+
+.new-offer-game {
+    @apply bg-secondary cursor-pointer rounded-xl p-2 flex flex-col sm:flex-row justify-between mb-2 border-4 hover:border-gray-300 transform transition-transform hover:scale-95
+}
+
+.gallery {
+    columns: 260px 5;
+    column-gap: 0.5em;
+}
+
+.gallery-item {
+    break-inside: avoid;
+}
+
+.offer-game {
+    @apply bg-tertiary cursor-pointer p-3 rounded-xl mb-2 w-full block gallery-item border-transparent transform transition-transform hover:scale-95
+}

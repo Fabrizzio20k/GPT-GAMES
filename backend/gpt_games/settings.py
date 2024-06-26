@@ -36,7 +36,9 @@ INSTALLED_APPS = [
     'shopping_car',
     'car_contains_offer',
     'transaction',
-    'corsheaders'
+    'corsheaders',
+    'django_filters',
+    'rest_framework_swagger'
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -79,7 +81,7 @@ ROOT_URLCONF = 'gpt_games.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -136,6 +138,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'templates'),
+]
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -144,3 +151,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Custom User model
 AUTH_USER_MODEL = 'user.User'
+
+#Media urls
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

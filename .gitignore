@@ -78,10 +78,6 @@ media/
 .env.local
 .env.*.local
 
-# Django migrations
-**/migrations/*
-!**/migrations/__init__.py
-
 # pyenv
 .python-version
 
@@ -180,10 +176,6 @@ static/
 
 # Media files
 media/
-
-# Django migrations
-**/migrations/*
-!**/migrations/__init__.py
 
 # Database
 *.sqlite3

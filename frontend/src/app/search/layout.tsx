@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import Search from './page';
 
 export const metadata: Metadata = {
-    title: "Encuentra tus juegos",
-    description: "Search your favorite games",
+    title: "Search Games",
+    description: "Search your favorite games and offers",
     icons: {
         icon: "/assets/logo/logo.png",
     }

@@ -30,7 +30,6 @@ export default function Navbar() {
         router.push('/signin');
         dispatch(setStatusLoggin(false));
         dispatch(clearUser());
-
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
