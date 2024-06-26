@@ -22,9 +22,9 @@ def game_info(request, id):
     data = get_game_info_api(id)
     return Response(data)
 
+
 @api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
-@authentication_classes([authentication.TokenAuthentication])
+@permission_classes([permissions.AllowAny])
 def game_by_name(request):
     name = request.query_params.get('name')
     if not name:

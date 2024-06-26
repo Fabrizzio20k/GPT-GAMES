@@ -244,3 +244,7 @@ input, textarea {
 .gallery-item {
     break-inside: avoid;
 }
+
+.offer-game {
+    @apply bg-tertiary cursor-pointer p-3 rounded-xl mb-2 w-full block gallery-item border-transparent transform transition-transform hover:scale-95
+}

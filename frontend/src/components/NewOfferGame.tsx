@@ -1,3 +1,4 @@
+import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import NewOfferGameProps from '../interfaces/NewOfferGameProps'
 
@@ -14,7 +15,9 @@ const NewOfferGame: React.FC<NewOfferGameProps> = ({
     
     const displayName = name || "Game name not found"
     const displayCompanies = involved_companies.length > 0 ? involved_companies : ["Not companies found"]
-    const displayImgUrl = img_url || "/assets/logo/logo.png" // TODO: Reducir tamaño de imagen
+    const displayImgUrl = img_url || "/assets/logo/logo.png"
+
+    const router = useRouter();
     
     const displaySummary = summary
     ? summary.length > 100
@@ -22,11 +25,19 @@ const NewOfferGame: React.FC<NewOfferGameProps> = ({
         : summary
     : "Summary not found";
 
+    const handleRedirect = () => {
+        router.push(`/game/${api_id}`)
+    }
+
+    const handleClick = () => {
+        onClick({api_id, name})
+    }
+
     return (
         <article 
-            className={`new-offer-game ${isSelected ? 'border-4 border-primary' : 'border border-transparent'}`}
+            className={`new-offer-game ${isSelected ? 'border-4 border-primary hover:border-primary'  : 'border border-transparent'}`}
             id={api_id}
-            onClick={() => onClick(api_id)}
+            onClick={handleClick}
         >
             <div className='sm:w-1/3 w-full mr-3 relative aspect-ratio-1-1'>
                 <Image
@@ -52,7 +63,7 @@ const NewOfferGame: React.FC<NewOfferGameProps> = ({
                 <p className="mb-2">{displaySummary}</p>
                 <button 
                     className="gradient button-gradient px-3 py-1 rounded-2xl"
-                    onClick={() => console.log("CLICK")} // TODO: Expand games
+                    onClick={handleRedirect}
                 > More info </button>
             </div>
         </article>

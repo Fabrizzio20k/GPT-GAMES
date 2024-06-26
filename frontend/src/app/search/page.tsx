@@ -1,24 +1,25 @@
 "use client"
 
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAppSelector } from "@/redux/store";
 import { searchGamesByName } from "@/services/api";
 import MainLayoutPage from "@/pages/MainLayoutPage";
 import Offer from "@/components/Offer";
-import { clear } from "console";
 
 export default function Search() { 
     const user = useAppSelector((state) => state.user);
 
     const [activeButton, setActiveButton] = useState('offers');
     const [searchResult, setSearchResult] = useState([] as any[]);
+    const [selectedGame, setSelectedGame] = useState<number | null>(null);
 
     const searchParams = useSearchParams();
+    const router = useRouter();
 
     const fetchGames = async () => {
         const gameName = searchParams ? searchParams.get('name') || '' : '';
-        console.log(gameName);
+        // console.log(gameName);
 
         // if (activeButton === 'offers' && gameName !== '') {
             
@@ -28,7 +29,7 @@ export default function Search() {
 
             const games = await searchGamesByName(gameName, user.token);
             setSearchResult(games);
-            console.log(games);
+            // console.log(games);
         }
     }
 
@@ -59,14 +60,18 @@ export default function Search() {
 
             <article className="w-full gallery">
                 {
-                    searchResult.map((game, index) => (
-                        <Offer 
-                            key={index}
-                            title={game.name}
-                            price={10}
-                            img_url={game.cover}
-                        />
-                    ))
+                    activeButton === 'offers' ? 'Offers' : (
+                        searchResult.map((game, index) => (
+                            <Offer 
+                                key={index}
+                                api_id={game.api_id}
+                                title={game.name}
+                                price={0}
+                                img_url={game.cover}
+                                isOffer={activeButton === 'offers'}
+                            />
+                        ))
+                    ) 
                 }
             </article>
         </MainLayoutPage>

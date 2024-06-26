@@ -4,7 +4,7 @@ interface NewOfferGameProps {
   involved_companies: any[];
   summary: string;
   img_url: string;
-  onClick: (api_id: string) => void;
+  onClick: (data: any) => void;
   isSelected: boolean;
 }
 

@@ -10,11 +10,7 @@ TODO: El endpoint retorna muchos juegos, se pueden paginar?
 */
 export const searchGamesByName = async (name: string, token: string) => {
   try {
-    const response = await axios.get(urlServer + `/game_by_name/?name=${name}`, {
-      headers: {
-        'Authorization': `token ${token}`,
-      }
-    });
+    const response = await axios.get(urlServer + `/game_by_name/?name=${name}`);
     return response.data;
   } catch (error: any) {
     console.log(error.response.data);

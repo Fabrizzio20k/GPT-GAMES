@@ -19,32 +19,33 @@ export default function Newoffer() {
     
     const [gameName, setGameName] = useState('');
     const [gamesResult, setGamesResult] = useState([] as any[]);
-    const [selectedGame, setSelectedGame] = useState<number | null>(null);
+    const [selectedGame, setSelectedGame] = useState<{ api_id: string, name: string }>({ api_id: '', name: '' });
+
 
     const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             e.preventDefault();           
             const games = await searchGamesByName(gameName, user.token);
             setGamesResult(games);
-            console.log(games);
+            // console.log(games);
         }
     };
 
-    const handleClick = useCallback((api_id: string) => {
-        const id = parseInt(api_id);
-        setSelectedGame(id);
+    const handleClick = useCallback((game_info: any) => {
+        setSelectedGame(game_info);        
     }, []);
 
     const onSubmit: SubmitHandler<FormPublishOffer> = async (data) => {
         data.seller_id = parseInt(user.id);
         data.date_created = new Date().toISOString(); // Backend?
         
-        if (selectedGame === null) {
+        if (selectedGame.api_id === '') {
             toast.error("Please select a game");
             return;
         }
 
-        data.game = selectedGame;
+        data.title = selectedGame.name;
+        data.game = parseInt(selectedGame.api_id);
         console.log(data);
         
 
@@ -77,16 +78,9 @@ export default function Newoffer() {
                         onSubmit={handleSubmit(onSubmit)}
                     >
                         <label className="w-full text-sm">Title</label>
-                        <input
-                            type="text"
-                            className="p-2 rounded-2xl bg-tertiary w-full"
-                            {...register("title", {
-                                required: "Title of offer is required",
-                                minLength: { value: 5, message: "Title must be at least 5 characters long" },
-                                maxLength: { value: 50, message: "Title must be at most 50 characters long" }
-                            })}
-                        />
-                        {errors.title && <p className="text-alert text-sm">{errors.title.message}</p>}
+                        <div
+                            className='p-2 rounded-2xl bg-tertiary w-full'
+                        > {selectedGame.name !== '' ? selectedGame.name : "Select a game..."} </div>
 
                         <label className="w-full text-sm">Description</label>
                         <textarea
@@ -166,7 +160,7 @@ export default function Newoffer() {
                                     summary={game.summary}
                                     img_url={game.cover}
                                     onClick={handleClick}
-                                    isSelected={selectedGame === game.api_id}
+                                    isSelected={selectedGame.api_id === game.api_id}
                                 />
                             ))
                         }

@@ -1,17 +1,29 @@
+import { useRouter } from 'next/navigation';
 import OfferProps from '@/interfaces/OfferProps';
 import Image from 'next/image'
 
 const Offer: React.FC<OfferProps> = ({
+    api_id,
     title,
     price,
-    img_url
+    img_url,
+    isOffer
 }) => {
 
     const displayTitle = title || "Game name not found"
-    const displayImgUrl = img_url || "/assets/logo/logo.png" // TODO: Reducir tamaño de imagen
+    const displayImgUrl = img_url || "/assets/logo/logo.png"
+
+    const router = useRouter();
+
+    const handleClick = () => {
+        router.push(`/game/${api_id}`)
+    };
 
     return (
-        <section className='bg-tertiary p-3 rounded-xl mb-2 w-full block gallery-item'>
+        <section 
+            className='offer-game bg-tertiary p-3 rounded-xl mb-2 w-full block gallery-item'
+            onClick = {handleClick}
+        >
             <div className='w-full mb-2'>
                 <Image
                     src={displayImgUrl}
@@ -26,9 +38,17 @@ const Offer: React.FC<OfferProps> = ({
             </div>
             <div className='flex justify-between'>
                 <h2 className='uppercase w-2/3'>{displayTitle}</h2>
-                <div className='gradient px-3 py-1 rounded-full font-bold my-auto'>
-                    {`$ ${price}`}
-                </div>
+                {
+                    isOffer ? (
+                        <div className='gradient px-3 py-1 rounded-full font-bold my-auto'>
+                            {`$ ${price}`}
+                        </div>
+                    ) : (
+                        <div className='gradient px-3 py-1 rounded-full font-bold my-auto text-xs'>
+                            More Info
+                        </div>
+                    )
+                }
             </div>
         </section>
     )
