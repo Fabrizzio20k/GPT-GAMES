@@ -88,14 +88,14 @@ def login(request):
         return Response({"error": "Invalid password"}, status=status.HTTP_400_BAD_REQUEST)
 
     token, created = Token.objects.get_or_create(user=user)
-    serializer = LoginSerializer(instance=user, context={'request': request})
+    serializer = UserSerializer(instance=user, context={'request': request})
     return Response({'token': token.key, 'user': serializer.data}, status=status.HTTP_201_CREATED)
 
 
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def register(request, format=None):
-    serialiazer = RegisterSerializer(
+    serialiazer = UserSerializer(
         data=request.data, context={'request': request})
 
     if serialiazer.is_valid():

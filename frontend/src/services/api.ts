@@ -77,6 +77,24 @@ export const searchGamesByName = async (name: string, token: string) => {
   return { errors, dataGames };
 }
 
+export const getGameById = async (id: number) => {
+  let errors = [];
+  let dataGame = {};
+
+  try {
+    const response = await axios.get(urlServer + "/game/" + id, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    dataGame = response.data;
+  } catch (error: any) {
+    errors = (error as any).response.data;
+  }
+
+  return { errors, dataGame };
+}
+
 
 /* Función que consume el endpoint "/offers/" para crear una oferta
 * @param offerInfo: información de la oferta (JSON)
