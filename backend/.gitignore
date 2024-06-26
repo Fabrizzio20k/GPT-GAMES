@@ -165,3 +165,7 @@ media/
 .DS_Store
 .AppleDouble
 .LSOverride
+
+# Ignorar migraciones de Django
+**/migrations/*.py
+!**/migrations/__init__.py
