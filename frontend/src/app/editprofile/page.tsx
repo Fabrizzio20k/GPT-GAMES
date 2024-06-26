@@ -62,7 +62,7 @@ export default function Profile() {
             <Loader activate={loading} />
             <Toaster richColors />
             <article className="w-full flex flex-col lg:flex-row gap-8">
-                <section className="w-full lg:w-1/2">
+                <section className="w-full">
                     <h1 className="text-xl font-alata">Profile Information</h1>
                     <form
                         className="flex flex-col space-y-4 mt-4 font-inter"
@@ -148,9 +148,6 @@ export default function Profile() {
                             Update Profile
                         </button>
                     </form>
-                </section>
-                <section className="w-full lg:w-1/2">
-                    <h1 className="text-xl font-alata">Games purchased</h1>
                 </section>
             </article>
         </MainLayoutPage>

@@ -3,7 +3,7 @@
 import MainLayoutPage from "@/pages/MainLayoutPage";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { toast, Toaster } from "sonner";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import Loader from "@/components/Loader";
 import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
@@ -38,10 +38,9 @@ export default function ViewProfile() {
             if (id !== user.id.toString()) {
                 try {
                     const { errors, dataUser } = await getUserById(id, user.token);
-                    console.log(typeof errors, dataUser);
-                    if (errors) {
+                    if (typeof errors === 'object' && Object.keys(errors).length > 0) {
                         toast.error('User not found');
-                        //router.push('/');
+                        router.push(`/viewprofile/${user.id}`);
                     } else {
                         setShowedUser(dataUser);
                     }
@@ -54,13 +53,13 @@ export default function ViewProfile() {
 
         fetchData();
 
-    }, [user, id, router, showedUser]);
+    }, [user, id, router]);
 
     return (
         <MainLayoutPage>
             <Loader activate={loading} />
             <Toaster richColors />
-            <article className="w-full flex flex-col lg:flex-row gap-8">
+            <article className="w-full flex flex-col gap-8">
                 <section className="w-full flex flex-col md:flex-row gap-8 items-center md:items-start justify-between">
                     <div className="flex flex-col xs:flex-row items-center w-full md:w-fit gap-8">
                         <Image src="/assets/background/d2.jpg" alt="user-photo" width={1920} height={1080} className="rounded-2xl w-[200px] border-gray-300 border-4" />
@@ -71,13 +70,21 @@ export default function ViewProfile() {
                             <p className="text-xl">{showedUser.phone}</p>
                         </div>
                     </div>
-                    <button className="flex flex-row items-center justify-center rounded-2xl p-3 gap-2 font-bold gradient w-full md:w-fit" onClick={handleClick}>
-                        Edit Profile
-                        <MdEdit className="text-2xl" />
-                    </button>
-                </section>
-                <section>
 
+                    {user.id.toString() === showedUser.id.toString() && (
+                        <button className="flex flex-row items-center justify-center rounded-2xl p-3 gap-2 font-bold gradient w-full md:w-fit" onClick={handleClick}>
+                            Edit Profile
+                            <MdEdit className="text-2xl" />
+                        </button>
+                    )}
+                </section>
+                <section className="test">
+                    <h1 className="font-bold text-2xl">
+                        {showedUser.id.toString() === user.id.toString() ? "Games Purchased" : "Offers published"}
+                    </h1>
+                    <div className="flex flex-col gap-4">
+                        <p className="text-xl">No games purchased yet</p>
+                    </div>
                 </section>
             </article>
         </MainLayoutPage>

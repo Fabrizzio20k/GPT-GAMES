@@ -53,7 +53,7 @@ export default function Sidebar() {
                         GPT GAMES
                     </h2>
                 </div>
-                <ul className="font-inter flex-1 space-y-6 px-4">
+                <ul className="font-inter flex-1 space-y-6 px-4 overflow-y-scroll custom-scroll">
                     <li
                         className={`button-sidebar ${path === '/' ? 'gradient button-gradient' : ''}`}
                         onClick={() => { router.push('/'); setIsSidebarVisible(false); }}>

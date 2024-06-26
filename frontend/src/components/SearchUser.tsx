@@ -16,23 +16,23 @@ const SearchOffer: React.FC<SearchUserProps> = ({
     const router = useRouter();
 
     const handleClick = () => {
-        router.push(`/users/${id}`)
+        router.push(`/viewprofile/${id}`)
     };
 
     return (
-        <section 
+        <section
             className='offer-game bg-tertiary p-3 rounded-xl mb-2 w-full block gallery-item'
-            onClick = {handleClick}
+            onClick={handleClick}
         >
             <div className='w-full mb-2'>
                 <Image
                     src={displayProfilePic}
                     alt={displayUsername}
-                    width={500} 
+                    width={500}
                     height={300}
                     sizes="(max-width: 768px) 100vw, 
                             (max-width: 1200px) 50vw, 
-                            33vw" 
+                            33vw"
                     className="object-cover object-center rounded-lg"
                 />
             </div>
