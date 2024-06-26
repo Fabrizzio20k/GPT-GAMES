@@ -1,6 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
+import os
 # Create your models here.
+
+def get_upload_path(instance, filename):
+    return os.path.join('images', 'profile_pictures', str(instance.id), filename)
+
+
+
 
 class User(AbstractUser):
     username = models.CharField(max_length=255 , unique=True)
@@ -10,6 +17,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
+    profile_picture = models.ImageField(upload_to=get_upload_path , blank=True , null=True)
 
     # Add these fields with unique related_name attributes
     groups = models.ManyToManyField(

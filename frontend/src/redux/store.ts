@@ -4,6 +4,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { statusReducer } from "./slices/stateSlice";
 import { userReducer } from "./slices/userSlice";
+
 const statePersistConfig = {
     key: "status",
     storage: storage,

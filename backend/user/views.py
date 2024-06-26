@@ -7,10 +7,13 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 from .models import User
-from .serializers import UserSerializer
+from .serializers import UserSerializer , ProfilePictureSerializer
 import logging
 from django.shortcuts import get_object_or_404
 from django.db.utils import IntegrityError
+from rest_framework.filters import SearchFilter
+from rest_framework.parsers import  MultiPartParser, FormParser
+
 
 logger = logging.getLogger(__name__)
 
@@ -20,6 +23,9 @@ class UserView(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [TokenAuthentication]
+    filter_backends = [SearchFilter]
+    search_fields = ['username', 'email']
+
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -29,6 +35,22 @@ class UserView(viewsets.ModelViewSet):
         headers = self.get_success_headers(serializer.data)
         logger.info(f'User created: {user.username}, Token: {token.key}')
         return Response({'token': token.key}, status=status.HTTP_201_CREATED, headers=headers)
+
+
+class UpdateProfilePictureView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    parser_classes = [MultiPartParser, FormParser]
+
+    def post(self, request, format=None):
+        user = request.user
+        serializer = ProfilePictureSerializer(instance=user, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(data=serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 
 @api_view(['POST'])

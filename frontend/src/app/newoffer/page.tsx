@@ -1,39 +1,15 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import MainLayoutPage from '@/pages/MainLayoutPage'
 import { toast, Toaster } from "sonner";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAppSelector } from '@/redux/store';
 import { useRouter } from 'next/navigation';
-import { FaSearch, FaWindows, FaXbox, FaPlaystation, FaApple } from "react-icons/fa";
-import { BsNintendoSwitch } from "react-icons/bs";
+import { FaSearch } from "react-icons/fa";
 import FormPublishOffer from '@/interfaces/FormPublishOffer';
-import Image from 'next/image';
-
-
-const Game = () => {
-    return (
-        <article className='bg-secondary rounded-xl p-2 flex justify-between mb-2'>
-            <div className='w-[48%]'>
-                <Image
-                    src="/assets/background/login_wallpaper.webp"
-                    alt="Login_background"
-                    layout="responsive"
-                    width={100}
-                    height={100} 
-                    className="object-cover object-center rounded-lg"
-                />
-            </div>
-            <div className='w-[48%]'>
-                <h2 className='text-xl font-medium font-alata'>Game 1 abcdefghijklmn</h2>
-                <hr/>
-                <h3 className='mb-1'>Creator</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore cupiditate rem, perferendis accusamus explicabo quaer</p>
-            </div>
-        </article>
-    )
-}
+import { searchGamesByName, createOffer } from '@/services/api';
+import NewOfferGame from '@/components/NewOfferGame';
 
 
 export default function Newoffer() {
@@ -41,65 +17,41 @@ export default function Newoffer() {
     const user = useAppSelector((state) => state.user);
     const router = useRouter();  
     
+    const [gameName, setGameName] = useState('');
+    const [gamesResult, setGamesResult] = useState([] as any[]);
+    const [selectedGame, setSelectedGame] = useState<{ api_id: string, name: string }>({ api_id: '', name: '' });
 
-    const [searchGame, setSearchGame] = useState('');
 
-    const fetchGames = async () => {
-
-    }
-
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
-            e.preventDefault();
-            console.log(searchGame);
+            e.preventDefault();           
+            const games = await searchGamesByName(gameName, user.token);
+            setGamesResult(games);
+            // console.log(games);
         }
     };
 
+    const handleClick = useCallback((game_info: any) => {
+        setSelectedGame(game_info);        
+    }, []);
+
     const onSubmit: SubmitHandler<FormPublishOffer> = async (data) => {
-        data.game = 1;
+        data.seller_id = parseInt(user.id);
+        data.date_created = new Date().toISOString(); // Backend?
+        
+        if (selectedGame.api_id === '') {
+            toast.error("Please select a game");
+            return;
+        }
+
+        data.title = selectedGame.name;
+        data.game = parseInt(selectedGame.api_id);
         console.log(data);
-
-        // let gameId = {
-        //     id: data.game
-        // }
+        
 
         // try {
-        //     const response = await axios.post(urlServer + "/games/", gameId, {
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Authorization': `token ${user.token}`,
-        //         }
-        //     })
-
-        //     console.log(response.data);
-        // } catch (error) {
-        //     const listErrors = (error as any).response.data;
-        //     let errors = '';
-        //     for (const key in listErrors) {
-        //         errors += `${listErrors[key]}\n`;
-        //     }
-        //     errors = errors.toUpperCase();
-        //     toast.error(errors);
-        // }
-
-        // let offerInfo = {
-        //     seller: user.id,
-        //     game: data.game,
-        //     price: data.price,
-        //     discount: data.discount
-        // }
-
-        // try {
-        //     const response = await axios.post(urlServer + "/offers/", offerInfo, {
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //             'Authorization': `token ${user.token}`,
-        //         },
-        //     });
-        //     toast.success('Offer published successfully');
-
-        //     console.log(response.data);
-
+            //const response = await createOffer(data, user.token);
+            // toast.success('Offer published successfully');
         // } catch (error) {
         //     const listErrors = (error as any).response.data;
         //     let errors = '';
@@ -126,16 +78,9 @@ export default function Newoffer() {
                         onSubmit={handleSubmit(onSubmit)}
                     >
                         <label className="w-full text-sm">Title</label>
-                        <input
-                            type="text"
-                            className="p-2 rounded-2xl bg-tertiary w-full"
-                            {...register("title", {
-                                required: "Title of offer is required",
-                                minLength: { value: 5, message: "Title must be at least 5 characters long" },
-                                maxLength: { value: 50, message: "Title must be at most 50 characters long" }
-                            })}
-                        />
-                        {errors.title && <p className="text-alert text-sm">{errors.title.message}</p>}
+                        <div
+                            className='p-2 rounded-2xl bg-tertiary w-full'
+                        > {selectedGame.name !== '' ? selectedGame.name : "Select a game..."} </div>
 
                         <label className="w-full text-sm">Description</label>
                         <textarea
@@ -190,9 +135,8 @@ export default function Newoffer() {
                         </button>
                     </form>
                 </section>
-                <section className="w-full lg:w-1/2 bg-tertiary rounded-xl p-4">
+                <section className="w-full lg:w-1/2 bg-tertiary rounded-xl p-4 flex flex-col h-100vh">
                     <h1 className="text-xl font-alata uppercase mb-3">Choose the game to sell</h1>
-
                     <div className="w-full bg-secondary rounded-2xl px-2 py-1 flex items-center mb-3">
                         <FaSearch
                             className="w-6 h-6 mx-2"
@@ -200,18 +144,29 @@ export default function Newoffer() {
                         <input
                             type="text"
                             placeholder="Search game..."
-                            onChange={(e) => setSearchGame(e.target.value)}
+                            onChange={(e) => setGameName(e.target.value)}
                             className="bg-secondary border-0 focus:border-0"
                             onKeyDown={handleKeyDown}
                         />
                     </div>
-
-                    <div>
-                        <Game />
-                        <Game />
+                    <div className='flex-grow overflow-y-scroll h-[500px] custom-scroll'>
+                        {
+                            gamesResult.map((game, index) => (
+                                <NewOfferGame
+                                    key={index}
+                                    api_id={game.api_id}
+                                    name={game.name}
+                                    involved_companies={game.involved_companies}
+                                    summary={game.summary}
+                                    img_url={game.cover}
+                                    onClick={handleClick}
+                                    isSelected={selectedGame.api_id === game.api_id}
+                                />
+                            ))
+                        }
                     </div>
-              </section>
-        </main>
+                </section>
+            </main>
         </MainLayoutPage>
     )
 }
