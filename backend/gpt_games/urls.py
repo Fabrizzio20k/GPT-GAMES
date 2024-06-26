@@ -22,6 +22,8 @@ from rest_framework.schemas import get_schema_view
 from rest_framework.permissions import AllowAny
 from django.views.generic import TemplateView
 
+from rest_framework.authtoken.views import obtain_auth_token
+
 
 schema_view = get_schema_view(
     title="API Schema",
@@ -47,6 +49,8 @@ urlpatterns = [
         template_name='docs.html',
         extra_context={'schema_url': 'api_schema'}
     ), name='swagger-ui'),
+
+    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
 ]
 
 if settings.DEBUG:
