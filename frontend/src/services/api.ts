@@ -9,14 +9,18 @@ const urlServer = process.env.NEXT_PUBLIC_DEV_SERVER_URL;
 * @returns lista de juegos
 TODO: El endpoint retorna muchos juegos, se pueden paginar?
 */
-const searchGamesByName = async (name: string, token: string) => {
+export const searchGamesByName = async (name: string, token: string) => {
+  let errors = [];
+  let dataGames = [];
+
   try {
     const response = await axios.get(urlServer + `/game_by_name/?name=${name}`);
-    return response.data;
+    dataGames = response.data;
   } catch (error: any) {
-    console.log(error.response.data);
-    return [];
+    errors = (error as any).response.data;
   }
+
+  return { errors, dataGames };
 }
 
 /* Función que consume el endpoint "/offers/" para crear una oferta
@@ -39,7 +43,11 @@ export const createOffer = async (offerInfo: any, token: string) => {
   }
 }
 
-const registerUser = async (data: any) => {
+/* Función que consume el endpoint "/offers/" para obtener todas las ofertas
+* @param token: token del usuario
+* @returns: lista de ofertas
+*/
+export const registerUser = async (data: any) => {
 
   let errors = [];
   let dataResponse = {};
@@ -58,7 +66,11 @@ const registerUser = async (data: any) => {
   return { errors, dataResponse };
 }
 
-const loginUser = async (data: any) => {
+/* Función que consume el endpoint "/login/" para loguear un usuario
+* @param data: información del usuario (JSON)
+* @returns: usuario logueado
+*/
+export const loginUser = async (data: any) => {
   let dataUser = {} as User;
   let errors = [];
 
@@ -87,7 +99,12 @@ const loginUser = async (data: any) => {
   return { errors, dataUser };
 }
 
-const updateUser = async (data: any, user: User) => {
+/* Función que consume el endpoint "/users/" para actualizar un usuario
+* @param data: información del usuario (JSON)
+* @param user: usuario a actualizar
+* @returns: usuario actualizado
+*/
+export const updateUser = async (data: any, user: User) => {
   let errors = [];
   let dataUser = {} as User;
 
@@ -124,7 +141,12 @@ const updateUser = async (data: any, user: User) => {
 
 }
 
-const getUserById = async (id: string, token: string) => {
+/* Función que consume el endpoint "/users/" para obtener un usuario por id
+* @param id: id del usuario
+* @param token: token del usuario
+* @returns: usuario
+*/
+export const getUserById = async (id: string, token: string) => {
   let errors = [];
   let dataUser = {} as User;
 
@@ -153,5 +175,3 @@ const getUserById = async (id: string, token: string) => {
   return { errors, dataUser };
 
 }
-
-export { searchGamesByName, registerUser, loginUser, updateUser, getUserById };

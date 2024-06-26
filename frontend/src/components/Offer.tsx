@@ -7,7 +7,6 @@ const Offer: React.FC<OfferProps> = ({
     title,
     price,
     img_url,
-    isOffer
 }) => {
 
     const displayTitle = title || "Game name not found"
@@ -38,17 +37,9 @@ const Offer: React.FC<OfferProps> = ({
             </div>
             <div className='flex justify-between'>
                 <h2 className='uppercase w-2/3'>{displayTitle}</h2>
-                {
-                    isOffer ? (
-                        <div className='gradient px-3 py-1 rounded-full font-bold my-auto'>
-                            {`$ ${price}`}
-                        </div>
-                    ) : (
-                        <div className='gradient px-3 py-1 rounded-full font-bold my-auto text-xs'>
-                            More Info
-                        </div>
-                    )
-                }
+                <div className='gradient px-3 py-1 rounded-full font-bold my-auto'>
+                    {`$ ${price}`}
+                </div>
             </div>
         </section>
     )

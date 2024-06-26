@@ -3,6 +3,7 @@
 import React, { useState, useCallback } from 'react'
 import MainLayoutPage from '@/pages/MainLayoutPage'
 import { toast, Toaster } from "sonner";
+import Loader from "@/components/Loader";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAppSelector } from '@/redux/store';
 import { useRouter } from 'next/navigation';
@@ -10,24 +11,27 @@ import { FaSearch } from "react-icons/fa";
 import FormPublishOffer from '@/interfaces/FormPublishOffer';
 import { searchGamesByName, createOffer } from '@/services/api';
 import NewOfferGame from '@/components/NewOfferGame';
+import { toastError } from '@/utils/toastError';
 
 
 export default function Newoffer() {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<FormPublishOffer>();
     const user = useAppSelector((state) => state.user);
     const router = useRouter();  
     
     const [gameName, setGameName] = useState('');
     const [gamesResult, setGamesResult] = useState([] as any[]);
     const [selectedGame, setSelectedGame] = useState<{ api_id: string, name: string }>({ api_id: '', name: '' });
+    const [loading, setLoading] = useState(false);
 
+    const { register, handleSubmit, watch, formState: { errors } } = useForm<FormPublishOffer>();
 
     const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             e.preventDefault();           
-            const games = await searchGamesByName(gameName, user.token);
-            setGamesResult(games);
-            // console.log(games);
+            setLoading(true);
+            const { errors, dataGames } = await searchGamesByName(gameName, user.token);
+            Object.keys(errors).length > 0 ? toastError(errors) : setGamesResult(dataGames);
+            setLoading(false);
         }
     };
 
@@ -35,20 +39,16 @@ export default function Newoffer() {
         setSelectedGame(game_info);        
     }, []);
 
-    const onSubmit: SubmitHandler<FormPublishOffer> = async (data) => {
-        data.seller_id = parseInt(user.id);
-        data.date_created = new Date().toISOString(); // Backend?
-        
+    const onSubmit: SubmitHandler<FormPublishOffer> = async (data) => {        
         if (selectedGame.api_id === '') {
             toast.error("Please select a game");
             return;
         }
 
-        data.title = selectedGame.name;
+        data.name = selectedGame.name;
         data.game = parseInt(selectedGame.api_id);
         console.log(data);
         
-
         // try {
             //const response = await createOffer(data, user.token);
             // toast.success('Offer published successfully');
@@ -69,6 +69,7 @@ export default function Newoffer() {
 
     return (
         <MainLayoutPage>
+            <Loader activate={loading} />
             <Toaster richColors />
             <main className="w-full flex flex-col lg:flex-row gap-8">
                 <section className="w-full lg:w-1/2">
