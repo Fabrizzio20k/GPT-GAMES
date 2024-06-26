@@ -7,12 +7,12 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 from .models import User
-from .serializers import UserSerializer , ProfilePictureSerializer, RegisterSerializer, LoginSerializer, SearchSerializer
+from .serializers import UserSerializer, ProfilePictureSerializer, RegisterSerializer, LoginSerializer, SearchSerializer
 import logging
 from django.shortcuts import get_object_or_404
 from django.db.utils import IntegrityError
 from rest_framework.filters import SearchFilter
-from rest_framework.parsers import  MultiPartParser, FormParser
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 logger = logging.getLogger(__name__)
@@ -23,7 +23,6 @@ class UserView(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [TokenAuthentication]
-
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -42,7 +41,6 @@ class SearchUserView(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication]
     filter_backends = [SearchFilter]
     search_fields = ['username', 'email']
-
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -67,7 +65,6 @@ class UpdateProfilePictureView(APIView):
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(data=serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 
 
 @api_view(['POST'])
@@ -95,12 +92,12 @@ def login(request):
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def register(request, format=None):
-    serialiazer = UserSerializer(
+    serialiazer = RegisterSerializer(
         data=request.data, context={'request': request})
 
     if serialiazer.is_valid():
 
-        if len(serialiazer.validated_data['password']) < 8:
+        if len(serialiazer.validated_data['password']) <= 8:
             return Response({"detail": "password too short"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
