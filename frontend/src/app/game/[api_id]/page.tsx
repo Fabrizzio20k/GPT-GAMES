@@ -2,13 +2,13 @@ import MainLayoutPage from "@/pages/MainLayoutPage";
 import { notFound } from "next/navigation";
 
 
-type GamePageProps = {
+type GameProps = {
   params: {
     api_id: string;
   };
 }
 
-export default function GamePage({params} : GamePageProps){
+export default function Game({params} : GameProps){
 
   if(params.api_id === "not-found"){
     return notFound();

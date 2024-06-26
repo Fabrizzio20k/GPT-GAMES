@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useRef } from "react";
 import Autoplay from "embla-carousel-autoplay"
-import Offer from "@/components/Offer";
+import SearchOffer from "@/components/SearchOffer";
 import { ArrowLeft, ArrowRight } from "lucide-react"
 
 
@@ -51,19 +51,44 @@ export default function Page() {
             >
                 <CarouselContent>
                     <CarouselItem className="sm:basis-1/2 lg:basis-1/3">
-                        <Offer />
+                        <SearchOffer 
+                            api_id={"0"}
+                            title={""}
+                            price={10}
+                            img_url={""}
+                        />
                     </CarouselItem>
                     <CarouselItem className="sm:basis-1/2 lg:basis-1/3">
-                        <Offer />
+                        <SearchOffer 
+                            api_id={"0"}
+                            title={""}
+                            price={10}
+                            img_url={""}
+                        />
                     </CarouselItem>
                     <CarouselItem className="sm:basis-1/2 lg:basis-1/3">
-                        <Offer />
+                        <SearchOffer 
+                            api_id={"0"}
+                            title={""}
+                            price={10}
+                            img_url={""}
+                        />
                     </CarouselItem>
                     <CarouselItem className="sm:basis-1/2 lg:basis-1/3">
-                        <Offer />
+                        <SearchOffer 
+                            api_id={"0"}
+                            title={""}
+                            price={10}
+                            img_url={""}
+                        />
                     </CarouselItem>
                     <CarouselItem className="sm:basis-1/2 lg:basis-1/3">
-                        <Offer />
+                        <SearchOffer 
+                            api_id={"0"}
+                            title={""}
+                            price={10}
+                            img_url={""}
+                        />
                     </CarouselItem>
                 </CarouselContent>
                 <CarouselPrevious className="absolute top-1/2 left-4 transform -translate-y-1/2"/>

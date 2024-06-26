@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from "react";
-import Offer from "@/components/Offer";
+import SearchOffer from "@/components/SearchOffer";
 import MainLayoutPage from "@/pages/MainLayoutPage";
 import { useAppSelector } from "@/redux/store";
 import { Button } from "@/components/ui/button";
@@ -97,8 +97,12 @@ export default function Dashboard() {
             </section>
 
             <section className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                <Offer />
-                <Offer />
+                <SearchOffer 
+                    api_id={"0"}
+                    title={""}
+                    price={10}
+                    img_url={""}
+                />
             </section>
         </MainLayoutPage>
     );

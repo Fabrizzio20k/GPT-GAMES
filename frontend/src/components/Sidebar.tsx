@@ -63,7 +63,7 @@ export default function Sidebar() {
                     <li className={`button-sidebar ${path === '/search' ? 'gradient button-gradient' : ''}`}
                         onClick={() => { router.push('/search'); setIsSidebarVisible(false); }}>
                         <FaGamepad className="text-2xl" />
-                        <h3 className="text-md">Game Store</h3>
+                        <h3 className="text-md">Explore</h3>
                     </li>
                     {logged && (
                         <>

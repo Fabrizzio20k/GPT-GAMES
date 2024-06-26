@@ -3,6 +3,56 @@ import { User } from "@/types/user";
 
 const urlServer = process.env.NEXT_PUBLIC_DEV_SERVER_URL;
 
+
+/* Función que consume el endpoint "/find-user/" para buscar usuarios por username
+* @param username: nombre de usuario
+* @param token: token del usuario
+* @returns: lista de usuarios
+*/
+
+export const searchUserByUsername = async (username: string, token: string) => {
+  let errors = [];
+  let dataUsers = [];
+
+  try {
+    const response = await axios.get(urlServer + `/find-user/?search=${username}`, {
+      headers: {
+        'Authorization': `token ${token}`,
+        'Content-Type': 'application/json',
+      }
+    });
+    dataUsers = response.data;
+  } catch (error: any) {
+    errors = (error as any).response.data;
+  }
+
+  return { errors, dataUsers };
+}
+
+/* Función que consume el endpoint "/offers/" para obtener todas las ofertas
+* @param name: nombre de la oferta
+* @param token: token del usuario
+* @returns: lista de ofertas
+*/
+export const searchOfferByName = async (name: string, token: string) => {
+  let errors = [];
+  let dataOffers = [];
+
+  try {
+    const response = await axios.get(urlServer + `/offers/?name=${name}`, {
+      headers: {
+        'Authorization': `token ${token}`,
+        'Content-Type': 'application/json',
+      }
+    });
+    dataOffers = response.data;
+  } catch (error: any) {
+    errors = (error as any).response.data;
+  }
+
+  return { errors, dataOffers };
+}
+
 /* Función que consume el endpoint "/game_by_name/" para buscar juegos por nombre
 * @param name: nombre del juego
 * @param token: token del usuario
@@ -14,7 +64,11 @@ export const searchGamesByName = async (name: string, token: string) => {
   let dataGames = [];
 
   try {
-    const response = await axios.get(urlServer + `/game_by_name/?name=${name}`);
+    const response = await axios.get(urlServer + `/game_by_name/?name=${name}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
     dataGames = response.data;
   } catch (error: any) {
     errors = (error as any).response.data;
@@ -23,6 +77,7 @@ export const searchGamesByName = async (name: string, token: string) => {
   return { errors, dataGames };
 }
 
+
 /* Función que consume el endpoint "/offers/" para crear una oferta
 * @param offerInfo: información de la oferta (JSON)
 * @param token: token del usuario
@@ -30,20 +85,24 @@ export const searchGamesByName = async (name: string, token: string) => {
 TODO: Acomodar el backend para que acepte los nuevos campos de la oferta
 */
 export const createOffer = async (offerInfo: any, token: string) => {
+  let errors = [];
+  let dataResponse = {};
+
   try {
     const response = await axios.post(urlServer + "/offers/", offerInfo, {
       headers: {
         'Authorization': `token ${token}`,
       }
     });
-    return response.data;
+    dataResponse = response.data;
   } catch (error: any) {
-    console.log(error.response.data);
-    return [];
+    errors = (error as any).response.data;
   }
+
+  return { errors, dataResponse };
 }
 
-/* Función que consume el endpoint "/offers/" para obtener todas las ofertas
+/* Función que consume el endpoint "/register/" para obtener todas las ofertas
 * @param token: token del usuario
 * @returns: lista de ofertas
 */
