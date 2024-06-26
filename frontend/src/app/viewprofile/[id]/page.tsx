@@ -3,7 +3,7 @@
 import MainLayoutPage from "@/pages/MainLayoutPage";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { toast, Toaster } from "sonner";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import Loader from "@/components/Loader";
 import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
@@ -38,10 +38,9 @@ export default function ViewProfile() {
             if (id !== user.id.toString()) {
                 try {
                     const { errors, dataUser } = await getUserById(id, user.token);
-                    console.log(typeof errors, dataUser);
-                    if (errors) {
+                    if (typeof errors === 'object' && Object.keys(errors).length > 0) {
                         toast.error('User not found');
-                        //router.push('/');
+                        router.push(`/viewprofile/${user.id}`);
                     } else {
                         setShowedUser(dataUser);
                     }
@@ -54,7 +53,7 @@ export default function ViewProfile() {
 
         fetchData();
 
-    }, [user, id, router, showedUser]);
+    }, [user, id, router]);
 
     return (
         <MainLayoutPage>
@@ -71,10 +70,13 @@ export default function ViewProfile() {
                             <p className="text-xl">{showedUser.phone}</p>
                         </div>
                     </div>
-                    <button className="flex flex-row items-center justify-center rounded-2xl p-3 gap-2 font-bold gradient w-full md:w-fit" onClick={handleClick}>
-                        Edit Profile
-                        <MdEdit className="text-2xl" />
-                    </button>
+
+                    {user.id.toString() === showedUser.id.toString() && (
+                        <button className="flex flex-row items-center justify-center rounded-2xl p-3 gap-2 font-bold gradient w-full md:w-fit" onClick={handleClick}>
+                            Edit Profile
+                            <MdEdit className="text-2xl" />
+                        </button>
+                    )}
                 </section>
                 <section>
 

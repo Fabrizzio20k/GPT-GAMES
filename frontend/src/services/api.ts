@@ -228,12 +228,13 @@ export const getUserById = async (id: string, token: string) => {
   let dataUser = {} as User;
 
   try {
-    const response = await axios.get(urlServer + "/users/" + id + "/", {
+    const response = await axios.get(urlServer + "/find-user/" + id + "/", {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Token ${token}`
       },
     });
+
     dataUser = {
       id: response.data.id,
       email: response.data.email,
