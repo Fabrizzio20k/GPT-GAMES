@@ -39,7 +39,7 @@ const OfferNew: React.FC<OfferBySeller> = (
                         {`-${discount}%`}
                     </div>
                     <div className='px-3 py-1 rounded-full text-gray-600 my-auto line-through'>
-                        {`${price / (1 - (discount / 100))} PEN`}
+                        {`${(price / (1 - (discount / 100))).toFixed(0)} PEN`}
                     </div>
                     <div className='px-3 py-1 rounded-full my-auto font-bold'>
                         {`${price} PEN`}
