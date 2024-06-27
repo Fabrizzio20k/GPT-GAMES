@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import MainLayoutPage from "@/pages/MainLayoutPage";
 import { notFound } from "next/navigation";
+import { FaWindows, FaPlaystation, FaXbox } from "react-icons/fa";
+import { BsNintendoSwitch } from "react-icons/bs";
 import { getGameById } from "@/services/api";
 import { Toaster } from "sonner";
 import Loader from "@/components/Loader";
@@ -17,14 +19,14 @@ type GameProps = {
     };
 }
 
-export default function Game({params} : GameProps){
+export default function Game({ params }: GameProps) {
     const [game, setGame] = useState({} as any);
     const [loading, setLoading] = useState(false);
 
     const fetchGame = async () => {
         setLoading(true);
-        const { errors, dataGame } = await getGameById(Number(params.api_id));        
-        Object.keys(errors).length > 0 ? toastError(errors) : setGame(dataGame);   
+        const { errors, dataGame } = await getGameById(Number(params.api_id));
+        Object.keys(errors).length > 0 ? toastError(errors) : setGame(dataGame);
 
         console.log(dataGame);
         setLoading(false)
@@ -45,11 +47,11 @@ export default function Game({params} : GameProps){
                     <Image
                         src={game.cover}
                         alt={game.name}
-                        width={300} 
+                        width={300}
                         height={300}
                         sizes="(max-width: 768px) 100vw, 
                                 (max-width: 1200px) 50vw, 
-                                33vw" 
+                                33vw"
                         className="object-cover object-center rounded-lg"
                     />
                 </div>
@@ -71,7 +73,7 @@ export default function Game({params} : GameProps){
                         {game.release_year}
                     </p>
 
-                    <div className="font-bold mt-4">Genres:</div> 
+                    <div className="font-bold mt-4">Genres:</div>
                     <p>
                         {
                             game.genres?.map((genre: string, index: number) => (
@@ -81,13 +83,19 @@ export default function Game({params} : GameProps){
                     </p>
 
                     <div className="font-bold mt-4">Platforms</div>
-                    <p>
+                    <div className="flex flex-row text-xl gap-2">
                         {
                             game.platforms?.map((platform: string, index: number) => (
-                                <span key={index}>{platform}, </span>
+                                <span key={index}>
+                                    {platform.includes("PC") ? <FaWindows /> :
+                                        platform.includes("PlayStation") ? <FaPlaystation /> :
+                                            platform.includes("Xbox") ? <FaXbox /> :
+                                                platform.includes("Nintendo") ? <BsNintendoSwitch /> : platform
+                                    }
+                                </span>
                             ))
                         }
-                    </p>
+                    </div>
                 </div>
             </section>
         </MainLayoutPage>
