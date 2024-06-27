@@ -3,14 +3,16 @@
 import MainLayoutPage from "@/pages/MainLayoutPage";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { toast, Toaster } from "sonner";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import Loader from "@/components/Loader";
 import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
 import { MdEdit } from "react-icons/md";
 import { User } from "@/types/user";
-import axios from "axios";
 import { getUserById } from "@/services/api";
+import OfferBySeller from "@/interfaces/OfferBySeller";
+import OfferNew from "@/components/OfferNew";
+
 
 export default function ViewProfile() {
     const user = useAppSelector((state) => state.user);
@@ -20,6 +22,7 @@ export default function ViewProfile() {
     const params = useParams() as { id: string };
     const { id } = params;
     const [showedUser, setShowedUser] = useState<User>(user);
+    const [offers, setOffers] = useState<OfferBySeller[]>([]);
 
     const handleClick = () => {
         router.push('/editprofile');
@@ -37,13 +40,14 @@ export default function ViewProfile() {
             }
             if (id !== user.id.toString()) {
                 try {
-                    const { errors, dataUser } = await getUserById(id, user.token);
+                    const { errors, dataUser, dataOffers } = await getUserById(id, user.token);
                     if (typeof errors === 'object' && Object.keys(errors).length > 0) {
                         toast.error('User not found');
                         router.push(`/viewprofile/${user.id}`);
                     } else {
                         setShowedUser(dataUser);
                     }
+                    setOffers(dataOffers);
                 } catch (error) {
                     toast.error('An error occurred. Try again later');
                 }
@@ -78,12 +82,15 @@ export default function ViewProfile() {
                         </button>
                     )}
                 </section>
-                <section className="test">
+                <section className="space-y-4">
                     <h1 className="font-bold text-2xl">
                         {showedUser.id.toString() === user.id.toString() ? "Games Purchased" : "Offers published"}
                     </h1>
-                    <div className="flex flex-col gap-4">
-                        <p className="text-xl">No games purchased yet</p>
+                    <div className="w-full gallery">
+                        {offers.length === 0 && (<p className="text-xl">No games purchased yet</p>)}
+                        {offers.length > 0 && offers.map((offer) => (
+                            <OfferNew key={offer.id} {...offer} />
+                        ))}
                     </div>
                 </section>
             </article>

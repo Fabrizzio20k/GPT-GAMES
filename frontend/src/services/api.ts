@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { User } from "@/types/user";
+import OfferBySeller from '@/interfaces/OfferBySeller';
 
 const urlServer = process.env.NEXT_PUBLIC_DEV_SERVER_URL;
 
@@ -226,6 +227,7 @@ export const updateUser = async (data: any, user: User) => {
 export const getUserById = async (id: string, token: string) => {
   let errors = [];
   let dataUser = {} as User;
+  let dataOffers = [] as OfferBySeller[];
 
   try {
     const response = await axios.get(urlServer + "/find-user/" + id + "/", {
@@ -245,11 +247,24 @@ export const getUserById = async (id: string, token: string) => {
       description: response.data.description,
       token: token,
     };
+
+    for (let i in response.data.offers) {
+      dataOffers.push({
+        id: response.data.offers[i].id,
+        seller: response.data.offers[i].seller,
+        game: response.data.offers[i].game,
+        price: response.data.offers[i].price,
+        discount: response.data.offers[i].discount,
+        published_date: response.data.offers[i].published_date,
+        description: response.data.offers[i].description,
+        link: response.data.offers[i].link,
+      });
+    }
   }
   catch (error) {
     errors = (error as any).response.data;
   }
 
-  return { errors, dataUser };
+  return { errors, dataUser, dataOffers };
 
 }
