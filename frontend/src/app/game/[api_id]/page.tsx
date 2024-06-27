@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import MainLayoutPage from "@/pages/MainLayoutPage";
 import { notFound } from "next/navigation";
-import { FaWindows, FaPlaystation, FaXbox } from "react-icons/fa";
+import { FaWindows, FaPlaystation, FaXbox, FaApple, FaAndroid } from "react-icons/fa";
 import { BsNintendoSwitch } from "react-icons/bs";
 import { getGameById } from "@/services/api";
 import { Toaster } from "sonner";
@@ -89,7 +89,9 @@ export default function Game({ params }: GameProps) {
                                     {platform.includes("PC") ? <FaWindows /> :
                                         platform.includes("PlayStation") ? <FaPlaystation /> :
                                             platform.includes("Xbox") ? <FaXbox /> :
-                                                platform.includes("Nintendo") ? <BsNintendoSwitch /> : platform
+                                                platform.includes("Nintendo") ? <BsNintendoSwitch /> :
+                                                    platform.includes("Mac") || platform.includes("iOS") ? <FaApple /> :
+                                                        platform.includes("Android") ? <FaAndroid /> : platform
                                     }
                                 </span>
                             ))
