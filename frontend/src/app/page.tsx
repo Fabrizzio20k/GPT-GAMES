@@ -11,8 +11,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { useRef } from "react";
 import Autoplay from "embla-carousel-autoplay"
-import SearchOffer from "@/components/SearchOffer";
 import { ArrowLeft, ArrowRight } from "lucide-react"
+import Image from "next/image";
+import OfferNew from "@/components/OfferNew";
 
 
 export default function Page() {
@@ -51,44 +52,64 @@ export default function Page() {
             >
                 <CarouselContent>
                     <CarouselItem className="sm:basis-1/2 lg:basis-1/3">
-                        <SearchOffer 
-                            api_id={"0"}
-                            title={""}
+                        <OfferNew 
+                            id={1}
+                            seller={"A"}
+                            game={"GPTGame"}
                             price={10}
-                            img_url={""}
-                        />
+                            discount={1}
+                            published_date={"2024-06-26"}
+                            description={"GPTDescription"}
+                            link={""}
+                        />  
                     </CarouselItem>
                     <CarouselItem className="sm:basis-1/2 lg:basis-1/3">
-                        <SearchOffer 
-                            api_id={"0"}
-                            title={""}
+                        <OfferNew 
+                            id={1}
+                            seller={"A"}
+                            game={"GPTGame"}
                             price={10}
-                            img_url={""}
-                        />
+                            discount={1}
+                            published_date={"2024-06-26"}
+                            description={"GPTDescription"}
+                            link={""}
+                        />  
                     </CarouselItem>
                     <CarouselItem className="sm:basis-1/2 lg:basis-1/3">
-                        <SearchOffer 
-                            api_id={"0"}
-                            title={""}
+                        <OfferNew 
+                            id={1}
+                            seller={"A"}
+                            game={"GPTGame"}
                             price={10}
-                            img_url={""}
-                        />
+                            discount={1}
+                            published_date={"2024-06-26"}
+                            description={"GPTDescription"}
+                            link={""}
+                        />  
                     </CarouselItem>
                     <CarouselItem className="sm:basis-1/2 lg:basis-1/3">
-                        <SearchOffer 
-                            api_id={"0"}
-                            title={""}
+                        <OfferNew 
+                            id={1}
+                            seller={"A"}
+                            game={"GPTGame"}
                             price={10}
-                            img_url={""}
-                        />
+                            discount={1}
+                            published_date={"2024-06-26"}
+                            description={"GPTDescription"}
+                            link={""}
+                        />  
                     </CarouselItem>
                     <CarouselItem className="sm:basis-1/2 lg:basis-1/3">
-                        <SearchOffer 
-                            api_id={"0"}
-                            title={""}
+                        <OfferNew 
+                            id={1}
+                            seller={"A"}
+                            game={"GPTGame"}
                             price={10}
-                            img_url={""}
-                        />
+                            discount={1}
+                            published_date={"2024-06-26"}
+                            description={"GPTDescription"}
+                            link={""}
+                        />  
                     </CarouselItem>
                 </CarouselContent>
                 <CarouselPrevious className="absolute top-1/2 left-4 transform -translate-y-1/2"/>

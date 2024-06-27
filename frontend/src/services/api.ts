@@ -40,7 +40,7 @@ export const searchOfferByName = async (name: string, token: string) => {
   let dataOffers = [];
 
   try {
-    const response = await axios.get(urlServer + `/offers/?name=${name}`, {
+    const response = await axios.get(urlServer + `/offers/?search=${name}`, {
       headers: {
         'Authorization': `token ${token}`,
         'Content-Type': 'application/json',
