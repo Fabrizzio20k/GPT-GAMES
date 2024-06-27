@@ -1,22 +1,16 @@
 "use client"
 
-import React, { useEffect, useState } from "react";
 import OfferNew from "@/components/OfferNew";
 import MainLayoutPage from "@/pages/MainLayoutPage";
 import { useAppSelector } from "@/redux/store";
 import { Button } from "@/components/ui/button";
 import { CiCirclePlus } from "react-icons/ci";
 import { useRouter } from "next/navigation";
-import { toast, Toaster } from "sonner";
 import Image from "next/image";
 
 export default function Dashboard() {
     const user = useAppSelector((state) => state.user);
     const router = useRouter();
-
-    useEffect(() => {
-        console.log(user)
-    }, []);
 
     return (
         <MainLayoutPage>
@@ -53,7 +47,7 @@ export default function Dashboard() {
             <section className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {
                     user.offers.map((offer, index) => (
-                        <OfferNew 
+                        <OfferNew
                             key={index}
                             id={offer.id}
                             seller={offer.seller}

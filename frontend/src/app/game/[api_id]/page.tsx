@@ -28,7 +28,6 @@ export default function Game({ params }: GameProps) {
         const { errors, dataGame } = await getGameById(Number(params.api_id));
         Object.keys(errors).length > 0 ? toastError(errors) : setGame(dataGame);
 
-        console.log(dataGame);
         setLoading(false)
     }
 

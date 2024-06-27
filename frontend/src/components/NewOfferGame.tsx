@@ -12,31 +12,30 @@ const NewOfferGame: React.FC<NewOfferGameProps> = ({
     onClick,
     isSelected
 }) => {
-    
+
     const displayName = name || "Game name not found"
     const displayCompanies = involved_companies.length > 0 ? involved_companies : ["Not companies found"]
     const displayImgUrl = img_url || "/assets/logo/logo.png"
 
     const router = useRouter();
-    
+
     const displaySummary = summary
-    ? summary.length > 100
-        ? summary.slice(0, 100) + '...'
-        : summary
-    : "Summary not found";
+        ? summary.length > 100
+            ? summary.slice(0, 100) + '...'
+            : summary
+        : "Summary not found";
 
     const handleRedirect = () => {
         router.push(`/game/${api_id}`)
     }
 
     const handleClick = () => {
-        console.log({api_id, name, img_url})
-        onClick({api_id, name, img_url})
+        onClick({ api_id, name, img_url })
     }
 
     return (
-        <article 
-            className={`new-offer-game ${isSelected ? 'border-4 border-primary hover:border-primary'  : 'border border-transparent'}`}
+        <article
+            className={`new-offer-game ${isSelected ? 'border-4 border-primary hover:border-primary' : 'border border-transparent'}`}
             id={api_id}
             onClick={handleClick}
         >
@@ -53,7 +52,7 @@ const NewOfferGame: React.FC<NewOfferGameProps> = ({
             </div>
             <div className='sm:w-2/3 w-full mt-2 sm:mt-0'>
                 <h2 className='text-xl font-medium font-alata'>{displayName}</h2>
-                <hr/>
+                <hr />
                 <h3 className='mb-1'>
                     {
                         displayCompanies.map((company, index) => (
@@ -62,7 +61,7 @@ const NewOfferGame: React.FC<NewOfferGameProps> = ({
                     }
                 </h3>
                 <p className="mb-2">{displaySummary}</p>
-                <button 
+                <button
                     className="gradient button-gradient px-3 py-1 rounded-2xl"
                     onClick={handleRedirect}
                 > More info </button>
