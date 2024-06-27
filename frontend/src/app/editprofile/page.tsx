@@ -43,6 +43,7 @@ export default function Profile() {
         } else {
             dispatch(setUser(dataUser));
             toast.success('Profile updated successfully');
+            router.push(`/viewprofile/${user.id}`);
         }
 
         setLoading(false);

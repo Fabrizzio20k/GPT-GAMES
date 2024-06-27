@@ -198,8 +198,6 @@ export const updateUser = async (data: any, user: User) => {
       },
     });
 
-    console.log(response.data);
-
     for (let i in response.data.user.offers) {
       dataOffers.push({
         id: response.data.user.offers[i].id,
