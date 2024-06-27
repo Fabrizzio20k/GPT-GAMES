@@ -198,16 +198,18 @@ export const updateUser = async (data: any, user: User) => {
       },
     });
 
+    console.log(response.data);
+
     for (let i in response.data.user.offers) {
       dataOffers.push({
-        id: response.data.offers[i].id,
-        seller: response.data.offers[i].seller,
-        game: response.data.offers[i].game,
-        price: response.data.offers[i].price,
-        discount: response.data.offers[i].discount,
-        published_date: response.data.offers[i].published_date,
-        description: response.data.offers[i].description,
-        link: response.data.offers[i].link,
+        id: response.data.user.offers[i].id,
+        seller: response.data.user.offers[i].seller,
+        game: response.data.user.offers[i].game,
+        price: response.data.user.offers[i].price,
+        discount: response.data.user.offers[i].discount,
+        published_date: response.data.user.offers[i].published_date,
+        description: response.data.user.offers[i].description,
+        link: response.data.user.offers[i].link,
       });
     }
 

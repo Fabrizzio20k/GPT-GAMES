@@ -54,7 +54,6 @@ export default function Profile() {
             toast.error('You must be logged in to access this page');
             router.push('/signin');
         }
-        console.log(user);
     });
 
     return (
