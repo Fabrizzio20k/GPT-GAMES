@@ -20,7 +20,7 @@ export default function Newoffer() {
     
     const [gameName, setGameName] = useState('');
     const [gamesResult, setGamesResult] = useState([] as any[]);
-    const [selectedGame, setSelectedGame] = useState<{ api_id: string, name: string }>({ api_id: '', name: '' });
+    const [selectedGame, setSelectedGame] = useState<{ api_id: string, name: string, img_url: string }>({ api_id: '', name: '', img_url: '' });
     const [loading, setLoading] = useState(false);
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm<FormPublishOffer>();
@@ -43,28 +43,19 @@ export default function Newoffer() {
         if (selectedGame.api_id === '') {
             toast.error("Please select a game");
             return;
-        }
+        }        
 
+        data.id = selectedGame.api_id;
         data.name = selectedGame.name;
-        data.game = parseInt(selectedGame.api_id);
+        data.link = selectedGame.img_url;
         console.log(data);
         
-        // try {
-            //const response = await createOffer(data, user.token);
-            // toast.success('Offer published successfully');
-        // } catch (error) {
-        //     const listErrors = (error as any).response.data;
-        //     let errors = '';
-        //     for (const key in listErrors) {
-        //         errors += `${listErrors[key]}\n`;
-        //     }
-        //     errors = errors.toUpperCase();
-        //     toast.error(errors);
-        // }
+        const {errors, dataResponse} = await createOffer(data, user.token);
+        Object.keys(errors).length > 0 ? toastError(errors) : toast.success('Offer published successfully');
 
-        // setTimeout(() => {
-        //     router.push('/dashboard');
-        // }, 1000);
+        setTimeout(() => {
+            // router.push('/dashboard');
+        }, 1000);
     }
 
     return (
@@ -83,7 +74,7 @@ export default function Newoffer() {
                             className='p-2 rounded-2xl bg-tertiary w-full'
                         > {selectedGame.name !== '' ? selectedGame.name : "Select a game..."} </div>
 
-                        <label className="w-full text-sm">Description</label>
+                        {/* <label className="w-full text-sm">Description</label>
                         <textarea
                             className="p-2 min-h-[100px] resize-none"
                             {...register("description", {
@@ -92,7 +83,7 @@ export default function Newoffer() {
                                 maxLength: { value: 200, message: "Description must be at most 200 characters long" }
                             })}
                         />
-                        {errors.description && <p className="text-alert text-sm">{errors.description.message}</p>}
+                        {errors.description && <p className="text-alert text-sm">{errors.description.message}</p>} */}
 
                         <label className="w-full text-sm">Game Key</label>
                         <input

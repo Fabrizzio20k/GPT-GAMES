@@ -33,9 +33,8 @@ export default function Search() {
             const { errors, dataUsers } = await searchUserByUsername(searchParam, user.token);
             Object.keys(errors).length > 0 ? toastError(errors) : setSearchResult(dataUsers);
         } else if (activeButton === 'offers') {
-            // const { errors, dataOffers } = await searchOfferByName(searchParam, user.token);
-            // Object.keys(errors).length > 0 ? toastError(errors) : setSearchResult(dataOffers);
-            console.log('Offerssss');
+            const { errors, dataOffers } = await searchOfferByName(searchParam, user.token);
+            Object.keys(errors).length > 0 ? toastError(errors) : setSearchResult(dataOffers);
         } else if (activeButton === 'games') {
             const { errors, dataGames } = await searchGamesByName(searchParam, user.token);
             Object.keys(errors).length > 0 ? toastError(errors) : setSearchResult(dataGames);            
@@ -111,20 +110,18 @@ export default function Search() {
 
                 case 'offers':
                     return (
-                        // <>
-                        //     {searchResult.map((offer, index) => (
-                        //     <SearchOffer 
-                        //         key={index}
-                        //         id={offer.id}
-                        //         name={offer.name}
-                        //         price={offer.price}
-                        //         discount={offer.discount}
-                        //         seller={offer.seller}
-                        //         img_url={offer.cover}
-                        //     />
-                        //     ))}
-                        // </>
-                        <div>Offers</div>
+                        <>
+                            {searchResult.map((offer, index) => (
+                            <SearchOffer 
+                                key={index}
+                                id={offer.id}
+                                name={offer.game}
+                                price={offer.price}
+                                seller={offer.seller}
+                                img_url={offer.link}
+                            />
+                            ))}
+                        </>
                     )
 
                 case 'games':

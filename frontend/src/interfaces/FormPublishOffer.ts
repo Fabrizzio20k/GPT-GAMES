@@ -1,10 +1,10 @@
 interface FormPublishOffer {
+  id: string;
   name: string;
-  description: string;
   gamekey: string;
   price: number;
-  discount: number;
-  game: number; 
+  discount: number; 
+  link: string;
 }
 
 export default FormPublishOffer;
