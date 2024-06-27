@@ -8,59 +8,11 @@ import { Button } from "@/components/ui/button";
 import { CiCirclePlus } from "react-icons/ci";
 import { useRouter } from "next/navigation";
 import { toast, Toaster } from "sonner";
-import axios from "axios";
 import Image from "next/image";
 
 export default function Dashboard() {
-    const [userOffers, setUserOffers] = useState([] as any);
-    const [userOffersInfo, setUserOffersInfo] = useState([] as any);
     const user = useAppSelector((state) => state.user);
     const router = useRouter();
-    const urlServer = process.env.NEXT_PUBLIC_DEV_SERVER_URL;
-
-    const fetchUserOffers = async () => {
-        try {
-            const response = await axios.get(urlServer + "/profile/", {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `token ${user.token}`,
-                }
-            })
-
-            setUserOffers(response.data.user.offers);
-
-        } catch (error) {
-            const listErrors = (error as any).response.data;
-            let errors = '';
-            for (const key in listErrors) {
-                errors += `${listErrors[key]}\n`;
-            }
-            errors = errors.toUpperCase();
-            toast.error(errors);
-        }
-    }
-
-    const fetchOffers = async (url: string) => {
-        try {
-            const response = await axios.get(url, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `token ${user.token}`,
-                }
-            })
-
-            setUserOffersInfo((prevOffers: any) => [...prevOffers, response.data]);
-
-        } catch (error) {
-            const listErrors = (error as any).response.data;
-            let errors = '';
-            for (const key in listErrors) {
-                errors += `${listErrors[key]}\n`;
-            }
-            errors = errors.toUpperCase();
-            toast.error(errors);
-        }
-    }
 
     useEffect(() => { }, []);
 
@@ -97,12 +49,7 @@ export default function Dashboard() {
             </section>
 
             <section className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                <SearchOffer 
-                    api_id={"0"}
-                    title={""}
-                    price={10}
-                    img_url={""}
-                />
+                Not offers published yet
             </section>
         </MainLayoutPage>
     );

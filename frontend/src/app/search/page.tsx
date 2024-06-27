@@ -17,6 +17,7 @@ import { toastError } from "@/utils/toastError";
 import { Toaster } from "sonner";
 import Loader from "@/components/Loader";
 import MainLayoutPage from "@/pages/MainLayoutPage";
+import OfferNew from "@/components/OfferNew";
 
 export default function Search() { 
     const user = useAppSelector((state) => state.user);
@@ -112,13 +113,16 @@ export default function Search() {
                     return (
                         <>
                             {searchResult.map((offer, index) => (
-                            <SearchOffer 
+                            <OfferNew 
                                 key={index}
                                 id={offer.id}
-                                name={offer.game}
-                                price={offer.price}
                                 seller={offer.seller}
-                                img_url={offer.link}
+                                game={offer.game}
+                                price={offer.price}
+                                discount={offer.discount}
+                                published_date={offer.published_date}
+                                description={offer.description}
+                                link={offer.link}
                             />
                             ))}
                         </>

@@ -74,7 +74,7 @@ export default function Newoffer() {
                             className='p-2 rounded-2xl bg-tertiary w-full'
                         > {selectedGame.name !== '' ? selectedGame.name : "Select a game..."} </div>
 
-                        {/* <label className="w-full text-sm">Description</label>
+                        <label className="w-full text-sm">Description</label>
                         <textarea
                             className="p-2 min-h-[100px] resize-none"
                             {...register("description", {
@@ -83,7 +83,7 @@ export default function Newoffer() {
                                 maxLength: { value: 200, message: "Description must be at most 200 characters long" }
                             })}
                         />
-                        {errors.description && <p className="text-alert text-sm">{errors.description.message}</p>} */}
+                        {errors.description && <p className="text-alert text-sm">{errors.description.message}</p>}
 
                         <label className="w-full text-sm">Game Key</label>
                         <input

@@ -5,6 +5,7 @@ interface FormPublishOffer {
   price: number;
   discount: number; 
   link: string;
+  description: string;
 }
 
 export default FormPublishOffer;
