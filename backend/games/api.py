@@ -3,8 +3,8 @@ import requests
 from dotenv import load_dotenv
 from django.http import JsonResponse
 from datetime import datetime, timezone
-
 from rest_framework.parsers import JSONParser
+
 
 load_dotenv()
 
@@ -44,12 +44,12 @@ def get_game_info_api(id):
     fields = "fields summary, name, first_release_date, genres.name, platforms.name, involved_companies.company.name, cover.image_id;"
     body = fields + " where id = " + str(id) + ";"
 
-    try:
-        data = fetch_games(body, "games").json()[0]
-        return game_response(data)
+    data = fetch_games(body, "games").json()
 
-    except requests.exceptions.HTTPError as e:
-        return JsonResponse({"error": "Game not found"})
+    if len(data) == 0:
+        return {"error": "No games found"}
+
+    return game_response(data[0])
 
 
 def get_game_by_name(name):

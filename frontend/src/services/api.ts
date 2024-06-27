@@ -83,14 +83,10 @@ export const getGameById = async (id: number) => {
   let dataGame = {};
 
   try {
-    const response = await axios.get(urlServer + "/game/" + id, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await axios.get(urlServer + "/game/" + id + "/");
     dataGame = response.data;
   } catch (error: any) {
-    errors = (error as any).response.data;
+    errors = (error as any).response.data;    
   }
 
   return { errors, dataGame };
