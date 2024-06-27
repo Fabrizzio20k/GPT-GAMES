@@ -86,7 +86,7 @@ export const getGameById = async (id: number) => {
     const response = await axios.get(urlServer + "/game/" + id + "/");
     dataGame = response.data;
   } catch (error: any) {
-    errors = (error as any).response.data;    
+    errors = (error as any).response.data;
   }
 
   return { errors, dataGame };
@@ -189,21 +189,23 @@ export const updateUser = async (data: any, user: User) => {
   data.phone = data.phone || user.phone;
 
   try {
-    const response = await axios.patch(urlServer + "/users/" + user.id + "/", data, {
+    const response = await axios.patch(urlServer + "/profile/edit_profile/", data, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Token ${user.token}`
       },
     });
 
+    console.log(response.data, "hola");
+
     dataUser = {
-      id: response.data.id,
-      email: response.data.email,
-      username: response.data.username,
-      first_name: response.data.first_name,
-      last_name: response.data.last_name,
-      phone: response.data.phone,
-      description: response.data.description,
+      id: response.data.user.id,
+      email: response.data.user.email,
+      username: response.data.user.username,
+      first_name: response.data.user.first_name,
+      last_name: response.data.user.last_name,
+      phone: response.data.user.phone,
+      description: response.data.user.description,
       token: user.token,
     };
 

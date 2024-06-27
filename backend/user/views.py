@@ -16,8 +16,8 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import action
 
 
-
 logger = logging.getLogger(__name__)
+
 
 class UserView(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -33,6 +33,7 @@ class UserView(viewsets.ModelViewSet):
         headers = self.get_success_headers(serializer.data)
         logger.info(f'User created: {user.username}, Token: {token.key}')
         return Response({'token': token.key}, status=status.HTTP_201_CREATED, headers=headers)
+
 
 class SearchUserView(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -51,6 +52,7 @@ class SearchUserView(viewsets.ModelViewSet):
         logger.info(f'User created: {user.username}, Token: {token.key}')
         return Response({'token': token.key}, status=status.HTTP_201_CREATED, headers=headers)
 
+
 class UpdateProfilePictureView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [TokenAuthentication]
@@ -64,6 +66,7 @@ class UpdateProfilePictureView(APIView):
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(data=serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
@@ -86,6 +89,7 @@ def login(request):
     serializer = UserSerializer(instance=user, context={'request': request})
     return Response({'token': token.key, 'user': serializer.data}, status=status.HTTP_201_CREATED)
 
+
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def register(request, format=None):
@@ -105,6 +109,7 @@ def register(request, format=None):
 
     return Response(serialiazer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class ProfileViewSet(viewsets.ViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
@@ -117,10 +122,11 @@ class ProfileViewSet(viewsets.ViewSet):
         token, created = Token.objects.get_or_create(user=user)
         return Response({'user': serializer.data, 'token': token.key}, status=status.HTTP_200_OK)
 
-    @action(detail=False, methods=['put', 'patch'] , url_path= 'edit_profile')
+    @action(detail=False, methods=['put', 'patch'], url_path='edit_profile')
     def update_profile(self, request):
         user = request.user
-        serializer = RegisterSerializer(user, data=request.data, partial=True)
+        serializer = RegisterSerializer(
+            user, data=request.data, partial=True, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             logger.info(f'Updated user: {user}')
