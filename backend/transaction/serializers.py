@@ -5,7 +5,7 @@ from offer.models import Offer
 
 
 
-class TransactionSerializer(serializers.HyperlinkedModelSerializer):
+class TransactionSerializer(serializers.ModelSerializer):
     buyer = serializers.ReadOnlyField(source='buyer.username')
     seller = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     offer = serializers.PrimaryKeyRelatedField(queryset=Offer.objects.all())
