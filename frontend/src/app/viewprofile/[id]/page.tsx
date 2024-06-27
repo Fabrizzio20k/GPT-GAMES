@@ -1,7 +1,7 @@
 "use client";
 
 import MainLayoutPage from "@/pages/MainLayoutPage";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppSelector } from "@/redux/store";
 import { toast, Toaster } from "sonner";
 import { useState, useEffect } from "react";
 import Loader from "@/components/Loader";
@@ -16,7 +16,6 @@ import OfferNew from "@/components/OfferNew";
 
 export default function ViewProfile() {
     const user = useAppSelector((state) => state.user);
-    const dispatch = useAppDispatch();
     const [loading, setLoading] = useState(false);
     const router = useRouter();
     const params = useParams() as { id: string };
@@ -40,14 +39,14 @@ export default function ViewProfile() {
             }
             if (id !== user.id.toString()) {
                 try {
-                    const { errors, dataUser, dataOffers } = await getUserById(id, user.token);
+                    const { errors, dataUser } = await getUserById(id, user.token);
                     if (typeof errors === 'object' && Object.keys(errors).length > 0) {
                         toast.error('User not found');
                         router.push(`/viewprofile/${user.id}`);
                     } else {
                         setShowedUser(dataUser);
                     }
-                    setOffers(dataOffers);
+                    setOffers(dataUser.offers);
                 } catch (error) {
                     toast.error('An error occurred. Try again later');
                 }

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { User } from "../../types/user";
+import OfferBySeller from "@/interfaces/OfferBySeller";
 
 const initialState: User = {
     id: "",
@@ -11,6 +12,7 @@ const initialState: User = {
     phone: "",
     description: "",
     token: "",
+    offers: [],
 };
 
 export const userSlice = createSlice({
@@ -26,6 +28,7 @@ export const userSlice = createSlice({
             state.phone = action.payload.phone;
             state.description = action.payload.description;
             state.token = action.payload.token;
+            state.offers = action.payload.offers;
         },
         clearUser: (state) => {
             state.id = "";
@@ -36,6 +39,7 @@ export const userSlice = createSlice({
             state.phone = "";
             state.description = "";
             state.token = "";
+            state.offers = [];
         },
         updateToken: (state, action: PayloadAction<string>) => {
             state.token = action.payload;
@@ -55,8 +59,11 @@ export const userSlice = createSlice({
         updateDescription: (state, action: PayloadAction<string>) => {
             state.description = action.payload;
         },
+        updateOffers: (state, action: PayloadAction<OfferBySeller[]>) => {
+            state.offers = action.payload;
+        }
     },
 });
 
-export const { setUser, clearUser, updateToken, updateUsername, updateFirstname, updateLastname, updatePhone, updateDescription } = userSlice.actions;
+export const { setUser, clearUser, updateToken, updateUsername, updateFirstname, updateLastname, updatePhone, updateDescription, updateOffers } = userSlice.actions;
 export const userReducer = userSlice.reducer;

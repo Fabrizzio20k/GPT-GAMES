@@ -1,3 +1,5 @@
+import OfferBySeller from "@/interfaces/OfferBySeller";
+
 export type User = {
     id: string;
     email: string;
@@ -7,4 +9,5 @@ export type User = {
     phone: string;
     description: string;
     token: string;
+    offers: OfferBySeller[];
 };

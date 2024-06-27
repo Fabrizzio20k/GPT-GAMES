@@ -164,6 +164,7 @@ export const loginUser = async (data: any) => {
       phone: response.data.user.phone,
       description: response.data.user.description,
       token: response.data.token,
+      offers: response.data.user.offers,
     } as User;
 
   } catch (error) {
@@ -181,6 +182,7 @@ export const loginUser = async (data: any) => {
 export const updateUser = async (data: any, user: User) => {
   let errors = [];
   let dataUser = {} as User;
+  let dataOffers = [] as OfferBySeller[];
 
   data.username = data.username || user.username;
   data.first_name = data.first_name || user.first_name;
@@ -196,7 +198,18 @@ export const updateUser = async (data: any, user: User) => {
       },
     });
 
-    console.log(response.data, "hola");
+    for (let i in response.data.user.offers) {
+      dataOffers.push({
+        id: response.data.offers[i].id,
+        seller: response.data.offers[i].seller,
+        game: response.data.offers[i].game,
+        price: response.data.offers[i].price,
+        discount: response.data.offers[i].discount,
+        published_date: response.data.offers[i].published_date,
+        description: response.data.offers[i].description,
+        link: response.data.offers[i].link,
+      });
+    }
 
     dataUser = {
       id: response.data.user.id,
@@ -207,6 +220,7 @@ export const updateUser = async (data: any, user: User) => {
       phone: response.data.user.phone,
       description: response.data.user.description,
       token: user.token,
+      offers: dataOffers,
     };
 
   } catch (error) {
@@ -235,17 +249,6 @@ export const getUserById = async (id: string, token: string) => {
       },
     });
 
-    dataUser = {
-      id: response.data.id,
-      email: response.data.email,
-      username: response.data.username,
-      first_name: response.data.first_name,
-      last_name: response.data.last_name,
-      phone: response.data.phone,
-      description: response.data.description,
-      token: token,
-    };
-
     for (let i in response.data.offers) {
       dataOffers.push({
         id: response.data.offers[i].id,
@@ -258,11 +261,23 @@ export const getUserById = async (id: string, token: string) => {
         link: response.data.offers[i].link,
       });
     }
+
+    dataUser = {
+      id: response.data.id,
+      email: response.data.email,
+      username: response.data.username,
+      first_name: response.data.first_name,
+      last_name: response.data.last_name,
+      phone: response.data.phone,
+      description: response.data.description,
+      token: token,
+      offers: dataOffers,
+    };
   }
   catch (error) {
     errors = (error as any).response.data;
   }
 
-  return { errors, dataUser, dataOffers };
+  return { errors, dataUser };
 
 }
