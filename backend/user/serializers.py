@@ -6,6 +6,7 @@ from shopping_car.serializers import ShoppingCarSerializer
 from transaction.serializers import TransactionSerializer
 from transaction.models import Transaction
 
+
 class UserSerializer(serializers.ModelSerializer):
     billing_info = BillingInfoSerializer(read_only=True, many=True)
     offers = OfferSerializer(read_only=True, many=True)
@@ -16,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = [
             'id', 'username', 'profile_picture', 'first_name', 'last_name',
-            'description', 'email', 'phone', 'billing_info', 'offers', 
+            'description', 'email', 'phone', 'billing_info', 'offers',
             'shopping_car', 'transactions'
         ]
 
@@ -41,6 +42,7 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+
 class RegisterSerializer(serializers.ModelSerializer):
     billing_info = BillingInfoSerializer(read_only=True, many=True)
     offers = OfferSerializer(read_only=True, many=True)
@@ -51,7 +53,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         model = User
         fields = [
             'id', 'username', 'profile_picture', 'first_name', 'last_name',
-            'description', 'email', 'password', 'phone', 'billing_info', 
+            'description', 'email', 'password', 'phone', 'billing_info',
             'offers', 'shopping_car', 'transactions'
         ]
         extra_kwargs = {'password': {'write_only': True}}
@@ -77,6 +79,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+
 class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -90,6 +93,7 @@ class LoginSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+
 class ProfilePictureSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -101,6 +105,7 @@ class ProfilePictureSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+
 class SearchSerializer(serializers.ModelSerializer):
     offers = OfferSerializer(read_only=True, many=True)
     shopping_car = ShoppingCarSerializer(read_only=True, many=True)
@@ -108,7 +113,7 @@ class SearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'id', 'username', 'profile_picture', 'first_name', 'last_name', 
+            'id', 'username', 'profile_picture', 'first_name', 'last_name',
             'description', 'email', 'phone', 'offers', 'shopping_car'
         ]
 
