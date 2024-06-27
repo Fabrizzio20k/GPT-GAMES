@@ -30,7 +30,8 @@ const NewOfferGame: React.FC<NewOfferGameProps> = ({
     }
 
     const handleClick = () => {
-        onClick({api_id, name})
+        console.log({api_id, name, img_url})
+        onClick({api_id, name, img_url})
     }
 
     return (

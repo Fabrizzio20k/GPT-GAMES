@@ -6,6 +6,7 @@ const SearchOffer: React.FC<SearchOfferProps> = ({
     id,
     name,
     price,
+    seller,
     img_url,
 }) => {
 
@@ -35,11 +36,14 @@ const SearchOffer: React.FC<SearchOfferProps> = ({
                     className="object-cover object-center rounded-lg"
                 />
             </div>
-            <div className='flex justify-between'>
+            <div className='flex justify-between mb-3'>
                 <h2 className='uppercase w-2/3'>{displayName}</h2>
                 <div className='gradient px-3 py-1 rounded-full font-bold my-auto'>
                     {`$ ${price}`}
                 </div>
+            </div>
+            <div className='gradient px-3 py-1 rounded-full font-bold w-auto'>
+                <p className='text-sm'>{seller}</p>
             </div>
         </section>
     )

@@ -107,7 +107,7 @@ export const createOffer = async (offerInfo: any, token: string) => {
   let dataResponse = {};
 
   try {
-    const response = await axios.post(urlServer + "/offers/", offerInfo, {
+    const response = await axios.post(urlServer + "/create_game/", offerInfo, {
       headers: {
         'Authorization': `token ${token}`,
       }
