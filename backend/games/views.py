@@ -64,7 +64,12 @@ def create_game_with_offer(request):
 @permission_classes([permissions.AllowAny])
 def game_info(request, id):
     data = get_game_info_api(id)
-    return Response(data)
+
+    if data["api_id"]:
+        return Response(data, status=status.HTTP_200_OK)
+
+    if data["error"]:
+        return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])
