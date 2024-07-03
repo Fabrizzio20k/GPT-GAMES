@@ -14,6 +14,11 @@ class CreateCheckoutSessionView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication]
 
+    """
+    Chamba del backend: recuperar los productos del carrito y crear una sesión de pago con Stripe.
+    URGENTE!!!!!
+    """
+
     def post(self, request, *args, **kwargs):
         line_items = [
             {
