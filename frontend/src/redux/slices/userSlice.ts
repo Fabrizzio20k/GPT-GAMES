@@ -6,6 +6,7 @@ import OfferBySeller from "@/interfaces/OfferBySeller";
 const initialState: User = {
     id: "",
     email: "",
+    profile_photo: "",
     username: "",
     first_name: "",
     last_name: "",
@@ -22,6 +23,7 @@ export const userSlice = createSlice({
         setUser: (state, action: PayloadAction<User>) => {
             state.id = action.payload.id;
             state.email = action.payload.email;
+            state.profile_photo = action.payload.profile_photo;
             state.username = action.payload.username;
             state.first_name = action.payload.first_name;
             state.last_name = action.payload.last_name;
@@ -33,6 +35,7 @@ export const userSlice = createSlice({
         clearUser: (state) => {
             state.id = "";
             state.email = "";
+            state.profile_photo = "";
             state.username = "";
             state.first_name = "";
             state.last_name = "";
@@ -46,6 +49,9 @@ export const userSlice = createSlice({
         },
         updateUsername: (state, action: PayloadAction<string>) => {
             state.username = action.payload;
+        },
+        updateProfilePhoto: (state, action: PayloadAction<string>) => {
+            state.profile_photo = action.payload;
         },
         updateFirstname: (state, action: PayloadAction<string>) => {
             state.first_name = action.payload;
@@ -65,5 +71,5 @@ export const userSlice = createSlice({
     },
 });
 
-export const { setUser, clearUser, updateToken, updateUsername, updateFirstname, updateLastname, updatePhone, updateDescription, updateOffers } = userSlice.actions;
+export const { setUser, clearUser, updateToken, updateProfilePhoto, updateUsername, updateFirstname, updateLastname, updatePhone, updateDescription, updateOffers } = userSlice.actions;
 export const userReducer = userSlice.reducer;
