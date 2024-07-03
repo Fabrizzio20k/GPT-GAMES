@@ -121,6 +121,7 @@ export const registerUser = async (data: any) => {
 export const loginUser = async (data: any) => {
   let dataUser = {} as User;
   let errors = [];
+  let profile_pic = '';
 
   try {
     const response = await axios.post(urlServer + "/login/", data, {
@@ -129,10 +130,13 @@ export const loginUser = async (data: any) => {
       },
     });
 
+    profile_pic = response.data.profile_picture || '/assets/img/default-user-profile.jpeg';
+
     dataUser = {
       id: response.data.user.id,
       email: response.data.user.email,
       username: response.data.user.username,
+      profile_photo: profile_pic,
       first_name: response.data.user.first_name,
       last_name: response.data.user.last_name,
       phone: response.data.user.phone,
@@ -157,6 +161,7 @@ export const updateUser = async (data: any, user: User) => {
   let errors = [];
   let dataUser = {} as User;
   let dataOffers = [] as OfferBySeller[];
+  let profile_pic = '';
 
   data.username = data.username || user.username;
   data.first_name = data.first_name || user.first_name;
@@ -171,6 +176,8 @@ export const updateUser = async (data: any, user: User) => {
         'Authorization': `Token ${user.token}`
       },
     });
+
+    profile_pic = response.data.profile_picture || '/assets/img/default-user-profile.jpeg';
 
     for (let i in response.data.user.offers) {
       dataOffers.push({
@@ -189,6 +196,7 @@ export const updateUser = async (data: any, user: User) => {
       id: response.data.user.id,
       email: response.data.user.email,
       username: response.data.user.username,
+      profile_photo: profile_pic,
       first_name: response.data.user.first_name,
       last_name: response.data.user.last_name,
       phone: response.data.user.phone,
@@ -214,6 +222,7 @@ export const getUserById = async (id: string, token: string) => {
   let errors = [];
   let dataUser = {} as User;
   let dataOffers = [] as OfferBySeller[];
+  let profile_pic = '';
 
   try {
     const response = await axios.get(urlServer + "/find-user/" + id + "/", {
@@ -222,6 +231,8 @@ export const getUserById = async (id: string, token: string) => {
         'Authorization': `Token ${token}`
       },
     });
+
+    profile_pic = response.data.profile_picture || '/assets/img/default-user-profile.jpeg';
 
     for (let i in response.data.offers) {
       dataOffers.push({
@@ -240,6 +251,7 @@ export const getUserById = async (id: string, token: string) => {
       id: response.data.id,
       email: response.data.email,
       username: response.data.username,
+      profile_photo: profile_pic,
       first_name: response.data.first_name,
       last_name: response.data.last_name,
       phone: response.data.phone,

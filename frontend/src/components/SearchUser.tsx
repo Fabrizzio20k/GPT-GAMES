@@ -11,7 +11,7 @@ const SearchOffer: React.FC<SearchUserProps> = ({
 
     const displayUsername = username || "GPT user"
     const displayDescription = description || "Best description ever!"
-    const displayProfilePic = profile_picture || "/assets/logo/logo.png"
+    const displayProfilePic = profile_picture || "/assets/img/default-user-profile.jpeg"
 
     const router = useRouter();
 

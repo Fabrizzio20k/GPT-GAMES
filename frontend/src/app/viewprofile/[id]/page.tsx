@@ -48,6 +48,7 @@ export default function ViewProfile() {
             if (id !== user.id.toString()) {
                 try {
                     const { errors, dataUser } = await getUserById(id, user.token);
+
                     if (typeof errors === 'object' && Object.keys(errors).length > 0) {
                         toast.error('User not found');
                         router.push(`/viewprofile/${user.id}`);
@@ -55,8 +56,10 @@ export default function ViewProfile() {
                         setShowedUser(dataUser);
                     }
                     setOffers(dataUser.offers);
-                } catch (error) {
+                } catch (error: any) {
                     toast.error('An error occurred. Try again later');
+                    console.log(error);
+
                 }
             }
             setLoading(false);
@@ -80,7 +83,7 @@ export default function ViewProfile() {
                         >
                             <input {...getInputProps()} />
                             <Image
-                                src="/assets/background/d2.jpg"
+                                src={showedUser.profile_photo}
                                 alt="user-photo"
                                 width={1920}
                                 height={1080}
