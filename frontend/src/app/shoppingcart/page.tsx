@@ -4,8 +4,12 @@ import MainLayoutPage from "@/pages/MainLayoutPage";
 import Image from "next/image";
 import { BiSolidStore } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
+import { handlePayment } from "@/services/api";
+import { useAppSelector } from "@/redux/store";
 
 export default function ShoppingCart() {
+    const token = useAppSelector((state) => state.user.token);
+
     return (
         <MainLayoutPage>
             <section className="rounded-xl mb-6 h-48 flex flex-row items-center justify-center relative overflow-hidden border-2 border-white select-none">
@@ -63,7 +67,7 @@ export default function ShoppingCart() {
                     <h2 className="text-4xl font-bold font-alata">Total</h2>
                     <p className="text-lg">$0.00</p>
                 </div>
-                <button className="font-bold p-2 bg-violet-900 rounded-2xl text-sm md:text-md">
+                <button className="font-bold p-2 bg-violet-900 rounded-2xl text-sm md:text-md" onClick={() => handlePayment(token)}>
                     Checkout
                 </button>
             </section>

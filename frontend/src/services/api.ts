@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { User } from "@/types/user";
 import OfferBySeller from '@/interfaces/OfferBySeller';
-
 const urlServer = process.env.NEXT_PUBLIC_DEV_SERVER_URL;
 
 
@@ -291,4 +290,16 @@ export const searchUserByUsername = async (username: string, token: string) => {
   }
 
   return { errors, dataUsers };
+}
+
+export const handlePayment = async (token: string) => {
+  const response = await axios.post(urlServer + "/payments/create-checkout-session/", {}, {
+    headers: {
+      'Authorization': `Token ${token}`,
+      'Content-Type': 'application/json',
+    }
+  });
+
+  const { checkout_url } = response.data;
+  window.location.href = checkout_url;
 }
