@@ -58,8 +58,8 @@ class CreateCheckoutSessionView(APIView):
                 line_items=line_items,
                 mode='payment',
                 success_url=YOUR_DOMAIN +
-                '/success?session_id={CHECKOUT_SESSION_ID}',
-                cancel_url=YOUR_DOMAIN + '/cancel',
+                '/payment?status=success&session_id={CHECKOUT_SESSION_ID}',
+                cancel_url=YOUR_DOMAIN + '/payment?status=cancel',
             )
         except Exception as e:
             return Response({'error': str(e)}, status=500)
