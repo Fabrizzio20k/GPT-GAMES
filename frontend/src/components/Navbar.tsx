@@ -1,13 +1,12 @@
 import { FaMessage, FaBell, FaBarsStaggered, FaUserNinja } from 'react-icons/fa6';
 import { FaSearch, FaSignOutAlt, FaSignInAlt, FaUserPlus } from 'react-icons/fa';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useRef, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/redux/store';
 import { setStatusLoggin } from '@/redux/slices/stateSlice';
 import { clearUser } from '@/redux/slices/userSlice';
 
 export default function Navbar() {
-
     const user = useAppSelector((state) => state.user);
     const logged = useAppSelector((state) => state.status.logged);
 
@@ -17,8 +16,11 @@ export default function Navbar() {
     const [searchExpanded, setSearchExpanded] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [menuOpen, setMenuOpen] = useState(false);
+
     const searchRef = useRef<HTMLDivElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
+
+    const searchParams = useSearchParams();
 
     const handleOutsideClick = (event: MouseEvent) => {
         if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
@@ -40,6 +42,11 @@ export default function Navbar() {
     };
 
     useEffect(() => {
+        const searchParam = searchParams ? searchParams.get('name') || '' : '';
+        if (searchParam !== '') {
+            setSearchTerm(searchParam);
+        }
+
         if (searchExpanded) {
             document.addEventListener('mousedown', handleOutsideClick);
         } else {

@@ -3,23 +3,22 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { useAppSelector } from "@/redux/store";
-import { 
+import {
     searchUserByUsername,
     searchOfferByName,
-    searchGamesByName 
+    searchGamesByName
 } from "@/services/api";
-import { 
-    SearchUser, 
-    SearchOffer, 
-    SearchGame 
+import {
+    SearchUser,
+    OfferNew,
+    SearchGame
 } from "@/components";
 import { toastError } from "@/utils/toastError";
 import { Toaster } from "sonner";
 import Loader from "@/components/Loader";
 import MainLayoutPage from "@/pages/MainLayoutPage";
-import OfferNew from "@/components/OfferNew";
 
-export default function Search() { 
+export default function Search() {
     const user = useAppSelector((state) => state.user);
 
     const [activeButton, setActiveButton] = useState('offers');
@@ -37,8 +36,11 @@ export default function Search() {
             const { errors, dataOffers } = await searchOfferByName(searchParam, user.token);
             Object.keys(errors).length > 0 ? toastError(errors) : setSearchResult(dataOffers);
         } else if (activeButton === 'games') {
+            if (searchParam === '') {
+                searchParam = 'Minecraft'
+            }
             const { errors, dataGames } = await searchGamesByName(searchParam, user.token);
-            Object.keys(errors).length > 0 ? toastError(errors) : setSearchResult(dataGames);            
+            Object.keys(errors).length > 0 ? toastError(errors) : setSearchResult(dataGames);
         }
         setLoading(false);
     }
@@ -46,9 +48,7 @@ export default function Search() {
     useEffect(() => {
         setSearchResult([]);
         const searchParam = searchParams ? searchParams.get('name') || '' : '';
-        if (searchParam !== '') {
-            fetchGames(searchParam);
-        }
+        fetchGames(searchParam);
     }, [searchParams, activeButton])
 
     return (
@@ -58,17 +58,17 @@ export default function Search() {
             <article className="flex justify-between items-center mb-5">
                 {(() => {
                     switch (activeButton) {
-                    case 'users':
-                        return <h1 className="text-2xl">FIND USERS</h1>;
-                    case 'offers':
-                        return <h1 className="text-2xl">SEARCH OFFERS</h1>;
-                    case 'games':
-                        return <h1 className="text-2xl">EXPLORE THE CATALOG</h1>;
-                    default:
-                        return <h1 className="text-2xl">What?</h1>;
+                        case 'users':
+                            return <h1 className="text-2xl">FIND USERS</h1>;
+                        case 'offers':
+                            return <h1 className="text-2xl">SEARCH OFFERS</h1>;
+                        case 'games':
+                            return <h1 className="text-2xl">EXPLORE THE CATALOG</h1>;
+                        default:
+                            return <h1 className="text-2xl">What?</h1>;
                     }
                 })()}
-            
+
                 <section>
                     <button
                         className={`px-4 py-2 rounded-2xl mr-4 ${activeButton === 'users' ? 'gradient button-gradient' : 'hover:bg-tertiary'}`}
@@ -92,61 +92,61 @@ export default function Search() {
             </article>
 
             <article className="w-full gallery">
-            {(() => {
-                switch (activeButton) {
-                case 'users':
-                    return (
-                        <>
-                            {searchResult.map((user, index) => (
-                            <SearchUser 
-                                key={index}
-                                id={user.id}
-                                username={user.username}
-                                description={user.description}
-                                profile_picture={user.profile_picture}
-                            />
-                            ))}
-                        </>
-                    )
+                {(() => {
+                    switch (activeButton) {
+                        case 'users':
+                            return (
+                                <>
+                                    {searchResult.map((user, index) => (
+                                        <SearchUser
+                                            key={index}
+                                            id={user.id}
+                                            username={user.username}
+                                            description={user.description}
+                                            profile_picture={user.profile_picture}
+                                        />
+                                    ))}
+                                </>
+                            )
 
-                case 'offers':
-                    return (
-                        <>
-                            {searchResult.map((offer, index) => (
-                            <OfferNew 
-                                key={index}
-                                id={offer.id}
-                                seller={offer.seller}
-                                game={offer.game}
-                                price={offer.price}
-                                discount={offer.discount}
-                                published_date={offer.published_date}
-                                description={offer.description}
-                                link={offer.link}
-                            />
-                            ))}
-                        </>
-                    )
+                        case 'offers':
+                            return (
+                                <>
+                                    {searchResult.map((offer, index) => (
+                                        <OfferNew
+                                            key={index}
+                                            id={offer.id}
+                                            seller={offer.seller}
+                                            game={offer.game}
+                                            price={offer.price}
+                                            discount={offer.discount}
+                                            published_date={offer.published_date}
+                                            description={offer.description}
+                                            link={offer.link}
+                                        />
+                                    ))}
+                                </>
+                            )
 
-                case 'games':
-                    return (
-                        <>
-                            {searchResult.map((game, index) => (
-                            <SearchGame 
-                                key={index}
-                                api_id={game.api_id}
-                                title={game.name}
-                                price={10}
-                                img_url={game.cover}
-                            />
-                            ))}
-                        </>
-                        );
-                    
-                default:
-                    return null;
-                }
-            })()}
+                        case 'games':
+                            return (
+                                <>
+                                    {searchResult.map((game, index) => (
+                                        <SearchGame
+                                            key={index}
+                                            api_id={game.api_id}
+                                            title={game.name}
+                                            price={10}
+                                            img_url={game.cover}
+                                        />
+                                    ))}
+                                </>
+                            );
+
+                        default:
+                            return null;
+                    }
+                })()}
             </article>
         </MainLayoutPage>
     );
