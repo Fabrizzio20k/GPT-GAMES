@@ -9,6 +9,7 @@ import Loader from "@/components/Loader";
 import { useState } from "react";
 import IFormInput from "@/interfaces/IFormInput";
 import { registerUser } from "@/services/api";
+import Link from "next/link";
 
 
 
@@ -135,6 +136,7 @@ export default function Register() {
                             <FcGoogle className="text-2xl" />
                             <h2 className="text-black font-bold text-sm md:text-md">Register with Google</h2>
                         </button>
+                        <Link href="/signin" className="text-sm underline mt-2">Already have an account? Log in</Link>
                     </div>
                 </div>
             </div>

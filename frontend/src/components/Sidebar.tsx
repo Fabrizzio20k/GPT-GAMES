@@ -35,7 +35,7 @@ export default function Sidebar() {
     }, [isSidebarVisible]);
 
     return (
-        <aside>
+        <aside className="h-full">
             <div className={`fixed inset-0 z-40 bg-black transition-opacity ${isSidebarVisible ? 'opacity-50' : 'opacity-0 pointer-events-none'}`}></div>
             <aside
                 ref={sidebarRef}

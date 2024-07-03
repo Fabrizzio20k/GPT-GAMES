@@ -10,7 +10,6 @@ import { Toaster } from "sonner";
 import Loader from "@/components/Loader";
 import Image from "next/image";
 import { toastError } from "@/utils/toastError";
-import { log } from "console";
 
 
 
@@ -33,10 +32,8 @@ export default function Game({ params }: GameProps) {
     const fetchGame = async () => {
         setLoading(true);
         const { errors, dataGame } = await getGameById(Number(params.api_id));
-        Object.keys(errors).length > 0 ? toastError(errors) : setGame(dataGame);
-
-        console.log(dataGame);
-
+        setGame(dataGame);
+        // Handle erros?
 
         if (Object.keys(dataGame).length === 0) {
             setIsNotGame(true);
