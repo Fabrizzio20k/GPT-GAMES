@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'shopping_car',
     'car_contains_offer',
     'transaction',
+    'payments',
     'corsheaders',
     'django_filters',
     'rest_framework_swagger'
@@ -143,7 +144,6 @@ STATICFILES_DIRS = [
 ]
 
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -152,7 +152,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Custom User model
 AUTH_USER_MODEL = 'user.User'
 
-#Media urls
+# Media urls
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
