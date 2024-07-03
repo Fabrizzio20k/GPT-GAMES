@@ -130,7 +130,7 @@ export const loginUser = async (data: any) => {
       },
     });
 
-    profile_pic = response.data.profile_picture || '/assets/img/default-user-profile.jpeg';
+    profile_pic = response.data.user.profile_picture || '/assets/img/default-user-profile.jpeg';
 
     dataUser = {
       id: response.data.user.id,

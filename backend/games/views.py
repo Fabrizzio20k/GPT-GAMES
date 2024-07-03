@@ -65,11 +65,11 @@ def create_game_with_offer(request):
 def game_info(request, id):
     data = get_game_info_api(id)
 
-    if data["api_id"]:
-        return Response(data, status=status.HTTP_200_OK)
+    if "error" in data:
+        return Response(data, status=status.HTTP_404_NOT_FOUND)
 
-    if data["error"]:
-        return Response(data, status=status.HTTP_400_BAD_REQUEST)
+    if "api_id" in data:
+        return Response(data, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])

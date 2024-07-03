@@ -1,4 +1,4 @@
-export default function NotFoundGame() {
+export default function NotFound() {
   return (
     <div>
       <h1>Game Details not found</h1>
