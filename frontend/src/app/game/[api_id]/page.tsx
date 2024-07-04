@@ -22,7 +22,7 @@ type GameProps = {
 export default function Game({ params }: GameProps) {
     const [game, setGame] = useState({} as any);
     const [loading, setLoading] = useState(false);
-    const [isNotGame, setIsNotGame] = useState(false);
+    const [gameNotFound, setGameNotFound] = useState(false);
 
     const displayName = game.name || 'GPTGame'
     const displaySummary = game.summary || 'Game summary not found'
@@ -36,13 +36,13 @@ export default function Game({ params }: GameProps) {
         // Handle erros?
 
         if (Object.keys(dataGame).length === 0) {
-            setIsNotGame(true);
+            setGameNotFound(true);
         }
 
         setLoading(false)
     }
 
-    if (isNotGame) {
+    if (gameNotFound) {
         notFound();
     }
 
@@ -62,7 +62,7 @@ export default function Game({ params }: GameProps) {
                         <Image
                             src={displayImg}
                             alt={displayName}
-                            width={300}
+                            width={400}
                             height={300}
                             sizes="(max-width: 768px) 100vw, 
                                     (max-width: 1200px) 50vw, 
@@ -107,7 +107,6 @@ export default function Game({ params }: GameProps) {
                                 Object.keys(game.platforms).length > 0 ?
                                     game.platforms.map((platform: string, index: number) => {
                                         let icon;
-
                                         switch (true) {
                                             case platform.includes("PC"):
                                                 icon = <FaWindows />;
@@ -130,11 +129,9 @@ export default function Game({ params }: GameProps) {
                                             default:
                                                 icon = platform;
                                         }
-
                                         return <span key={index}>{icon}</span>;
                                     })
                                     : 'Platforms not found'
-
                             }
                         </div>
                     </div>

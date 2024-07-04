@@ -10,22 +10,46 @@ const urlServer = process.env.NEXT_PUBLIC_DEV_SERVER_URL;
 * @returns: lista de ofertas
 */
 export const searchOfferByName = async (name: string, token: string) => {
-  let errors = [];
-  let dataOffers = [];
+    let errors = [];
+    let dataOffers = [];
 
-  try {
-    const response = await axios.get(urlServer + `/offers/?search=${name}`, {
-      headers: {
-        'Authorization': `token ${token}`,
-        'Content-Type': 'application/json',
-      }
-    });
-    dataOffers = response.data;
-  } catch (error: any) {
-    errors = (error as any).response.data;
-  }
+    try {
+        const response = await axios.get(urlServer + `/offers/?search=${name}`, {
+            headers: {
+                'Authorization': `token ${token}`,
+                'Content-Type': 'application/json',
+            }
+        });
+        dataOffers = response.data;
+    } catch (error: any) {
+        errors = (error as any).response.data;
+    }
 
-  return { errors, dataOffers };
+    return { errors, dataOffers };
+}
+
+/* Función que consume el endpoint "/offers/{id}/" para obtener una oferta por id
+* @param id: id de la oferta
+* @param token: token del usuario
+* @returns: oferta
+*/
+export const getOfferById = async (id: number, token: string) => {
+    let errors = [];
+    let dataOffer = {} as OfferBySeller;
+
+    try {
+        const response = await axios.get(urlServer + "/offers/" + id + "/", {
+            headers: {
+                'Authorization': `Token ${token}`,
+                'Content-Type': 'application/json',
+            }
+        });
+        dataOffer = response.data;
+    } catch (error: any) {
+        errors = (error as any).response.data;
+    }
+
+    return { errors, dataOffer };
 }
 
 /* Función que consume el endpoint "/game_by_name/" para buscar juegos por nombre
@@ -35,35 +59,35 @@ export const searchOfferByName = async (name: string, token: string) => {
 TODO: El endpoint retorna muchos juegos, se pueden paginar?
 */
 export const searchGamesByName = async (name: string, token: string) => {
-  let errors = [];
-  let dataGames = [];
+    let errors = [];
+    let dataGames = [];
 
-  try {
-    const response = await axios.get(urlServer + `/game_by_name/?name=${name}`, {
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    });
-    dataGames = response.data;
-  } catch (error: any) {
-    errors = (error as any).response.data;
-  }
+    try {
+        const response = await axios.get(urlServer + `/game_by_name/?name=${name}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        dataGames = response.data;
+    } catch (error: any) {
+        errors = (error as any).response.data;
+    }
 
-  return { errors, dataGames };
+    return { errors, dataGames };
 }
 
 export const getGameById = async (id: number) => {
-  let errors = [];
-  let dataGame = {};
+    let errors = [];
+    let dataGame = {};
 
-  try {
-    const response = await axios.get(urlServer + "/game/" + id + "/");
-    dataGame = response.data;
-  } catch (error: any) {
-    errors = (error as any).response.data;
-  }
+    try {
+        const response = await axios.get(urlServer + "/game/" + id + "/");
+        dataGame = response.data;
+    } catch (error: any) {
+        errors = (error as any).response.data;
+    }
 
-  return { errors, dataGame };
+    return { errors, dataGame };
 }
 
 /* Función que consume el endpoint "/offers/" para crear una oferta
@@ -73,21 +97,21 @@ export const getGameById = async (id: number) => {
 TODO: Acomodar el backend para que acepte los nuevos campos de la oferta
 */
 export const createOffer = async (offerInfo: any, token: string) => {
-  let errors = [];
-  let dataResponse = {};
+    let errors = [];
+    let dataResponse = {};
 
-  try {
-    const response = await axios.post(urlServer + "/create_game/", offerInfo, {
-      headers: {
-        'Authorization': `token ${token}`,
-      }
-    });
-    dataResponse = response.data;
-  } catch (error: any) {
-    errors = (error as any).response.data;
-  }
+    try {
+        const response = await axios.post(urlServer + "/create_game/", offerInfo, {
+            headers: {
+                'Authorization': `token ${token}`,
+            }
+        });
+        dataResponse = response.data;
+    } catch (error: any) {
+        errors = (error as any).response.data;
+    }
 
-  return { errors, dataResponse };
+    return { errors, dataResponse };
 }
 
 /* Función que consume el endpoint "/register/" para obtener todas las ofertas
@@ -96,21 +120,21 @@ export const createOffer = async (offerInfo: any, token: string) => {
 */
 export const registerUser = async (data: any) => {
 
-  let errors = [];
-  let dataResponse = {};
+    let errors = [];
+    let dataResponse = {};
 
-  try {
-    const response = await axios.post(urlServer + "/register/", data, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    dataResponse = response.data;
-  } catch (error) {
-    errors = (error as any).response.data;
-  }
+    try {
+        const response = await axios.post(urlServer + "/register/", data, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        dataResponse = response.data;
+    } catch (error) {
+        errors = (error as any).response.data;
+    }
 
-  return { errors, dataResponse };
+    return { errors, dataResponse };
 }
 
 /* Función que consume el endpoint "/login/" para loguear un usuario
@@ -118,37 +142,37 @@ export const registerUser = async (data: any) => {
 * @returns: usuario logueado
 */
 export const loginUser = async (data: any) => {
-  let dataUser = {} as User;
-  let errors = [];
-  let profile_pic = '';
+    let dataUser = {} as User;
+    let errors = [];
+    let profile_pic = '';
 
-  try {
-    const response = await axios.post(urlServer + "/login/", data, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    try {
+        const response = await axios.post(urlServer + "/login/", data, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
 
-    profile_pic = response.data.user.profile_picture || '/assets/img/default-user-profile.jpeg';
+        profile_pic = response.data.user.profile_picture || '/assets/img/default-user-profile.jpeg';
 
-    dataUser = {
-      id: response.data.user.id,
-      email: response.data.user.email,
-      username: response.data.user.username,
-      profile_photo: profile_pic,
-      first_name: response.data.user.first_name,
-      last_name: response.data.user.last_name,
-      phone: response.data.user.phone,
-      description: response.data.user.description,
-      token: response.data.token,
-      offers: response.data.user.offers,
-    } as User;
+        dataUser = {
+            id: response.data.user.id,
+            email: response.data.user.email,
+            username: response.data.user.username,
+            profile_photo: profile_pic,
+            first_name: response.data.user.first_name,
+            last_name: response.data.user.last_name,
+            phone: response.data.user.phone,
+            description: response.data.user.description,
+            token: response.data.token,
+            offers: response.data.user.offers,
+        } as User;
 
-  } catch (error) {
-    errors = (error as any).response.data;
-  }
+    } catch (error) {
+        errors = (error as any).response.data;
+    }
 
-  return { errors, dataUser };
+    return { errors, dataUser };
 }
 
 /* Función que consume el endpoint "/users/" para actualizar un usuario
@@ -157,58 +181,58 @@ export const loginUser = async (data: any) => {
 * @returns: usuario actualizado
 */
 export const updateUser = async (data: any, user: User) => {
-  let errors = [];
-  let dataUser = {} as User;
-  let dataOffers = [] as OfferBySeller[];
-  let profile_pic = '';
+    let errors = [];
+    let dataUser = {} as User;
+    let dataOffers = [] as OfferBySeller[];
+    let profile_pic = '';
 
-  data.username = data.username || user.username;
-  data.first_name = data.first_name || user.first_name;
-  data.last_name = data.last_name || user.last_name;
-  data.description = data.description || user.description;
-  data.phone = data.phone || user.phone;
+    data.username = data.username || user.username;
+    data.first_name = data.first_name || user.first_name;
+    data.last_name = data.last_name || user.last_name;
+    data.description = data.description || user.description;
+    data.phone = data.phone || user.phone;
 
-  try {
-    const response = await axios.patch(urlServer + "/profile/edit_profile/", data, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${user.token}`
-      },
-    });
+    try {
+        const response = await axios.patch(urlServer + "/profile/edit_profile/", data, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${user.token}`
+            },
+        });
 
-    profile_pic = response.data.profile_picture || '/assets/img/default-user-profile.jpeg';
+        profile_pic = response.data.profile_picture || '/assets/img/default-user-profile.jpeg';
 
-    for (let i in response.data.user.offers) {
-      dataOffers.push({
-        id: response.data.user.offers[i].id,
-        seller: response.data.user.offers[i].seller,
-        game: response.data.user.offers[i].game,
-        price: response.data.user.offers[i].price,
-        discount: response.data.user.offers[i].discount,
-        published_date: response.data.user.offers[i].published_date,
-        description: response.data.user.offers[i].description,
-        link: response.data.user.offers[i].link,
-      });
+        for (let i in response.data.user.offers) {
+            dataOffers.push({
+                id: response.data.user.offers[i].id,
+                seller: response.data.user.offers[i].seller,
+                game: response.data.user.offers[i].game,
+                price: response.data.user.offers[i].price,
+                discount: response.data.user.offers[i].discount,
+                published_date: response.data.user.offers[i].published_date,
+                description: response.data.user.offers[i].description,
+                link: response.data.user.offers[i].link,
+            });
+        }
+
+        dataUser = {
+            id: response.data.user.id,
+            email: response.data.user.email,
+            username: response.data.user.username,
+            profile_photo: profile_pic,
+            first_name: response.data.user.first_name,
+            last_name: response.data.user.last_name,
+            phone: response.data.user.phone,
+            description: response.data.user.description,
+            token: user.token,
+            offers: dataOffers,
+        };
+
+    } catch (error) {
+        errors = (error as any).response.data;
     }
 
-    dataUser = {
-      id: response.data.user.id,
-      email: response.data.user.email,
-      username: response.data.user.username,
-      profile_photo: profile_pic,
-      first_name: response.data.user.first_name,
-      last_name: response.data.user.last_name,
-      phone: response.data.user.phone,
-      description: response.data.user.description,
-      token: user.token,
-      offers: dataOffers,
-    };
-
-  } catch (error) {
-    errors = (error as any).response.data;
-  }
-
-  return { errors, dataUser };
+    return { errors, dataUser };
 
 }
 
@@ -218,52 +242,52 @@ export const updateUser = async (data: any, user: User) => {
 * @returns: usuario
 */
 export const getUserById = async (id: string, token: string) => {
-  let errors = [];
-  let dataUser = {} as User;
-  let dataOffers = [] as OfferBySeller[];
-  let profile_pic = '';
+    let errors = [];
+    let dataUser = {} as User;
+    let dataOffers = [] as OfferBySeller[];
+    let profile_pic = '';
 
-  try {
-    const response = await axios.get(urlServer + "/find-user/" + id + "/", {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${token}`
-      },
-    });
+    try {
+        const response = await axios.get(urlServer + "/find-user/" + id + "/", {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Token ${token}`
+            },
+        });
 
-    profile_pic = response.data.profile_picture || '/assets/img/default-user-profile.jpeg';
+        profile_pic = response.data.profile_picture || '/assets/img/default-user-profile.jpeg';
 
-    for (let i in response.data.offers) {
-      dataOffers.push({
-        id: response.data.offers[i].id,
-        seller: response.data.offers[i].seller,
-        game: response.data.offers[i].game,
-        price: response.data.offers[i].price,
-        discount: response.data.offers[i].discount,
-        published_date: response.data.offers[i].published_date,
-        description: response.data.offers[i].description,
-        link: response.data.offers[i].link,
-      });
+        for (let i in response.data.offers) {
+            dataOffers.push({
+                id: response.data.offers[i].id,
+                seller: response.data.offers[i].seller,
+                game: response.data.offers[i].game,
+                price: response.data.offers[i].price,
+                discount: response.data.offers[i].discount,
+                published_date: response.data.offers[i].published_date,
+                description: response.data.offers[i].description,
+                link: response.data.offers[i].link,
+            });
+        }
+
+        dataUser = {
+            id: response.data.id,
+            email: response.data.email,
+            username: response.data.username,
+            profile_photo: profile_pic,
+            first_name: response.data.first_name,
+            last_name: response.data.last_name,
+            phone: response.data.phone,
+            description: response.data.description,
+            token: token,
+            offers: dataOffers,
+        };
+    }
+    catch (error) {
+        errors = (error as any).response.data;
     }
 
-    dataUser = {
-      id: response.data.id,
-      email: response.data.email,
-      username: response.data.username,
-      profile_photo: profile_pic,
-      first_name: response.data.first_name,
-      last_name: response.data.last_name,
-      phone: response.data.phone,
-      description: response.data.description,
-      token: token,
-      offers: dataOffers,
-    };
-  }
-  catch (error) {
-    errors = (error as any).response.data;
-  }
-
-  return { errors, dataUser };
+    return { errors, dataUser };
 
 }
 
@@ -274,32 +298,53 @@ export const getUserById = async (id: string, token: string) => {
 */
 
 export const searchUserByUsername = async (username: string, token: string) => {
-  let errors = [];
-  let dataUsers = [];
+    let errors = [];
+    let dataUsers = [];
 
-  try {
-    const response = await axios.get(urlServer + `/find-user/?search=${username}`, {
-      headers: {
-        'Authorization': `token ${token}`,
-        'Content-Type': 'application/json',
-      }
-    });
-    dataUsers = response.data;
-  } catch (error: any) {
-    errors = (error as any).response.data;
-  }
+    try {
+        const response = await axios.get(urlServer + `/find-user/?search=${username}`, {
+            headers: {
+                'Authorization': `token ${token}`,
+                'Content-Type': 'application/json',
+            }
+        });
+        dataUsers = response.data;
+    } catch (error: any) {
+        errors = (error as any).response.data;
+    }
 
-  return { errors, dataUsers };
+    return { errors, dataUsers };
 }
 
 export const handlePayment = async (token: string) => {
-  const response = await axios.post(urlServer + "/payments/create-checkout-session/", {}, {
-    headers: {
-      'Authorization': `Token ${token}`,
-      'Content-Type': 'application/json',
-    }
-  });
+    const response = await axios.post(urlServer + "/payments/create-checkout-session/", {}, {
+        headers: {
+            'Authorization': `Token ${token}`,
+            'Content-Type': 'application/json',
+        }
+    });
 
-  const { checkout_url } = response.data;
-  window.location.href = checkout_url;
+    const { checkout_url } = response.data;
+    window.location.href = checkout_url;
+}
+
+export const addCommentOffer = async (offer: string, comment: string, token: string) => {
+    let errors = [];
+    let dataResponse = {};
+
+    let body = { text: comment }
+
+    try {
+        const response = await axios.post(offer + "add-review/", body, {
+            headers: {
+                'Authorization': `token ${token}`,
+                'Content-Type': 'application/json',
+            }
+        })
+        dataResponse = response.data;
+    } catch (error: any) {
+        errors = (error as any).response.data;
+    }
+
+    return { errors, dataResponse };
 }

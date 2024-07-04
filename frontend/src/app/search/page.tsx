@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react";
+import { useMediaQuery } from 'react-responsive';
 import { useSearchParams } from "next/navigation";
 import { useAppSelector } from "@/redux/store";
 import {
@@ -21,21 +22,29 @@ import MainLayoutPage from "@/pages/MainLayoutPage";
 export default function Search() {
     const user = useAppSelector((state) => state.user);
 
-    const [activeButton, setActiveButton] = useState('offers');
+    const [activeButton, setActiveButton] = useState('Offers');
     const [searchResult, setSearchResult] = useState([] as any[]);
     const [loading, setLoading] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const searchParams = useSearchParams();
 
+    const isSmallScreen = useMediaQuery({ query: '(max-width: 640px)' });
+
+    const handleDropdownSelect = (value: string) => {
+        setActiveButton(value);
+        setIsDropdownOpen(false);
+    };
+
     const fetchGames = async (searchParam: string) => {
         setLoading(true);
-        if (activeButton === 'users') {
+        if (activeButton === 'Users') {
             const { errors, dataUsers } = await searchUserByUsername(searchParam, user.token);
             Object.keys(errors).length > 0 ? toastError(errors) : setSearchResult(dataUsers);
-        } else if (activeButton === 'offers') {
+        } else if (activeButton === 'Offers') {
             const { errors, dataOffers } = await searchOfferByName(searchParam, user.token);
             Object.keys(errors).length > 0 ? toastError(errors) : setSearchResult(dataOffers);
-        } else if (activeButton === 'games') {
+        } else if (activeButton === 'Games') {
             if (searchParam === '') {
                 searchParam = 'Minecraft'
             }
@@ -58,58 +67,80 @@ export default function Search() {
             <article className="flex justify-between items-center mb-5">
                 {(() => {
                     switch (activeButton) {
-                        case 'users':
-                            return <h1 className="text-2xl">FIND USERS</h1>;
-                        case 'offers':
-                            return <h1 className="text-2xl">SEARCH OFFERS</h1>;
-                        case 'games':
-                            return <h1 className="text-2xl">EXPLORE THE CATALOG</h1>;
+                        case 'Offers':
+                            return <h1 className="text-xl sm:text-2xl">SEARCH OFFERS</h1>;
+                        case 'Users':
+                            return <h1 className="text-xl sm:text-2xl">FIND USERS</h1>;
+                        case 'Games':
+                            return <h1 className="text-lg sm:text-2xl">EXPLORE THE CATALOG</h1>;
                         default:
-                            return <h1 className="text-2xl">What?</h1>;
+                            return <h1 className="text-xl sm:text-2xl">What?</h1>;
                     }
                 })()}
 
-                <section>
-                    <button
-                        className={`px-4 py-2 rounded-2xl mr-4 ${activeButton === 'users' ? 'gradient button-gradient' : 'hover:bg-tertiary'}`}
-                        onClick={() => setActiveButton('users')}
-                    >
-                        Users
-                    </button>
-                    <button
-                        className={`px-4 py-2 rounded-2xl mr-4 ${activeButton === 'offers' ? 'gradient button-gradient' : 'hover:bg-tertiary'}`}
-                        onClick={() => setActiveButton('offers')}
-                    >
-                        Offers
-                    </button>
-                    <button
-                        className={`px-4 py-2 rounded-2xl ${activeButton === 'games' ? 'gradient button-gradient' : 'hover:bg-tertiary'}`}
-                        onClick={() => setActiveButton('games')}
-                    >
-                        Games
-                    </button>
-                </section>
+                {isSmallScreen ? (
+                    <div className="relative">
+                        <button
+                            className="custom-select"
+                            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                        >
+                            {activeButton}
+                        </button>
+                        {isDropdownOpen && (
+                            <ul className="absolute w-full bg-ebony-950 p-2 text-white rounded-2xl mt-2 z-10">
+                                <li
+                                    className="px-4 py-2 hover:bg-secondary cursor-pointer rounded-lg"
+                                    onClick={() => handleDropdownSelect('Offers')}
+                                >
+                                    Offers
+                                </li>
+                                <li
+                                    className="px-4 py-2 hover:bg-secondary cursor-pointer rounded-lg"
+                                    onClick={() => handleDropdownSelect('Users')}
+                                >
+                                    Users
+                                </li>
+                                <li
+                                    className="px-4 py-2 hover:bg-secondary cursor-pointer rounded-lg"
+                                    onClick={() => handleDropdownSelect('Games')}
+                                >
+                                    Games
+                                </li>
+                            </ul>
+                        )}
+                    </div>
+                ) : (
+                    <section>
+                        <button
+                            className={`px-4 py-2 rounded-2xl mr-4 ${activeButton === 'Offers' ? 'gradient button-gradient' : 'hover:bg-tertiary'}`}
+                            onClick={() => setActiveButton('Offers')}
+                        >
+                            Offers
+                        </button>
+                        <button
+                            className={`px-4 py-2 rounded-2xl mr-4 ${activeButton === 'Users' ? 'gradient button-gradient' : 'hover:bg-tertiary'}`}
+                            onClick={() => setActiveButton('Users')}
+                        >
+                            Users
+                        </button>
+                        <button
+                            className={`px-4 py-2 rounded-2xl ${activeButton === 'Games' ? 'gradient button-gradient' : 'hover:bg-tertiary'}`}
+                            onClick={() => setActiveButton('Games')}
+                        >
+                            Games
+                        </button>
+                    </section>
+                )}
             </article>
 
             <article className="w-full gallery">
+                {
+                    searchResult.length === 0 &&
+                    <h1 className="text-2xl">No results found ☠️</h1>
+                }
                 {(() => {
                     switch (activeButton) {
-                        case 'users':
-                            return (
-                                <>
-                                    {searchResult.map((user, index) => (
-                                        <SearchUser
-                                            key={index}
-                                            id={user.id}
-                                            username={user.username}
-                                            description={user.description}
-                                            profile_picture={user.profile_picture}
-                                        />
-                                    ))}
-                                </>
-                            )
-
-                        case 'offers':
+                        case 'Offers':
                             return (
                                 <>
                                     {searchResult.map((offer, index) => (
@@ -128,7 +159,22 @@ export default function Search() {
                                 </>
                             )
 
-                        case 'games':
+                        case 'Users':
+                            return (
+                                <>
+                                    {searchResult.map((user, index) => (
+                                        <SearchUser
+                                            key={index}
+                                            id={user.id}
+                                            username={user.username}
+                                            description={user.description}
+                                            profile_picture={user.profile_picture}
+                                        />
+                                    ))}
+                                </>
+                            )
+
+                        case 'Games':
                             return (
                                 <>
                                     {searchResult.map((game, index) => (
@@ -148,6 +194,6 @@ export default function Search() {
                     }
                 })()}
             </article>
-        </MainLayoutPage>
+        </MainLayoutPage >
     );
 }

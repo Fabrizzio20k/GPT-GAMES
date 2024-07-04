@@ -203,7 +203,7 @@
 }
 
 .button-sidebar {
-    @apply flex flex-row items-center justify-start cursor-pointer px-4 py-4 space-x-4 rounded-2xl hover:bg-tertiary 
+    @apply flex flex-row items-center justify-start cursor-pointer px-4 py-4 space-x-4 rounded-2xl hover:bg-tertiary
 }
 
 .button-navbar {
@@ -215,7 +215,7 @@
 }
 
 .button-gradient {
-    @apply hover:from-fuchsia-700 hover:to-indigo-600 transition-all duration-300
+    @apply hover:from-fuchsia-700 hover:to-indigo-600 transition-all duration-300 cursor-pointer
 }
 
 input, textarea {
@@ -247,4 +247,13 @@ input, textarea {
 
 .offer-game {
     @apply bg-tertiary cursor-pointer p-3 rounded-xl mb-2 w-full block gallery-item border-transparent transform transition-transform hover:scale-95
+}
+
+.custom-select {
+    @apply bg-gradient-to-r from-fuchsia-800 to-indigo-700 text-white px-6 py-2 rounded-2xl;
+}
+
+.custom-select option {
+    background: linear-gradient(to right, #7c3aed, #4f46e5);
+    color: white;
 }
