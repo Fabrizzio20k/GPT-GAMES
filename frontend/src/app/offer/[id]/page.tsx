@@ -73,7 +73,7 @@ const Offer = ({ params }: OfferProps) => {
             <Toaster richColors />
             {
                 Object.keys(offer).length > 0 &&
-                <article className="grid grid-cols-3">
+                <article className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <section>
                         <Image
                             src={offer.link}
@@ -87,7 +87,7 @@ const Offer = ({ params }: OfferProps) => {
                         />
                     </section>
 
-                    <section className="pl-6 col-start-2 col-end-4">
+                    <section className="md:pl-6 md:col-start-2 md:col-end-4">
                         <h1 className="font-alata text-2xl mb-6">{offer.game}</h1>
                         <div className='flex justify-between mb-6'>
                             <div>
@@ -98,7 +98,7 @@ const Offer = ({ params }: OfferProps) => {
                                 </div>
                             </div>
                             <button
-                                className="gradient button-gradient px-4 py-2 rounded-3xl flex flex-col justify-center items-center"
+                                className="gradient button-gradient px-4 rounded-3xl flex flex-row justify-center items-center h-fit py-3 space-x-2"
                                 onClick={() => console.log(offer.id)}
                             >
                                 <p>Add to Cart</p>
@@ -121,7 +121,7 @@ const Offer = ({ params }: OfferProps) => {
                         </div>
                     </section>
 
-                    <section className="col-start-1 col-end-2 mt-4 flex justify-center h-fit">
+                    <section className="mt-4 md:mt-0 flex justify-center h-fit">
                         <button
                             className="gradient button-gradient px-4 py-2 rounded-full"
                             onClick={() => router.push(`/game/${offer.game_id}`)}
@@ -130,7 +130,7 @@ const Offer = ({ params }: OfferProps) => {
                         </button>
                     </section>
 
-                    <section className="mt-4 p-8 bg-tertiary rounded-3xl col-start-2 col-end-4">
+                    <section className="mt-4 p-8 bg-tertiary rounded-3xl col-span-1 md:col-start-2 md:col-end-4">
                         <div className="flex items-center mb-4">
                             <div className="mr-2 w-10 h-10 "> {/* Ajuste de tamaño para imagen de perfil */}
                                 <Image
