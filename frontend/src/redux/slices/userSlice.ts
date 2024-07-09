@@ -67,9 +67,12 @@ export const userSlice = createSlice({
         },
         updateOffers: (state, action: PayloadAction<OfferBySeller[]>) => {
             state.offers = action.payload;
+        },
+        pushOffer: (state, action: PayloadAction<OfferBySeller>) => {
+            state.offers.push(action.payload);
         }
     },
 });
 
-export const { setUser, clearUser, updateToken, updateProfilePhoto, updateUsername, updateFirstname, updateLastname, updatePhone, updateDescription, updateOffers } = userSlice.actions;
+export const { setUser, clearUser, updateToken, updateProfilePhoto, updateUsername, updateFirstname, updateLastname, updatePhone, updateDescription, updateOffers, pushOffer } = userSlice.actions;
 export const userReducer = userSlice.reducer;

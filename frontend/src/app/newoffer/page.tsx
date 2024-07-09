@@ -5,18 +5,21 @@ import MainLayoutPage from '@/pages/MainLayoutPage'
 import { toast, Toaster } from "sonner";
 import Loader from "@/components/Loader";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useAppSelector } from '@/redux/store';
+import { useAppSelector, useAppDispatch } from '@/redux/store';
 import { useRouter } from 'next/navigation';
 import { FaSearch } from "react-icons/fa";
 import FormPublishOffer from '@/interfaces/FormPublishOffer';
 import { searchGamesByName, createOffer } from '@/services/api';
 import NewOfferGame from '@/components/NewOfferGame';
 import { toastError } from '@/utils/toastError';
+import OfferBySeller from '@/interfaces/OfferBySeller';
+import { pushOffer } from '@/redux/slices/userSlice';
 
 
 export default function Newoffer() {
     const user = useAppSelector((state) => state.user);
     const router = useRouter();
+    const dispatch = useAppDispatch();
 
     const [gameName, setGameName] = useState('');
     const [gamesResult, setGamesResult] = useState([] as any[]);
@@ -48,10 +51,23 @@ export default function Newoffer() {
         data.id = selectedGame.api_id;
         data.name = selectedGame.name;
         data.link = selectedGame.img_url;
-        console.log(data);
 
         const { errors, dataResponse } = await createOffer(data, user.token);
         Object.keys(errors).length > 0 ? toastError(errors) : toast.success('Offer published successfully');
+
+        let newOffer: OfferBySeller = {
+            id: parseInt(data.id),
+            seller: user.username,
+            game: data.name,
+            price: data.price,
+            discount: data.discount,
+            published_date: new Date().toISOString().split('T')[0],
+            description: data.description,
+            link: data.link
+        };
+
+        dispatch(pushOffer(newOffer));
+
 
         setTimeout(() => {
             router.push('/dashboard');
