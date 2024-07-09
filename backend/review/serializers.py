@@ -11,3 +11,4 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         fields = ['url','id', 'profile_picture','commenter', 'offer', 'text']
         read_only_fields = ['offer', 'commenter', 'profile_picture']
+
