@@ -10,7 +10,7 @@ from transaction.models import Transaction
 class UserSerializer(serializers.ModelSerializer):
     billing_info = BillingInfoSerializer(read_only=True, many=True)
     offers = OfferSerializer(read_only=True, many=True)
-    shopping_car = ShoppingCarSerializer(read_only=True, many=True)
+    shopping_car = ShoppingCarSerializer(read_only=True, many=False)
     transactions = serializers.SerializerMethodField()
 
     class Meta:
