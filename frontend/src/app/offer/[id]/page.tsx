@@ -10,6 +10,7 @@ import { useRouter, notFound } from "next/navigation";
 import Image from "next/image";
 import { FaCartShopping } from "react-icons/fa6";
 import { toastError } from "@/utils/toastError";
+import OfferComment from "@/components/OfferComment";
 
 type OfferProps = {
     params: {
@@ -32,6 +33,8 @@ const Offer = ({ params }: OfferProps) => {
         const { errors, dataOffer } = await getOfferById(Number(params.id), user.token);
         setOffer(dataOffer);
         // Handle erros?
+        console.log(dataOffer);
+
 
         if (Object.keys(dataOffer).length === 0) {
             setOfferNotFound(true);
@@ -158,22 +161,13 @@ const Offer = ({ params }: OfferProps) => {
                         <h2 className="font-alata text-lg mb-2 border-b-2 border-gray-600 pb-2">{Object.keys(offer.reviews).length} {Object.keys(offer.reviews).length == 1 ? "Comment" : "Comments"}</h2>
 
                         {offer.reviews.map((comment: any, index: any) => (
-                            <div className="flex items-center mb-4" key={index}>
-                                <div className="mr-2 w-10 h-10">
-                                    <Image
-                                        src='/assets/img/default-user-profile.jpeg'
-                                        alt={comment.commenter}
-                                        width={40}
-                                        height={40}
-                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                        className="object-cover object-center rounded-full w-full h-full"
-                                    />
-                                </div>
-                                <div className="w-full flex flex-col ml-3">
-                                    <b>{comment.commenter}</b>
-                                    <p>{comment.text}</p>
-                                </div>
-                            </div>
+                            <OfferComment
+                                key={index}
+                                id={comment.id}
+                                commenter={comment.commenter}
+                                profile_picture={comment.profile_picture}
+                                text={comment.text}
+                            />
                         ))}
                     </section>
 
