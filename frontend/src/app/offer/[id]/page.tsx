@@ -32,7 +32,6 @@ const Offer = ({ params }: OfferProps) => {
         const { errors, dataOffer } = await getOfferById(Number(params.id), user.token);
         setOffer(dataOffer);
         // Handle erros?
-        console.log(dataOffer);
 
         if (Object.keys(dataOffer).length === 0) {
             setOfferNotFound(true);

@@ -283,6 +283,8 @@ export const getUserById = async (id: string, token: string) => {
             offers: dataOffers,
         };
     }
+
+
     catch (error) {
         errors = (error as any).response.data;
     }
