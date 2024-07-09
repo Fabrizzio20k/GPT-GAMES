@@ -4,10 +4,6 @@ import OfferCommentProps from "@/interfaces/OfferCommentProps"
 const OfferComment: React.FC<OfferCommentProps> = (
 	{ id, commenter, profile_picture, text }
 ) => {
-
-	console.log(profile_picture);
-
-
 	const displayImg = profile_picture || "/assets/img/default-user-profile.jpeg"
 
 	return (

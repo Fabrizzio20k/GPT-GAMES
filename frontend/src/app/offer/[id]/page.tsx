@@ -23,7 +23,7 @@ const Offer = ({ params }: OfferProps) => {
     const [offer, setOffer] = useState({} as any);
     const [loading, setLoading] = useState(false);
     const [offerNotFound, setOfferNotFound] = useState(false);
-    const [comment, setComent] = useState('')
+    const [comment, setComment] = useState('')
     const [updated, isUpdated] = useState(false)
 
     const router = useRouter();
@@ -33,8 +33,8 @@ const Offer = ({ params }: OfferProps) => {
         const { errors, dataOffer } = await getOfferById(Number(params.id), user.token);
         setOffer(dataOffer);
         // Handle erros?
-        console.log(dataOffer);
 
+        console.log(dataOffer)
 
         if (Object.keys(dataOffer).length === 0) {
             setOfferNotFound(true);
@@ -58,6 +58,7 @@ const Offer = ({ params }: OfferProps) => {
                 const { errors, dataResponse } = await addCommentOffer(offer.url, comment, user.token);
                 Object.keys(errors).length > 0 ? toastError(errors) : toast.success("Comment added!");
 
+                setComment('');
                 isUpdated(true);
                 setLoading(false);
             }
@@ -152,7 +153,8 @@ const Offer = ({ params }: OfferProps) => {
                                     id="comment"
                                     className="border-b-2 outline-none py-2 px-4 w-full"
                                     placeholder="Add your thoughts..."
-                                    onChange={(e) => setComent(e.target.value)}
+                                    value={comment}
+                                    onChange={(e) => setComment(e.target.value)}
                                     onKeyDown={handleKeyDown}
                                 />
                             </div>
