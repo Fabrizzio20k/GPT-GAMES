@@ -14,6 +14,12 @@ const nextConfig = {
         port: '8000',
         pathname: '/media/images/profile_pictures/**',
       },
+      {
+        protocol: 'https',
+        hostname: '.s3.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      }
     ],
   },
 };
