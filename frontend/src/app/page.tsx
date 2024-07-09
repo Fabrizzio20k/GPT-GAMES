@@ -12,19 +12,37 @@ import { Button } from "@/components/ui/button";
 import { useRef } from "react";
 import Autoplay from "embla-carousel-autoplay"
 import { ArrowLeft, ArrowRight } from "lucide-react"
-import Image from "next/image";
 import OfferNew from "@/components/OfferNew";
+import { useState, useEffect } from "react";
+import { searchOfferByName } from "@/services/api";
+import { useAppSelector } from "@/redux/store";
+import { toastError } from "@/utils/toastError";
 
 
 export default function Page() {
+    const [mainOffers, setMainOffers] = useState([] as any[]);
+
+    const user = useAppSelector((state) => state.user);
+
     const plugin = useRef(
         Autoplay({ delay: 2000, stopOnInteraction: true })
     )
 
+    const fectchOffers = async () => {
+        const { errors, dataOffers } = await searchOfferByName("", user.token);
+        Object.keys(errors).length > 0 ? toastError(errors) : setMainOffers(dataOffers);
+        console.log(dataOffers);
+
+    }
+
+    useEffect(() => {
+        fectchOffers();
+    }, []);
+
     return (
         <MainLayoutPage>
-            <section className="gradient p-4 rounded-xl mb-6 h-96">
-                hi
+            <section className="gradient background-home rounded-xl mb-6 h-[500px]">
+                {/* <div className="background-home rounded-xl h-full w-1/2"></div> */}
             </section>
 
             <section className="flex justify-between  mb-6">
@@ -39,81 +57,34 @@ export default function Page() {
                 </div>
             </section>
 
-
-
-            <Carousel 
+            <Carousel
                 className="w-full"
                 opts={{
-                    align: "start",                
+                    align: "start",
                 }}
                 plugins={[plugin.current]}
                 onMouseEnter={plugin.current.stop}
                 onMouseLeave={plugin.current.reset}
             >
                 <CarouselContent>
-                    <CarouselItem className="sm:basis-1/2 lg:basis-1/3">
-                        <OfferNew 
-                            id={1}
-                            seller={"A"}
-                            game={"GPTGame"}
-                            price={10}
-                            discount={1}
-                            published_date={"2024-06-26"}
-                            description={"GPTDescription"}
-                            link={""}
-                        />  
-                    </CarouselItem>
-                    <CarouselItem className="sm:basis-1/2 lg:basis-1/3">
-                        <OfferNew 
-                            id={1}
-                            seller={"A"}
-                            game={"GPTGame"}
-                            price={10}
-                            discount={1}
-                            published_date={"2024-06-26"}
-                            description={"GPTDescription"}
-                            link={""}
-                        />  
-                    </CarouselItem>
-                    <CarouselItem className="sm:basis-1/2 lg:basis-1/3">
-                        <OfferNew 
-                            id={1}
-                            seller={"A"}
-                            game={"GPTGame"}
-                            price={10}
-                            discount={1}
-                            published_date={"2024-06-26"}
-                            description={"GPTDescription"}
-                            link={""}
-                        />  
-                    </CarouselItem>
-                    <CarouselItem className="sm:basis-1/2 lg:basis-1/3">
-                        <OfferNew 
-                            id={1}
-                            seller={"A"}
-                            game={"GPTGame"}
-                            price={10}
-                            discount={1}
-                            published_date={"2024-06-26"}
-                            description={"GPTDescription"}
-                            link={""}
-                        />  
-                    </CarouselItem>
-                    <CarouselItem className="sm:basis-1/2 lg:basis-1/3">
-                        <OfferNew 
-                            id={1}
-                            seller={"A"}
-                            game={"GPTGame"}
-                            price={10}
-                            discount={1}
-                            published_date={"2024-06-26"}
-                            description={"GPTDescription"}
-                            link={""}
-                        />  
-                    </CarouselItem>
+                    {mainOffers.map((offer, index) => (
+                        <CarouselItem className="sm:basis-1/2 lg:basis-1/3">
+                            <OfferNew
+                                key={index}
+                                id={offer.id}
+                                seller={offer.seller}
+                                game={offer.game}
+                                price={offer.price}
+                                discount={offer.discount}
+                                published_date={offer.published_date}
+                                description={offer.description}
+                                link={offer.link}
+                            />
+                        </CarouselItem>
+                    ))}
                 </CarouselContent>
-                <CarouselPrevious className="absolute top-1/2 left-4 transform -translate-y-1/2"/>
-                <CarouselNext className="absolute top-1/2 right-4 transform -translate-y-1/2"/>
+                <CarouselPrevious className="absolute top-1/2 left-4 transform -translate-y-1/2" />
+                <CarouselNext className="absolute top-1/2 right-4 transform -translate-y-1/2" />
             </Carousel>
         </MainLayoutPage>
     );

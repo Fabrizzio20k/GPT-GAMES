@@ -257,3 +257,10 @@ input, textarea {
     background: linear-gradient(to right, #7c3aed, #4f46e5);
     color: white;
 }
+
+.background-home {
+    background-image: url('/assets/background/Hollow-knight.png');
+    background-size: cover;
+    background-position: center;
+
+}
