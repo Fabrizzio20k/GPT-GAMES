@@ -11,4 +11,6 @@ export type User = {
     description: string;
     token: string;
     offers: OfferBySeller[];
+    shoppingCartID: string;
+    shoppingCartElements: OfferBySeller[];
 };

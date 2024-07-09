@@ -14,6 +14,8 @@ const initialState: User = {
     description: "",
     token: "",
     offers: [],
+    shoppingCartID: "",
+    shoppingCartElements: [],
 };
 
 export const userSlice = createSlice({
@@ -31,6 +33,8 @@ export const userSlice = createSlice({
             state.description = action.payload.description;
             state.token = action.payload.token;
             state.offers = action.payload.offers;
+            state.shoppingCartID = action.payload.shoppingCartID;
+            state.shoppingCartElements = action.payload.shoppingCartElements;
         },
         clearUser: (state) => {
             state.id = "";
@@ -43,6 +47,8 @@ export const userSlice = createSlice({
             state.description = "";
             state.token = "";
             state.offers = [];
+            state.shoppingCartID = "";
+            state.shoppingCartElements = [];
         },
         updateToken: (state, action: PayloadAction<string>) => {
             state.token = action.payload;
@@ -70,9 +76,18 @@ export const userSlice = createSlice({
         },
         pushOffer: (state, action: PayloadAction<OfferBySeller>) => {
             state.offers.push(action.payload);
-        }
+        },
+        updateShoppingCartID: (state, action: PayloadAction<string>) => {
+            state.shoppingCartID = action.payload;
+        },
+        updateShoppingCartElements: (state, action: PayloadAction<OfferBySeller[]>) => {
+            state.shoppingCartElements = action.payload;
+        },
+        pushShoppingElement: (state, action: PayloadAction<OfferBySeller>) => {
+            state.shoppingCartElements.push(action.payload);
+        },
     },
 });
 
-export const { setUser, clearUser, updateToken, updateProfilePhoto, updateUsername, updateFirstname, updateLastname, updatePhone, updateDescription, updateOffers, pushOffer } = userSlice.actions;
+export const { setUser, clearUser, updateToken, updateProfilePhoto, updateUsername, updateFirstname, updateLastname, updatePhone, updateDescription, updateOffers, pushOffer, updateShoppingCartID, updateShoppingCartElements, pushShoppingElement } = userSlice.actions;
 export const userReducer = userSlice.reducer;

@@ -121,7 +121,7 @@ export const createOffer = async (offerInfo: any, token: string) => {
 export const registerUser = async (data: any) => {
 
     let errors = [];
-    let dataResponse = {};
+    let dataResponse: any = {};
 
     try {
         const response = await axios.post(urlServer + "/register/", data, {
@@ -130,6 +130,20 @@ export const registerUser = async (data: any) => {
             },
         });
         dataResponse = response.data;
+
+        // Despues de generar un usuario, crear una instancia de carrito de compras
+        try {
+            const responseCart = await axios.post(urlServer + "/shoppingcars/", {}, {
+                headers: {
+                    'Authorization': `Token ${dataResponse.token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+        }
+        catch (error) {
+            console.log(error);
+        }
+
     } catch (error) {
         errors = (error as any).response.data;
     }
@@ -145,6 +159,7 @@ export const loginUser = async (data: any) => {
     let dataUser = {} as User;
     let errors = [];
     let profile_pic = '';
+    let shoppingItems = [] as OfferBySeller[];
 
     try {
         const response = await axios.post(urlServer + "/login/", data, {
@@ -154,6 +169,21 @@ export const loginUser = async (data: any) => {
         });
 
         profile_pic = response.data.user.profile_picture || '/assets/img/default-user-profile.jpeg';
+
+        const elementsRetrieved: any[] = response.data.user.shopping_car.offers;
+
+        for (let i in elementsRetrieved) {
+            shoppingItems.push({
+                id: elementsRetrieved[i].id,
+                seller: elementsRetrieved[i].seller,
+                game: elementsRetrieved[i].game,
+                price: elementsRetrieved[i].price,
+                discount: elementsRetrieved[i].discount,
+                published_date: elementsRetrieved[i].published_date,
+                description: elementsRetrieved[i].description,
+                link: elementsRetrieved[i].link,
+            });
+        }
 
         dataUser = {
             id: response.data.user.id,
@@ -166,7 +196,11 @@ export const loginUser = async (data: any) => {
             description: response.data.user.description,
             token: response.data.token,
             offers: response.data.user.offers,
+            shoppingCartID: response.data.user.shopping_car.id,
+            shoppingCartElements: shoppingItems,
         } as User;
+
+        console.log(dataUser)
 
     } catch (error) {
         errors = (error as any).response.data;
@@ -226,6 +260,8 @@ export const updateUser = async (data: any, user: User) => {
             description: response.data.user.description,
             token: user.token,
             offers: dataOffers,
+            shoppingCartID: user.shoppingCartID,
+            shoppingCartElements: user.shoppingCartElements,
         };
 
     } catch (error) {
@@ -281,6 +317,8 @@ export const getUserById = async (id: string, token: string) => {
             description: response.data.description,
             token: token,
             offers: dataOffers,
+            shoppingCartID: "",
+            shoppingCartElements: []
         };
     }
 
