@@ -1,7 +1,7 @@
 "use client";
 
 import MainLayoutPage from "@/pages/MainLayoutPage";
-import { useAppSelector } from "@/redux/store";
+import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { toast, Toaster } from "sonner";
 import { useState, useEffect, useCallback } from "react";
 import Loader from "@/components/Loader";
@@ -9,14 +9,19 @@ import { useRouter, useParams, notFound } from "next/navigation";
 import Image from "next/image";
 import { MdEdit } from "react-icons/md";
 import { User } from "@/types/user";
-import { getUserById } from "@/services/api";
+import { getUserById, updateProfileImage } from "@/services/api";
 import OfferNew from "@/components/OfferNew";
 import { useDropzone } from 'react-dropzone';
 import { FaUpload } from "react-icons/fa";
+import { toastError } from "@/utils/toastError";
+import { updateProfilePhoto } from "@/redux/slices/userSlice";
+import { log } from "util";
 
 
 export default function ViewProfile() {
     const user = useAppSelector((state) => state.user);
+    const dispatch = useAppDispatch();
+
     const [loading, setLoading] = useState(false);
     const [showedUser, setShowedUser] = useState<User>();
     const [userNotFound, setUserNotFound] = useState(false);
@@ -30,10 +35,35 @@ export default function ViewProfile() {
         router.push('/editprofile');
     }
 
-    const onDrop = useCallback((acceptedFiles: File[]) => {
-        console.log("Uploaded file:", acceptedFiles[0].name);
-        // Aquí puedes agregar la lógica para subir la imagen al servidor.
-    }, []);
+    const onDrop = useCallback(async (acceptedFiles: File[]) => {
+        setLoading(true);
+        const { errors, dataResponse } = await updateProfileImage(acceptedFiles, user.token) as
+            { errors: any, dataResponse: { 'profile_picture': string } };
+
+        if (Object.keys(errors).length > 0) {
+            toastError(errors);
+        } else {
+            dispatch(updateProfilePhoto(dataResponse.profile_picture));
+
+            setShowedUser(prevState => {
+                if (prevState) {
+                    return {
+                        ...prevState,
+                        profile_photo: dataResponse.profile_picture
+                    };
+                }
+                return prevState;
+            });
+
+            const img = document.createElement('img');
+            img.width = 1920;
+            img.height = 1080;
+            img.src = dataResponse.profile_picture;
+            img.onload = () => setLoading(false);
+
+            toast.success('Profile photo updated successfully');
+        }
+    }, [dispatch, user.token]);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
@@ -49,10 +79,6 @@ export default function ViewProfile() {
         if (id === user.id.toString()) {
             setShowedUser(user);
         } else if (id !== user.id.toString()) {
-            console.log(id, user.id);
-
-            console.log(showedUser);
-
             try {
                 const { errors, dataUser } = await getUserById(id, user.token);
                 setShowedUser(dataUser);
@@ -78,7 +104,7 @@ export default function ViewProfile() {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [user]);
 
     return (
         <MainLayoutPage>

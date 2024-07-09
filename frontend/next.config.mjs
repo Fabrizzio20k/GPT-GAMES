@@ -19,6 +19,12 @@ const nextConfig = {
         hostname: '.s3.amazonaws.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'desu-bucket.s3.amazonaws.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
