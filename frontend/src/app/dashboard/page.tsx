@@ -2,14 +2,13 @@
 
 import OfferNew from "@/components/OfferNew";
 import MainLayoutPage from "@/pages/MainLayoutPage";
-import { useAppSelector, useAppDispatch } from "@/redux/store";
+import { useAppSelector } from "@/redux/store";
 import { Button } from "@/components/ui/button";
 import { CiCirclePlus } from "react-icons/ci";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 export default function Dashboard() {
-    const dispatch = useAppDispatch();
     const user = useAppSelector((state) => state.user);
     const router = useRouter();
 

@@ -389,6 +389,27 @@ export const addCommentOffer = async (offer: string, comment: string, token: str
     return { errors, dataResponse };
 }
 
+export const updateProfileImage = async (profile_picture: File[], token: string) => {
+    let errors = [];
+    let dataResponse = {};
+
+    const formData = new FormData();
+    formData.append('profile_picture', profile_picture[0]);
+
+    try {
+        const response = await axios.post(urlServer + "/profile-image/", formData, {
+            headers: {
+                'Authorization': `Token ${token}`,
+            }
+        });
+        dataResponse = response.data;
+    } catch (error: any) {
+        errors = (error as any).response.data;
+    }
+
+    return { errors, dataResponse };
+}
+
 export const addToCartFun = async (shoppingcarID: string, offerID: string, token: string) => {
     let errors = [];
     let dataResponse = {};
