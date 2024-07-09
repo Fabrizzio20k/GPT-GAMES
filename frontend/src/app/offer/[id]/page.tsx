@@ -23,6 +23,7 @@ const Offer = ({ params }: OfferProps) => {
     const [loading, setLoading] = useState(false);
     const [offerNotFound, setOfferNotFound] = useState(false);
     const [comment, setComent] = useState('')
+    const [updated, isUpdated] = useState(false)
 
     const router = useRouter();
 
@@ -55,6 +56,7 @@ const Offer = ({ params }: OfferProps) => {
                 const { errors, dataResponse } = await addCommentOffer(offer.url, comment, user.token);
                 Object.keys(errors).length > 0 ? toastError(errors) : toast.success("Comment added!");
 
+                isUpdated(true);
                 setLoading(false);
             }
         }
@@ -62,7 +64,9 @@ const Offer = ({ params }: OfferProps) => {
 
     useEffect(() => {
         fetchOffer();
-    }, []);
+        isUpdated(false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [updated]);
 
     return (
         <MainLayoutPage>
@@ -127,16 +131,16 @@ const Offer = ({ params }: OfferProps) => {
                         </button>
                     </section>
 
-                    <section className="mt-4 p-4 bg-tertiary rounded-3xl col-start-2 col-end-4">
-                        <h2 className="font-alata text-lg mb-2">{Object.keys(offer.reviews).length} Comments</h2>
-                        <div className="flex items-center mb-2">
-                            <div className="mr-1 w-1/12 h-[45px]"> {/* TODO: Fix this bug */}
+                    <section className="mt-4 p-8 bg-tertiary rounded-3xl col-start-2 col-end-4">
+                        <div className="flex items-center mb-4">
+                            <div className="mr-2 w-10 h-10 "> {/* Ajuste de tamaño para imagen de perfil */}
                                 <Image
                                     src={user.profile_photo}
                                     alt={user.username}
-                                    width={300}
-                                    height={300}
-                                    className="object-cover w-full h-full rounded-full"
+                                    width={40}
+                                    height={40}
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                    className="object-cover object-center rounded-full w-full h-full"
                                 />
                             </div>
                             <div className="w-full">
@@ -144,7 +148,7 @@ const Offer = ({ params }: OfferProps) => {
                                     type="text"
                                     name="comment"
                                     id="comment"
-                                    className="border-b-2 outline-none py-2 px-4"
+                                    className="border-b-2 outline-none py-2 px-4 w-full"
                                     placeholder="Add your thoughts..."
                                     onChange={(e) => setComent(e.target.value)}
                                     onKeyDown={handleKeyDown}
@@ -152,29 +156,28 @@ const Offer = ({ params }: OfferProps) => {
                             </div>
                         </div>
 
-                        {
-                            offer.reviews.map((comment: any, index: any) => (
-                                <div className="flex items-center mb-2" key={index}>
-                                    <div className="mr-2 w-1/12">
-                                        <Image
-                                            src='/assets/img/default-user-profile.jpeg'
-                                            alt={user.username}
-                                            width={400}
-                                            height={300}
-                                            sizes="(max-width: 768px) 100vw, 
-                                                (max-width: 1200px) 50vw, 
-                                                33vw"
-                                            className="object-cover object-center rounded-full"
-                                        />
-                                    </div>
-                                    <div className="w-full flex flex-col ml-3">
-                                        <b>{comment.commenter}</b>
-                                        <p>{comment.text}</p>
-                                    </div>
+                        <h2 className="font-alata text-lg mb-2 border-b-2 border-gray-600 pb-2">{Object.keys(offer.reviews).length} {Object.keys(offer.reviews).length == 1 ? "Comment" : "Comments"}</h2>
+
+                        {offer.reviews.map((comment: any, index: any) => (
+                            <div className="flex items-center mb-4" key={index}>
+                                <div className="mr-2 w-10 h-10"> {/* Ajuste de tamaño para imagen de perfil */}
+                                    <Image
+                                        src='/assets/img/default-user-profile.jpeg'
+                                        alt={comment.commenter}
+                                        width={40}
+                                        height={40}
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        className="object-cover object-center rounded-full w-full h-full"
+                                    />
                                 </div>
-                            ))
-                        }
+                                <div className="w-full flex flex-col ml-3">
+                                    <b>{comment.commenter}</b>
+                                    <p>{comment.text}</p>
+                                </div>
+                            </div>
+                        ))}
                     </section>
+
                 </article>
             }
         </MainLayoutPage >

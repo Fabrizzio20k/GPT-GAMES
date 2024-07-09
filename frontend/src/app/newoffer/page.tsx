@@ -16,8 +16,8 @@ import { toastError } from '@/utils/toastError';
 
 export default function Newoffer() {
     const user = useAppSelector((state) => state.user);
-    const router = useRouter();  
-    
+    const router = useRouter();
+
     const [gameName, setGameName] = useState('');
     const [gamesResult, setGamesResult] = useState([] as any[]);
     const [selectedGame, setSelectedGame] = useState<{ api_id: string, name: string, img_url: string }>({ api_id: '', name: '', img_url: '' });
@@ -27,7 +27,7 @@ export default function Newoffer() {
 
     const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
-            e.preventDefault();           
+            e.preventDefault();
             setLoading(true);
             const { errors, dataGames } = await searchGamesByName(gameName, user.token);
             Object.keys(errors).length > 0 ? toastError(errors) : setGamesResult(dataGames);
@@ -36,25 +36,25 @@ export default function Newoffer() {
     };
 
     const handleClick = useCallback((game_info: any) => {
-        setSelectedGame(game_info);        
+        setSelectedGame(game_info);
     }, []);
 
-    const onSubmit: SubmitHandler<FormPublishOffer> = async (data) => {        
+    const onSubmit: SubmitHandler<FormPublishOffer> = async (data) => {
         if (selectedGame.api_id === '') {
             toast.error("Please select a game");
             return;
-        }        
+        }
 
         data.id = selectedGame.api_id;
         data.name = selectedGame.name;
         data.link = selectedGame.img_url;
         console.log(data);
-        
-        const {errors, dataResponse} = await createOffer(data, user.token);
+
+        const { errors, dataResponse } = await createOffer(data, user.token);
         Object.keys(errors).length > 0 ? toastError(errors) : toast.success('Offer published successfully');
 
         setTimeout(() => {
-            // router.push('/dashboard');
+            router.push('/dashboard');
         }, 1000);
     }
 
