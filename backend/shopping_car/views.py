@@ -1,3 +1,5 @@
+from rest_framework.exceptions import ValidationError
+from django.db import IntegrityError
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
@@ -10,9 +12,7 @@ from shopping_car.models import ShoppingCar
 from shopping_car.serializers import ShoppingCarSerializer
 
 from offer.models import Offer
-
 from rest_framework.decorators import action
-
 
 class ShoppingCarViewSet(ModelViewSet):
     queryset = ShoppingCar.objects.all()

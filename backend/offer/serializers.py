@@ -8,6 +8,7 @@ from review.serializers import ReviewSerializer
 
 class OfferSerializer(serializers.ModelSerializer):
     seller = serializers.ReadOnlyField(source='seller.username')
+    seller_id = serializers.ReadOnlyField(source='seller.id')
     queryset = Game.objects.all()
     game = serializers.PrimaryKeyRelatedField(
         queryset=queryset, source='game.name')
@@ -18,7 +19,7 @@ class OfferSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Offer
-        fields = ('url', 'id', 'seller', 'game', 'game_id', 'price', 'discount',
+        fields = ('url', 'id', 'seller', 'seller_id', 'game', 'game_id', 'price', 'discount',
                   'published_date', 'gamekey', 'description', 'reviews', 'link')
 
     def create(self, validated_data):
