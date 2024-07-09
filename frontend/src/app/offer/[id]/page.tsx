@@ -34,8 +34,6 @@ const Offer = ({ params }: OfferProps) => {
         setOffer(dataOffer);
         // Handle erros?
 
-        console.log(dataOffer)
-
         if (Object.keys(dataOffer).length === 0) {
             setOfferNotFound(true);
         }

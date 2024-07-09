@@ -33,7 +33,7 @@ export default function Dashboard() {
             </section>
 
             <section className="flex justify-between">
-                <h2 className="uppercase text-xl mb-6">
+                <h2 className="uppercase font-alata text-xl mb-6">
                     Published Offers:
                 </h2>
                 <Button
@@ -43,6 +43,13 @@ export default function Dashboard() {
                     <CiCirclePlus className="h-6 w-6" />
                     <span className="ml-2">Publish offer</span>
                 </Button>
+            </section>
+
+            <section>
+                {
+                    user.offers.length == 0 &&
+                    <h1 className="text-2xl">You haven't published any offer yet 👀</h1>
+                }
             </section>
 
             <section className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
