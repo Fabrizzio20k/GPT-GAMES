@@ -80,10 +80,10 @@ export default function ShoppingCart() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="flex flex-row gap-4 items-center text-alert cursor-pointer">
+                                {/* <div className="flex flex-row gap-4 items-center text-alert cursor-pointer">
                                     <MdDelete className="text-4xl" />
                                     <h3 className="text-lg font-bold font-alata">Remove</h3>
-                                </div>
+                                </div> */}
                             </div>
                         ))
                     }
