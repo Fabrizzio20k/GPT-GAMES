@@ -10,7 +10,7 @@ from transaction.models import Transaction
 class UserSerializer(serializers.ModelSerializer):
     billing_info = BillingInfoSerializer(read_only=True, many=True)
     offers = OfferSerializer(read_only=True, many=True)
-    shopping_car = ShoppingCarSerializer(read_only=True, many=True)
+    shopping_car = ShoppingCarSerializer(read_only=True, many=False)
     transactions = serializers.SerializerMethodField()
 
     class Meta:
@@ -46,7 +46,7 @@ class UserSerializer(serializers.ModelSerializer):
 class RegisterSerializer(serializers.ModelSerializer):
     billing_info = BillingInfoSerializer(read_only=True, many=True)
     offers = OfferSerializer(read_only=True, many=True)
-    shopping_car = ShoppingCarSerializer(read_only=True, many=True)
+    shopping_car = ShoppingCarSerializer(read_only=True, many=False)
     transactions = serializers.SerializerMethodField()
 
     class Meta:
@@ -108,7 +108,7 @@ class ProfilePictureSerializer(serializers.ModelSerializer):
 
 class SearchSerializer(serializers.ModelSerializer):
     offers = OfferSerializer(read_only=True, many=True)
-    shopping_car = ShoppingCarSerializer(read_only=True, many=True)
+    shopping_car = ShoppingCarSerializer(read_only=True, many=False)
 
     class Meta:
         model = User

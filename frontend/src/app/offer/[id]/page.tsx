@@ -95,9 +95,9 @@ const Offer = ({ params }: OfferProps) => {
                         <h1 className="font-alata text-2xl mb-6">{offer.game}</h1>
                         <div className='flex justify-between mb-6'>
                             <div>
-                                <p className="text-sm text-gray-400 line-through mb-2">S/.{(offer.price).toFixed(2)}</p>
+                                <p className="text-sm text-gray-400 line-through mb-2">S/ {(offer.price).toFixed(2)}</p>
                                 <div className="flex items-center">
-                                    <p className="gradient px-4 py-2 rounded-full font-bold text-xl">S/.{(offer.price - (offer.price * offer.discount / 100)).toFixed(2)}</p>
+                                    <p className="gradient px-4 py-2 rounded-full font-bold text-xl">S/ {(offer.price - (offer.price * offer.discount / 100)).toFixed(2)}</p>
                                     <p className='ml-2 font-bold text-green-500'>{offer.discount}% OFF</p>
                                 </div>
                             </div>

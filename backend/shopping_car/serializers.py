@@ -1,14 +1,11 @@
 from rest_framework import serializers
 from .models import ShoppingCar
+from offer.serializers import OfferSerializer
 
 
-class ShoppingCarSerializer(serializers.HyperlinkedModelSerializer):
+class ShoppingCarSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
-    offers_contained = serializers.HyperlinkedRelatedField(
-        many=True,
-        view_name='carcontainsoffer-detail',
-        read_only=True,
-    )
+    offers_contained = OfferSerializer(many=True, read_only=True)
 
     class Meta:
         model = ShoppingCar
