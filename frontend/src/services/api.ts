@@ -388,3 +388,54 @@ export const addCommentOffer = async (offer: string, comment: string, token: str
 
     return { errors, dataResponse };
 }
+
+export const addToCartFun = async (shoppingcarID: string, offerID: string, token: string) => {
+    let errors = [];
+    let dataResponse = {};
+
+    try {
+        const { data } = await axios.post(urlServer + "/shoppingcars/" + shoppingcarID + "/add-offer/" + offerID + "/", {}, {
+            headers: {
+                'Authorization': `token ${token}`,
+                'Content-Type': 'application/json',
+            }
+        });
+        dataResponse = data;
+    } catch (error) {
+        errors = (error as any).response.data;
+    }
+
+    return { errors, dataResponse };
+}
+
+export const retrieveCartItems = async (token: string) => {
+    let errors = [];
+    let shoppingItems = [] as OfferBySeller[];
+
+    try {
+        const { data: { user: { shopping_car: { offers } } } } = await axios.get(urlServer + "/profile/", {
+            headers: {
+                'Authorization': `Token ${token}`,
+                'Content-Type': 'application/json',
+            }
+        });
+
+        for (let i in offers) {
+            shoppingItems.push({
+                id: offers[i].id,
+                seller: offers[i].seller,
+                game: offers[i].game,
+                price: offers[i].price,
+                discount: offers[i].discount,
+                published_date: offers[i].published_date,
+                description: offers[i].description,
+                link: offers[i].link,
+            });
+        }
+
+    } catch (error) {
+        errors = (error as any).response.data;
+    }
+
+    return { errors, shoppingItems };
+}

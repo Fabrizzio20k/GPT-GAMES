@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import MainLayoutPage from "@/pages/MainLayoutPage";
 import Loader from "@/components/Loader";
 import { Toaster, toast } from 'sonner';
-import { getOfferById, addCommentOffer } from "@/services/api";
+import { getOfferById, addCommentOffer, addToCartFun } from "@/services/api";
 import { useAppSelector } from "@/redux/store";
 import { useRouter, notFound } from "next/navigation";
 import Image from "next/image";
@@ -63,6 +63,27 @@ const Offer = ({ params }: OfferProps) => {
         }
     };
 
+    const handleAddToCart = async () => {
+        setLoading(true);
+        try {
+            const { errors, dataResponse } = await addToCartFun(user.shoppingCartID, params.id, user.token);
+            if (Object.keys(errors).length > 0) {
+                let errorsText = '';
+                for (const key in errors) {
+                    errorsText += `${errors[key]}\n`;
+                }
+                errorsText = errorsText.toUpperCase();
+                toast.error(errorsText);
+            } else {
+                toast.success('Game added to cart successfully!');
+            }
+
+        } catch (error) {
+            console.error(error)
+        }
+        setLoading(false);
+    }
+
     useEffect(() => {
         fetchOffer();
         isUpdated(false);
@@ -101,7 +122,7 @@ const Offer = ({ params }: OfferProps) => {
                             </div>
                             <button
                                 className="gradient button-gradient px-4 rounded-3xl flex flex-row justify-center items-center h-fit py-2 space-x-2"
-                                onClick={() => console.log(offer.id)}
+                                onClick={handleAddToCart}
                             >
                                 <p>Add to Cart</p>
                                 <FaCartShopping className="text-2xl" />
