@@ -2,7 +2,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 from . import views
-from .views import UserView, login, ProfileViewSet, register, UpdateProfilePictureView, SearchUserView
+from .views import UserView, login, ProfileViewSet, register, UpdateProfilePictureView, SearchUserView, GoogleLogin
 
 router = DefaultRouter()
 router.register(r'users', UserView, basename='user')
@@ -14,6 +14,7 @@ urlpatterns = [
     path('login/', login, name='login'),
     path('register/', register, name='register'),
     path('profile-image/', UpdateProfilePictureView.as_view(), name='profile-image'),
+    path('google/', GoogleLogin.as_view(), name='google_login'),  # Nueva ruta para login con Google
 ]
 
 
