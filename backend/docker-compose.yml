@@ -1,0 +1,29 @@
+version: "2.2"
+services:
+  django:
+    build: .
+    container_name: gpt_games_server
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/usr/app
+    env_file:
+      - .env
+    stdin_open: true
+    tty: true
+  db:
+    container_name: gpt_games_db_dev
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    stdin_open: true
+    tty: true
+volumes:
+  postgres-data:

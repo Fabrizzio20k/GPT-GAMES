@@ -1,0 +1,250 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.loader {
+    --cell-size: 25px;
+    --cell-spacing: 1px;
+    --cells: 3;
+    --total-size: calc(var(--cells) * (var(--cell-size) + 2 * var(--cell-spacing)));
+    display: flex;
+    flex-wrap: wrap;
+    width: var(--total-size);
+    height: var(--total-size);
+}
+
+.cell {
+    flex: 0 0 var(--cell-size);
+    margin: var(--cell-spacing);
+    background-color: transparent;
+    box-sizing: border-box;
+    border-radius: 4px;
+    animation: 1.5s ripple ease infinite;
+}
+
+.cell.d-1 {
+    animation-delay: 100ms;
+}
+
+.cell.d-2 {
+    animation-delay: 200ms;
+}
+
+.cell.d-3 {
+    animation-delay: 300ms;
+}
+
+.cell.d-4 {
+    animation-delay: 400ms;
+}
+
+.cell:nth-child(1) {
+    --cell-color: #00FF87;
+}
+
+.cell:nth-child(2) {
+    --cell-color: #0CFD95;
+}
+
+.cell:nth-child(3) {
+    --cell-color: #17FBA2;
+}
+
+.cell:nth-child(4) {
+    --cell-color: #23F9B2;
+}
+
+.cell:nth-child(5) {
+    --cell-color: #30F7C3;
+}
+
+.cell:nth-child(6) {
+    --cell-color: #3DF5D4;
+}
+
+.cell:nth-child(7) {
+    --cell-color: #45F4DE;
+}
+
+.cell:nth-child(8) {
+    --cell-color: #53F1F0;
+}
+
+.cell:nth-child(9) {
+    --cell-color: #60EFFF;
+}
+
+/*Animation*/
+@keyframes ripple {
+    0% {
+        background-color: transparent;
+    }
+
+    30% {
+        background-color: var(--cell-color);
+    }
+
+    60% {
+        background-color: transparent;
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+
+/* App.css */
+.custom-scroll::-webkit-scrollbar {
+    width: 6px;
+    /* Cambia el ancho del scrollbar */
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+    background: transparent;
+    /* Fondo transparente */
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    /* Color del thumb del scrollbar */
+    border-radius: 10px;
+    /* Bordes redondeados */
+    border: 1px solid transparent;
+    /* Espacio para crear margen */
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+    /* Color al pasar el mouse */
+}
+
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 900;
+    src: url('/fonts/inter/Inter-Black.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 700;
+    src: url('/fonts/inter/Inter-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 800;
+    src: url('/fonts/inter/Inter-ExtraBold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 200;
+    src: url('/fonts/inter/Inter-ExtraLight.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 300;
+    src: url('/fonts/inter/Inter-Light.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 500;
+    src: url('/fonts/inter/Inter-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 400;
+    src: url('/fonts/inter/Inter-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 600;
+    src: url('/fonts/inter/Inter-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 100;
+    src: url('/fonts/inter/Inter-Thin.ttf') format('truetype');
+}
+
+
+@font-face {
+    font-family: 'Alata';
+    font-weight: 400;
+    src: url('/fonts/alata/Alata-Regular.ttf') format('truetype');
+}
+
+@layer components {
+    .test {
+        border: 2px solid red;
+    }
+
+    .shadow-bottom {
+        box-shadow: 0 10px 10px -2px rgba(0, 0, 0, 0.3);
+    }
+
+    .shadow-top {
+        box-shadow: 0 -4px 2px -2px rgba(0, 0, 0, 0.2);
+    }
+
+    .shadow-left {
+        box-shadow: -4px 0 2px -2px rgba(0, 0, 0, 0.2);
+    }
+
+    .shadow-right {
+        box-shadow: 10px 0 10px -2px rgba(0, 0, 0, 0.3);
+    }
+}
+
+.button-sidebar {
+    @apply flex flex-row items-center justify-start cursor-pointer px-4 py-4 space-x-4 rounded-2xl hover:bg-tertiary 
+}
+
+.button-navbar {
+    @apply flex items-center space-x-2 cursor-pointer px-4 py-2 rounded-2xl
+}
+
+.gradient {
+    @apply bg-gradient-to-r from-fuchsia-800 to-indigo-700 text-white
+}
+
+.button-gradient {
+    @apply hover:from-fuchsia-700 hover:to-indigo-600 transition-all duration-300
+}
+
+input, textarea {
+    @apply p-2 rounded-2xl bg-tertiary w-full outline-none border-2 border-transparent focus:border-primary
+}
+
+.aspect-ratio-1-1 {
+    aspect-ratio: 1 / 1;
+}
+
+@media (max-width: 500px) {
+    .aspect-ratio-16-9 {
+        aspect-ratio: 16 / 9;
+    }
+}
+
+.new-offer-game {
+    @apply bg-secondary cursor-pointer rounded-xl p-2 flex flex-col sm:flex-row justify-between mb-2 border-4 hover:border-gray-300 transform transition-transform hover:scale-95
+}
+
+.gallery {
+    columns: 260px 5;
+    column-gap: 0.5em;
+}
+
+.gallery-item {
+    break-inside: avoid;
+}
+
+.offer-game {
+    @apply bg-tertiary cursor-pointer p-3 rounded-xl mb-2 w-full block gallery-item border-transparent transform transition-transform hover:scale-95
+}
