@@ -31,17 +31,15 @@ export default function Page() {
     const fectchOffers = async () => {
         const { errors, dataOffers } = await searchOfferByName("", user.token);
         Object.keys(errors).length > 0 ? toastError(errors) : setMainOffers(dataOffers);
-        console.log(dataOffers);
-
     }
 
     useEffect(() => {
         fectchOffers();
-    }, []);
+    });
 
     return (
         <MainLayoutPage>
-            <section className="gradient background-home rounded-xl mb-6 h-[500px]">
+            <section className="gradient background-home rounded-xl mb-6 h-[200px] sm:h-[300px] md:h-[400px] lg:h-[500px]">
                 {/* <div className="background-home rounded-xl h-full w-1/2"></div> */}
             </section>
 
@@ -68,9 +66,8 @@ export default function Page() {
             >
                 <CarouselContent>
                     {mainOffers.map((offer, index) => (
-                        <CarouselItem className="sm:basis-1/2 lg:basis-1/3">
+                        <CarouselItem className="sm:basis-1/2 md:basis-1/3 lg:basis-1/4" key={index}>
                             <OfferNew
-                                key={index}
                                 id={offer.id}
                                 seller={offer.seller}
                                 game={offer.game}

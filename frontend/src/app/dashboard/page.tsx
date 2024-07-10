@@ -47,7 +47,7 @@ export default function Dashboard() {
             <section>
                 {
                     user.offers.length == 0 &&
-                    <h1 className="text-2xl">You haven't published any offer yet 👀</h1>
+                    <h1 className="text-2xl">You havent published any offer yet 👀</h1>
                 }
             </section>
 
