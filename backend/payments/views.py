@@ -8,7 +8,7 @@ from rest_framework import status
 import requests
 
 stripe.api_key = 'sk_test_51PYLDQF4ZsyjeQ4SsVozca1INRiBvOftqb23qvQlOSwqMowRw1ZXZafhMCpDTwuxwp34orQhG1u8PwzEsAwMSBHa0025xTN2pk'
-YOUR_DOMAIN = 'http://localhost:3000'
+YOUR_DOMAIN = 'http://44.213.115.68:3000'
 
 
 class CreateCheckoutSessionView(APIView):
