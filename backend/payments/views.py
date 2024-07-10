@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import status
+import requests
 
 stripe.api_key = 'sk_test_51PYLDQF4ZsyjeQ4SsVozca1INRiBvOftqb23qvQlOSwqMowRw1ZXZafhMCpDTwuxwp34orQhG1u8PwzEsAwMSBHa0025xTN2pk'
 YOUR_DOMAIN = 'http://localhost:3000'
@@ -14,38 +15,39 @@ class CreateCheckoutSessionView(APIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [TokenAuthentication]
 
-    """
-    Chamba del backend: recuperar los productos del carrito y crear una sesión de pago con Stripe.
-    URGENTE!!!!!
-    """
-
     def post(self, request, *args, **kwargs):
-        line_items = [
-            {
-                'price_data': {
-                    'currency': 'usd',
-                    'product_data': {
-                        'name': 'Valorant',
-                        # URL de la imagen del producto
-                        'images': ['https://i.blogs.es/3f15c2/valorant/1366_2000.jpg'],
+        token = request.data["user_token"]
+
+        # HACER UN REQUEST A //localhost:8000/profile
+        data = requests.get('http://localhost:8000/profile',
+                            headers={'Authorization': f'Token {token}'}).json()
+
+        offers = data["user"]["shopping_car"]["offers"]
+
+        line_items = []
+
+        for offer in offers:
+            game = offer.get("game")
+            price = offer.get("price")
+            discount = offer.get("discount")
+            link = offer.get("link")
+
+            if game and price is not None and discount is not None and link:
+                # Stripe expects amount in cents
+                unit_amount = int((price - (discount / 100 * price)) * 100)
+                line_items.append({
+                    'price_data': {
+                        'currency': 'usd',
+                        'product_data': {
+                            'name': game,
+                            'images': [link],
+                        },
+                        'unit_amount': unit_amount,
                     },
-                    'unit_amount': 1000,  # Precio en centavos
-                },
-                'quantity': 100
-            },
-            {
-                'price_data': {
-                    'currency': 'usd',
-                    'product_data': {
-                        'name': 'Half-Life',
-                        # URL de la imagen del producto
-                        'images': ['https://i.3djuegos.com/juegos/5006/halflife/fotos/ficha/halflife-1696756.jpg'],
-                    },
-                    'unit_amount': 500,  # Precio en centavos
-                },
-                'quantity': 100
-            },
-        ]
+                    'quantity': 1
+                })
+            else:
+                print(f"Invalid offer data: {offer}")
 
         # Filtrar productos con cantidad mayor a 0
         line_items = [item for item in line_items if item['quantity'] > 0]

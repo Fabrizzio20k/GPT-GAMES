@@ -357,7 +357,10 @@ export const searchUserByUsername = async (username: string, token: string) => {
 }
 
 export const handlePayment = async (token: string) => {
-    const response = await axios.post(urlServer + "/payments/create-checkout-session/", {}, {
+
+    const body = { user_token: token }
+
+    const response = await axios.post(urlServer + "/payments/create-checkout-session/", body, {
         headers: {
             'Authorization': `Token ${token}`,
             'Content-Type': 'application/json',
