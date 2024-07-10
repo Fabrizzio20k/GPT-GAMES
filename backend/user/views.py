@@ -1,5 +1,5 @@
 from rest_framework import viewsets, permissions
-from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -14,10 +14,11 @@ from django.db.utils import IntegrityError
 from rest_framework.filters import SearchFilter
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.decorators import action
-
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from dj_rest_auth.registration.views import SocialLoginView
+from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 
 logger = logging.getLogger(__name__)
-
 
 class UserView(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -34,7 +35,6 @@ class UserView(viewsets.ModelViewSet):
         logger.info(f'User created: {user.username}, Token: {token.key}')
         return Response({'token': token.key}, status=status.HTTP_201_CREATED, headers=headers)
 
-
 class SearchUserView(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = SearchSerializer
@@ -42,16 +42,6 @@ class SearchUserView(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication]
     filter_backends = [SearchFilter]
     search_fields = ['username', 'email']
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        token, created = Token.objects.get_or_create(user=user)
-        headers = self.get_success_headers(serializer.data)
-        logger.info(f'User created: {user.username}, Token: {token.key}')
-        return Response({'token': token.key}, status=status.HTTP_201_CREATED, headers=headers)
-
 
 class UpdateProfilePictureView(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -66,7 +56,6 @@ class UpdateProfilePictureView(APIView):
             return Response(data=serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(data=serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
 
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
@@ -89,33 +78,30 @@ def login(request):
     serializer = UserSerializer(instance=user, context={'request': request})
     return Response({'token': token.key, 'user': serializer.data}, status=status.HTTP_201_CREATED)
 
-
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def register(request, format=None):
-    serialiazer = RegisterSerializer(
+    serializer = RegisterSerializer(
         data=request.data, context={'request': request})
 
-    if serialiazer.is_valid():
-        if len(serialiazer.validated_data['password']) <= 8:
+    if serializer.is_valid():
+        if len(serializer.validated_data['password']) <= 8:
             return Response({"detail": "password too short"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            user = serialiazer.save()
+            user = serializer.save()
             token = Token.objects.create(user=user)
-            return Response({'token': token.key, 'user': serialiazer.data}, status=status.HTTP_201_CREATED)
+            return Response({'token': token.key, 'user': serializer.data}, status=status.HTTP_201_CREATED)
         except IntegrityError:
             return Response({"detail": "Username or email already exists."}, status=status.HTTP_400_BAD_REQUEST)
 
-    return Response(serialiazer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ProfileViewSet(viewsets.ViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request):
-        # Retorna el perfil del usuario autenticado
         user = request.user
         logger.info(f'Authenticated user: {user}')
         serializer = UserSerializer(user, context={'request': request})
@@ -132,3 +118,14 @@ class ProfileViewSet(viewsets.ViewSet):
             logger.info(f'Updated user: {user}')
             return Response({'user': serializer.data}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class GoogleLogin(SocialLoginView):
+    adapter_class = GoogleOAuth2Adapter
+    client_class = OAuth2Client
+    callback_url = "http://localhost:8000/accounts/google/login/callback/"
+
+    def get_response(self):
+        user = self.user
+        token, created = Token.objects.get_or_create(user=user)
+        serializer = UserSerializer(user, context={'request': self.request})
+        return Response({'token': token.key, 'user': serializer.data}, status=status.HTTP_200_OK)
